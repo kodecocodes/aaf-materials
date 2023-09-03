@@ -48,134 +48,136 @@ import timber.log.Timber
 
 @Composable
 fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
-    val scope = rememberCoroutineScope()
+  val scope = rememberCoroutineScope()
+  // TODO: Add Prefs
+  val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
     // TODO: Add Prefs
-    val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
-        // TODO: Add Prefs
-        RecipeViewModel()
-    })
-    val recipeState = remember { mutableStateOf<SpoonacularRecipe?>(null) }
-    val navController = LocalNavigatorProvider.current
-    // TODO: Add Repository
-    if (recipeId != null) {
-        LaunchedEffect(Unit) {
-            scope.launch {
-                viewModel.recipeState.collect { state ->
-                    recipeState.value = state
-                }
-            }
-            scope.launch {
-                viewModel.queryRecipe(recipeId)
-            }
+    RecipeViewModel()
+  })
+  val recipeState = remember { mutableStateOf<SpoonacularRecipe?>(null) }
+  val navController = LocalNavigatorProvider.current
+  // TODO: Add Repository
+  if (recipeId != null) {
+    LaunchedEffect(Unit) {
+      scope.launch {
+        viewModel.recipeState.collect { state ->
+          recipeState.value = state
         }
-    } else if (databaseRecipeId != null) {
-        LaunchedEffect(Unit) {
-            scope.launch {
-                viewModel.recipeState.collect { state ->
-                    recipeState.value = state
-                }
-            }
-            scope.launch {
-                // TODO: Add Repository
-                viewModel.getBookmark()
-            }
-        }
+      }
+      scope.launch {
+        viewModel.queryRecipe(recipeId)
+      }
     }
-    Column(modifier = Modifier.fillMaxSize()) {
-        if (recipeState.value != null) {
-            recipeState.value?.let { recipe ->
-                Box(modifier = Modifier.height(200.dp)) {
-                    if (recipe.image != null) {
-                        AsyncImage(
-                            modifier = Modifier.fillMaxWidth(),
-                            model = buildRecipeImageBuilder(recipe.image),
-                            contentScale = ContentScale.FillWidth,
-                            onState = { state ->
-                                if (state is AsyncImagePainter.State.Error) {
-                                    Timber.e(
-                                        state.result.throwable,
-                                        "Problems loading image ${recipe.image}"
-                                    )
-                                }
-                            },
-                            contentDescription = null,
-                        )
-                    }
-                    TitleRow(
-                        modifier = Modifier.align(Alignment.BottomStart),
-                        navController,
-                        viewModel,
-                        recipe,
-                        databaseRecipeId != null
-                    )
-                }
-                Description(description = recipe.summary)
-            }
+  } else if (databaseRecipeId != null) {
+    LaunchedEffect(Unit) {
+      scope.launch {
+        viewModel.recipeState.collect { state ->
+          recipeState.value = state
         }
+      }
+      scope.launch {
+        // TODO: Add Repository
+        viewModel.getBookmark()
+      }
     }
+  }
+  Column(modifier = Modifier.fillMaxSize()) {
+    if (recipeState.value != null) {
+      recipeState.value?.let { recipe ->
+        Box(modifier = Modifier.height(200.dp)) {
+          if (recipe.image != null) {
+            AsyncImage(
+              modifier = Modifier.fillMaxWidth(),
+              model = buildRecipeImageBuilder(recipe.image),
+              contentScale = ContentScale.FillWidth,
+              onState = { state ->
+                if (state is AsyncImagePainter.State.Error) {
+                  Timber.e(
+                    state.result.throwable,
+                    "Problems loading image ${recipe.image}"
+                  )
+                }
+              },
+              contentDescription = null,
+            )
+          }
+          TitleRow(
+            modifier = Modifier.align(Alignment.BottomStart),
+            navController,
+            viewModel,
+            recipe,
+            databaseRecipeId != null
+          )
+        }
+        Description(description = recipe.summary)
+      }
+    }
+  }
 }
 
 @Composable
 fun TitleRow(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    viewModel: RecipeViewModel,
-    recipe: SpoonacularRecipe,
-    isBookmark: Boolean
+  modifier: Modifier = Modifier,
+  navController: NavHostController,
+  viewModel: RecipeViewModel,
+  recipe: SpoonacularRecipe,
+  isBookmark: Boolean
 ) {
-    // TODO: Add Repository
-    val scope = rememberCoroutineScope()
-    Row(modifier = modifier
-        .fillMaxWidth()
-        .background(lighterBlue)) {
-        IconButton(onClick = { navController.popBackStack() }) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                tint = Color.Black,
-                contentDescription = "Go back"
-            )
-        }
-        Text(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            text = recipe.title,
-            style = HeadlineSmall.copy(color = Color.Black)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = {
-            scope.launch {
-                if (isBookmark) {
-                    // TODO: Add Repository
-                    viewModel.deleteBookmark()
-                } else {
-                    // TODO: Add Repository
-                    viewModel.bookmarkRecipe()
-                }
-            }
-            navController.popBackStack()
-        }) {
-            val imageVector = ImageVector.vectorResource(
-                if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
-            )
-            Icon(
-                imageVector = imageVector, tint = Color.Black, contentDescription = null
-            )
-        }
+  // TODO: Add Repository
+  val scope = rememberCoroutineScope()
+  Row(
+    modifier = modifier
+      .fillMaxWidth()
+      .background(lighterBlue)
+  ) {
+    IconButton(onClick = { navController.popBackStack() }) {
+      Icon(
+        imageVector = Icons.Default.ArrowBack,
+        tint = Color.Black,
+        contentDescription = "Go back"
+      )
     }
+    Text(
+      modifier = Modifier.align(Alignment.CenterVertically),
+      text = recipe.title,
+      style = HeadlineSmall.copy(color = Color.Black)
+    )
+    Spacer(modifier = Modifier.weight(1f))
+    IconButton(onClick = {
+      scope.launch {
+        if (isBookmark) {
+          // TODO: Add Repository
+          viewModel.deleteBookmark()
+        } else {
+          // TODO: Add Repository
+          viewModel.bookmarkRecipe()
+        }
+      }
+      navController.popBackStack()
+    }) {
+      val imageVector = ImageVector.vectorResource(
+        if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
+      )
+      Icon(
+        imageVector = imageVector, tint = Color.Black, contentDescription = null
+      )
+    }
+  }
 }
 
 @Composable
 fun Description(modifier: Modifier = Modifier, description: String) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxSize(1f),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-    ) {
-        AndroidView(modifier = modifier.padding(16.dp), factory = {
-            TextView(it)
-        }, update = {
-            it.text = HtmlCompat.fromHtml(description, 0)
-        })
-    }
+  Card(
+    colors = CardDefaults.cardColors(containerColor = Color.White),
+    modifier = modifier
+      .padding(8.dp)
+      .fillMaxSize(1f),
+    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+  ) {
+    AndroidView(modifier = modifier.padding(16.dp), factory = {
+      TextView(it)
+    }, update = {
+      it.text = HtmlCompat.fromHtml(description, 0)
+    })
+  }
 }

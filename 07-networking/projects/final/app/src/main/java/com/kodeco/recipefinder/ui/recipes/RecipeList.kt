@@ -22,46 +22,46 @@ const val PAGING_OFFSET = 6
 
 @Composable
 fun RecipeList() {
-    // TODO: Add Prefs
-    // TODO: Update RecipeModel
-    val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
-        RecipeViewModel()
-    })
-    val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
-    val scope = rememberCoroutineScope()
-    val uiState by viewModel.uiState.collectAsState()
-    LaunchedEffect(Unit) {
-        scope.launch {
-            viewModel.queryState.collect { state ->
-                if (state.number > 0) {
-                    viewModel.setSearching(false)
-                }
-            }
+  // TODO: Add Prefs
+  // TODO: Update RecipeModel
+  val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
+    RecipeViewModel()
+  })
+  val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
+  val scope = rememberCoroutineScope()
+  val uiState by viewModel.uiState.collectAsState()
+  LaunchedEffect(Unit) {
+    scope.launch {
+      viewModel.queryState.collect { state ->
+        if (state.number > 0) {
+          viewModel.setSearching(false)
         }
-        scope.launch {
-            viewModel.recipeListState.collect { state ->
-                recipeListState.value = state
-            }
-        }
+      }
     }
-    Column(modifier = Modifier.fillMaxSize()) {
-        ImageRow()
-        ChipRow(viewModel)
-        if (uiState.allChecked) {
-            SearchRow(viewModel)
-        }
-        if (uiState.allChecked) {
-            ShowRecipeList(recipeListState, viewModel)
-        } else {
-            ShowBookmarks(viewModel)
-        }
+    scope.launch {
+      viewModel.recipeListState.collect { state ->
+        recipeListState.value = state
+      }
     }
+  }
+  Column(modifier = Modifier.fillMaxSize()) {
+    ImageRow()
+    ChipRow(viewModel)
+    if (uiState.allChecked) {
+      SearchRow(viewModel)
+    }
+    if (uiState.allChecked) {
+      ShowRecipeList(recipeListState, viewModel)
+    } else {
+      ShowBookmarks(viewModel)
+    }
+  }
 }
 
 @Preview
 @Composable
 fun PreviewRecipeList() {
-    Surface {
-        RecipeList()
-    }
+  Surface {
+    RecipeList()
+  }
 }

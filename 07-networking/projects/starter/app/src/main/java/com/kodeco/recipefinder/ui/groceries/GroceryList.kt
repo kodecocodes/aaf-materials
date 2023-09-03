@@ -15,34 +15,34 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GroceryList() {
-    // TODO: Add Prefs
-    // TODO: Update RecipeModel
-    val recipeViewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
-        RecipeViewModel()
-    })
-    val groceryListViewModel: GroceryListViewModel = viewModel()
-    // TODO: Add Repository
-    val scope = rememberCoroutineScope()
+  // TODO: Add Prefs
+  // TODO: Update RecipeModel
+  val recipeViewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
+    RecipeViewModel()
+  })
+  val groceryListViewModel: GroceryListViewModel = viewModel()
+  // TODO: Add Repository
+  val scope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit) {
-        scope.launch {
-            recipeViewModel.ingredientsState.collect { ingredients ->
-                groceryListViewModel.setIngredients(ingredients)
-            }
-        }
-        // TODO: Get Ingredients
+  LaunchedEffect(Unit) {
+    scope.launch {
+      recipeViewModel.ingredientsState.collect { ingredients ->
+        groceryListViewModel.setIngredients(ingredients)
+      }
     }
-    Column(modifier = Modifier.fillMaxSize()) {
-        ShoppingImageRow()
-        ShoppingSearchRow(groceryListViewModel)
-        IngredientList(
-            groceryListViewModel
-        )
-    }
+    // TODO: Get Ingredients
+  }
+  Column(modifier = Modifier.fillMaxSize()) {
+    ShoppingImageRow()
+    ShoppingSearchRow(groceryListViewModel)
+    IngredientList(
+      groceryListViewModel
+    )
+  }
 }
 
 @Preview
 @Composable
 fun PreviewGroceryList() {
-    GroceryList()
+  GroceryList()
 }

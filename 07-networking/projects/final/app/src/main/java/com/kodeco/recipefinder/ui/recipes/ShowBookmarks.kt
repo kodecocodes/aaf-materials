@@ -37,76 +37,76 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun ShowBookmarks(viewModel: RecipeViewModel) {
-    val scope = rememberCoroutineScope()
-    // TODO: Add Repository
-    val bookmarkListState = remember { mutableStateOf(listOf<Recipe>()) }
-    LaunchedEffect(Unit) {
-        scope.launch {
-            viewModel.bookmarksState.collect { bookmarks ->
-                bookmarkListState.value = bookmarks
-            }
-        }
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                // TODO: Add Repository
-                viewModel.getBookmarks()
-            }
-        }
+  val scope = rememberCoroutineScope()
+  // TODO: Add Repository
+  val bookmarkListState = remember { mutableStateOf(listOf<Recipe>()) }
+  LaunchedEffect(Unit) {
+    scope.launch {
+      viewModel.bookmarksState.collect { bookmarks ->
+        bookmarkListState.value = bookmarks
+      }
     }
-    val bookmarks = bookmarkListState.value
-    LazyColumn(content = {
-        items(
-            count = bookmarks.size,
-            key = { index -> bookmarks[index].id },
-            itemContent = { index ->
-                val recipe = bookmarks[index]
-                val currentItem by rememberUpdatedState(recipe)
-                val dismissState = rememberDismissState(
-                    confirmValueChange = {
-                        scope.launch {
-                            withContext(Dispatchers.IO) {
-                                // TODO: Add Repository
-                                viewModel.deleteBookmark()
-                            }
-                        }
-                        true
-                    }
-                )
-                SwipeToDismiss(state = dismissState, background = {
-                    val alignment = when (dismissState.dismissDirection) {
-                        DismissDirection.StartToEnd -> Alignment.CenterStart
-                        DismissDirection.EndToStart -> Alignment.CenterEnd
-                        null -> return@SwipeToDismiss
-                    }
-                    Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(lightGrey)
-                            .padding(horizontal = 20.dp),
-                        contentAlignment = alignment
-                    ) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Delete",
-                        )
-                    }
-                }, dismissContent = {
-                    BookmarkCard(modifier = Modifier.fillMaxWidth(), recipe)
-                })
+    scope.launch {
+      withContext(Dispatchers.IO) {
+        // TODO: Add Repository
+        viewModel.getBookmarks()
+      }
+    }
+  }
+  val bookmarks = bookmarkListState.value
+  LazyColumn(content = {
+    items(
+      count = bookmarks.size,
+      key = { index -> bookmarks[index].id },
+      itemContent = { index ->
+        val recipe = bookmarks[index]
+        val currentItem by rememberUpdatedState(recipe)
+        val dismissState = rememberDismissState(
+          confirmValueChange = {
+            scope.launch {
+              withContext(Dispatchers.IO) {
+                // TODO: Add Repository
+                viewModel.deleteBookmark()
+              }
             }
+            true
+          }
         )
-    })
+        SwipeToDismiss(state = dismissState, background = {
+          val alignment = when (dismissState.dismissDirection) {
+            DismissDirection.StartToEnd -> Alignment.CenterStart
+            DismissDirection.EndToStart -> Alignment.CenterEnd
+            null -> return@SwipeToDismiss
+          }
+          Box(
+            Modifier
+              .fillMaxSize()
+              .background(lightGrey)
+              .padding(horizontal = 20.dp),
+            contentAlignment = alignment
+          ) {
+            Icon(
+              Icons.Default.Delete,
+              contentDescription = "Delete",
+            )
+          }
+        }, dismissContent = {
+          BookmarkCard(modifier = Modifier.fillMaxWidth(), recipe)
+        })
+      }
+    )
+  })
 }
 
 
 @Preview
 @Composable
 fun PreviewShowBookmarks() {
-    val context = LocalContext.current
-    Surface {
-        Column {
-            // TODO: Add PRefs
-            ShowBookmarks(RecipeViewModel())
-        }
+  val context = LocalContext.current
+  Surface {
+    Column {
+      // TODO: Add PRefs
+      ShowBookmarks(RecipeViewModel())
     }
+  }
 }

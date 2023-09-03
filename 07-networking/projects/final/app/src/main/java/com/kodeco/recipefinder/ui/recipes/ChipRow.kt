@@ -25,50 +25,50 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun ColumnScope.ChipRow(
-    viewModel: RecipeViewModel,
+  viewModel: RecipeViewModel,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.CenterHorizontally),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        SpacerW4()
-        FilterChip(selected = uiState.allChecked, leadingIcon = {
-            if (uiState.allChecked) {
-                Icon(imageVector = Icons.Default.Check, contentDescription = null)
-            }
-        }, onClick = {
-            val allChecked = !uiState.allChecked
-            viewModel.setAllChecked(allChecked)
-            if (allChecked) {
-                viewModel.setBookmarksChecked(false)
-            }
-        }, label = { Text(text = "All", style = LabelLarge) })
-        SpacerW4()
-        FilterChip(selected = uiState.bookmarksChecked, leadingIcon = {
-            if (uiState.bookmarksChecked) {
-                Icon(imageVector = Icons.Default.Check, contentDescription = null)
-            }
-        }, onClick = {
-            val bookmarksChecked = !uiState.bookmarksChecked
-            viewModel.setBookmarksChecked(bookmarksChecked)
-            if (bookmarksChecked) {
-                viewModel.setAllChecked(false)
-            }
-        }, label = { Text(text = "Bookmarks", style = LabelLarge) })
-    }
+  val uiState by viewModel.uiState.collectAsState()
+  Row(
+    modifier = Modifier
+      .fillMaxWidth()
+      .align(Alignment.CenterHorizontally),
+    horizontalArrangement = Arrangement.Center
+  ) {
+    SpacerW4()
+    FilterChip(selected = uiState.allChecked, leadingIcon = {
+      if (uiState.allChecked) {
+        Icon(imageVector = Icons.Default.Check, contentDescription = null)
+      }
+    }, onClick = {
+      val allChecked = !uiState.allChecked
+      viewModel.setAllChecked(allChecked)
+      if (allChecked) {
+        viewModel.setBookmarksChecked(false)
+      }
+    }, label = { Text(text = "All", style = LabelLarge) })
+    SpacerW4()
+    FilterChip(selected = uiState.bookmarksChecked, leadingIcon = {
+      if (uiState.bookmarksChecked) {
+        Icon(imageVector = Icons.Default.Check, contentDescription = null)
+      }
+    }, onClick = {
+      val bookmarksChecked = !uiState.bookmarksChecked
+      viewModel.setBookmarksChecked(bookmarksChecked)
+      if (bookmarksChecked) {
+        viewModel.setAllChecked(false)
+      }
+    }, label = { Text(text = "Bookmarks", style = LabelLarge) })
+  }
 }
 
 @Preview
 @Composable
 fun PreviewChipRow() {
-    val context = LocalContext.current
-    Surface {
-        Column {
-            // TODO: Add Prefs
-            ChipRow(RecipeViewModel())
-        }
+  val context = LocalContext.current
+  Surface {
+    Column {
+      // TODO: Add Prefs
+      ChipRow(RecipeViewModel())
     }
+  }
 }

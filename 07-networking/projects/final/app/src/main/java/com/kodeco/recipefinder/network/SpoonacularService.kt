@@ -12,34 +12,34 @@ import retrofit2.http.Query
 const val apiKey = "6abcc18295294c48b466ddf1270cddd7"
 
 interface SpoonacularService {
-    @GET("recipes/complexSearch?&apiKey=$apiKey")
-    suspend fun queryRecipes(
-        @Query("query") query: String,
-        @Query("offset") offset: Int,
-        @Query("number") number: Int = PAGE_SIZE
-    ): RecipeResponse
+  @GET("recipes/complexSearch?&apiKey=$apiKey")
+  suspend fun queryRecipes(
+    @Query("query") query: String,
+    @Query("offset") offset: Int,
+    @Query("number") number: Int = PAGE_SIZE
+  ): RecipeResponse
 
-    @GET("recipes/{id}/information?includeNutrition=false&apiKey=$apiKey")
-    suspend fun queryRecipe(@Path("id") id: Int): SpoonacularRecipe
+  @GET("recipes/{id}/information?includeNutrition=false&apiKey=$apiKey")
+  suspend fun queryRecipe(@Path("id") id: Int): SpoonacularRecipe
 }
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://api.spoonacular.com/"
+  private const val BASE_URL = "https://api.spoonacular.com/"
 
-    private fun provideMoshi(): Moshi =
-        Moshi
-            .Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
+  private fun provideMoshi(): Moshi =
+    Moshi
+      .Builder()
+      .add(KotlinJsonAdapterFactory())
+      .build()
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(provideMoshi()))
-            .build()
-    }
+  private val retrofit: Retrofit by lazy {
+    Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .addConverterFactory(MoshiConverterFactory.create(provideMoshi()))
+      .build()
+  }
 
-    val spoonacularService: SpoonacularService by lazy {
-        retrofit.create(SpoonacularService::class.java)
-    }
+  val spoonacularService: SpoonacularService by lazy {
+    retrofit.create(SpoonacularService::class.java)
+  }
 }

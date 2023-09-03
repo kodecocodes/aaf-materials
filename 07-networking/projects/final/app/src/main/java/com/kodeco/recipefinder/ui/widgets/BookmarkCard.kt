@@ -31,53 +31,54 @@ import timber.log.Timber
 
 @Composable
 fun BookmarkCard(modifier: Modifier = Modifier, recipe: Recipe) {
-    val navController = LocalNavigatorProvider.current
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth().clickable {
-                navController.navigate("bookmarks/${recipe.id}")
-            },
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-    ) {
-        Row(modifier = Modifier.fillMaxSize()) {
-            SpacerW12()
-            recipe.image?.let { image ->
-                AsyncImage(
-                    modifier = Modifier
-                        .width(68.dp)
-                        .height(68.dp),
-                    model = buildRecipeImageBuilder(image),
-                    contentScale = ContentScale.FillWidth,
-                    onState = { state ->
-                        if (state is AsyncImagePainter.State.Error) {
-                            Timber.e(
-                                state.result.throwable,
-                                "Problems loading image $image"
-                            )
-                        }
-                    },
-                    contentDescription = null,
-                )
+  val navController = LocalNavigatorProvider.current
+  Card(
+    colors = CardDefaults.cardColors(containerColor = Color.White),
+    modifier = modifier
+      .padding(16.dp)
+      .fillMaxWidth()
+      .clickable {
+        navController.navigate("bookmarks/${recipe.id}")
+      },
+    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+  ) {
+    Row(modifier = Modifier.fillMaxSize()) {
+      SpacerW12()
+      recipe.image?.let { image ->
+        AsyncImage(
+          modifier = Modifier
+            .width(68.dp)
+            .height(68.dp),
+          model = buildRecipeImageBuilder(image),
+          contentScale = ContentScale.FillWidth,
+          onState = { state ->
+            if (state is AsyncImagePainter.State.Error) {
+              Timber.e(
+                state.result.throwable,
+                "Problems loading image $image"
+              )
             }
-            SpacerW12()
-            Text(
-                text = recipe.title,
-                style = BodyLarge,
-                color = Color.Black,
-                modifier = Modifier.padding(16.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            IconButton(modifier = Modifier.align(Alignment.CenterVertically), onClick = {
-                navController.navigate("bookmarks/${recipe.id}")
-            }) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(
-                        R.drawable.arrow_circle_right
-                    ), tint = Color.Black, contentDescription = null
-                )
-            }
-        }
+          },
+          contentDescription = null,
+        )
+      }
+      SpacerW12()
+      Text(
+        text = recipe.title,
+        style = BodyLarge,
+        color = Color.Black,
+        modifier = Modifier.padding(16.dp)
+      )
+      Spacer(modifier = Modifier.weight(1f))
+      IconButton(modifier = Modifier.align(Alignment.CenterVertically), onClick = {
+        navController.navigate("bookmarks/${recipe.id}")
+      }) {
+        Icon(
+          imageVector = ImageVector.vectorResource(
+            R.drawable.arrow_circle_right
+          ), tint = Color.Black, contentDescription = null
+        )
+      }
     }
+  }
 }

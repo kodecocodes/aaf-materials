@@ -19,25 +19,25 @@ import com.kodeco.recipefinder.ui.theme.background1Color
 
 @Composable
 fun ShoppingImageRow() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .background(background1Color)
-    ) {
-        Image(
-            modifier = Modifier.align(Alignment.Center),
-            painter = painterResource(id = R.drawable.background1),
-            contentDescription = null,
-            contentScale = ContentScale.FillWidth
-        )
-    }
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(200.dp)
+      .background(background1Color)
+  ) {
+    Image(
+      modifier = Modifier.align(Alignment.Center),
+      painter = painterResource(id = R.drawable.background1),
+      contentDescription = null,
+      contentScale = ContentScale.FillWidth
+    )
+  }
 }
 
 @Preview
 @Composable
 fun PreviewShoppingImageRow() {
-    Surface {
-        ShoppingImageRow()
-    }
+  Surface {
+    ShoppingImageRow()
+  }
 }

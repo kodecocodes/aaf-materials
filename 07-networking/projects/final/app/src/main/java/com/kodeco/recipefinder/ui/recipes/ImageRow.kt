@@ -19,34 +19,34 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun ImageRow() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .background(lightGreen)
-    ) {
-        Image(
-            modifier = Modifier.align(Alignment.Center),
-            painter = painterResource(id = R.drawable.background2),
-            contentDescription = null
-        )
-    }
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(200.dp)
+      .background(lightGreen)
+  ) {
+    Image(
+      modifier = Modifier.align(Alignment.Center),
+      painter = painterResource(id = R.drawable.background2),
+      contentDescription = null
+    )
+  }
 }
 
 fun searchRecipes(searchString: String, viewModel: RecipeViewModel) {
-    if (searchString.isNotEmpty()) {
-        viewModel.addPreviousSearch(searchString)
-        viewModel.queryRecipies(searchString, viewModel.queryState.value.offset)
-    } else {
-        viewModel.setSearching(false)
-    }
+  if (searchString.isNotEmpty()) {
+    viewModel.addPreviousSearch(searchString)
+    viewModel.queryRecipies(searchString, viewModel.queryState.value.offset)
+  } else {
+    viewModel.setSearching(false)
+  }
 }
 
 
 @Preview
 @Composable
 fun PreviewImageRow() {
-    Surface {
-        ImageRow()
-    }
+  Surface {
+    ImageRow()
+  }
 }

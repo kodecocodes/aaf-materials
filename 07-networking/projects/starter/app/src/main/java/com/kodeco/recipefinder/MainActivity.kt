@@ -24,7 +24,7 @@ import com.kodeco.recipefinder.ui.RecipeDetails
 import com.kodeco.recipefinder.ui.theme.RecipeFinderTheme
 
 val LocalNavigatorProvider =
-    compositionLocalOf<NavHostController> { error("No navigation provided") }
+  compositionLocalOf<NavHostController> { error("No navigation provided") }
 
 // TODO: Add Repository Provider
 
@@ -32,57 +32,57 @@ val LocalNavigatorProvider =
 
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RecipeFinderTheme(darkTheme = false) {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val context = LocalContext.current
-                    val navController = rememberNavController()
-                    // TODO: Add Repository
-                    // TODO: Add Prefs
-                    CompositionLocalProvider(
-                        LocalNavigatorProvider provides navController,
-                    ) {
-                        NavHost(navController = navController, startDestination = "main") {
-                            composable("main") { MainScreen() }
-                            composable(
-                                "details/{recipeId}",
-                                arguments = listOf(navArgument("recipeId") {
-                                    type = NavType.IntType
-                                })
-                            ) { backStackEntry ->
-                                RecipeDetails(
-                                    recipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
-                                )
-                            }
-                            composable(
-                                "bookmarks/{recipeId}",
-                                arguments = listOf(navArgument("recipeId") {
-                                    type = NavType.IntType
-                                })
-                            ) { backStackEntry ->
-                                RecipeDetails(
-                                    databaseRecipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
-                                )
-                            }
-                        }
-                    }
-                }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      RecipeFinderTheme(darkTheme = false) {
+        // A surface container using the 'background' color from the theme
+        Surface(
+          modifier = Modifier.fillMaxSize(),
+          color = MaterialTheme.colorScheme.background
+        ) {
+          val context = LocalContext.current
+          val navController = rememberNavController()
+          // TODO: Add Repository
+          // TODO: Add Prefs
+          CompositionLocalProvider(
+            LocalNavigatorProvider provides navController,
+          ) {
+            NavHost(navController = navController, startDestination = "main") {
+              composable("main") { MainScreen() }
+              composable(
+                "details/{recipeId}",
+                arguments = listOf(navArgument("recipeId") {
+                  type = NavType.IntType
+                })
+              ) { backStackEntry ->
+                RecipeDetails(
+                  recipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
+                )
+              }
+              composable(
+                "bookmarks/{recipeId}",
+                arguments = listOf(navArgument("recipeId") {
+                  type = NavType.IntType
+                })
+              ) { backStackEntry ->
+                RecipeDetails(
+                  databaseRecipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
+                )
+              }
             }
+          }
         }
+      }
     }
+  }
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun MainPreview() {
-    RecipeFinderTheme {
-        MainScreen()
-    }
+  RecipeFinderTheme {
+    MainScreen()
+  }
 }

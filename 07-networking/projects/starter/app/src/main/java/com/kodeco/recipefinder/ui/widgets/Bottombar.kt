@@ -16,43 +16,43 @@ import com.kodeco.recipefinder.ui.theme.RecipeFinderTheme
 
 @Composable
 fun BottomBar(bottomItems: List<BottomItem>) {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colorScheme.primary,
-    ) {
+  BottomNavigation(
+    backgroundColor = MaterialTheme.colorScheme.primary,
+  ) {
 
-        bottomItems.forEach { item ->
-            BottomNavigationItem(
-                selected = item.selected,
-                onClick = item.onclick,
-                label = {
-                    Text(
-                        text = item.icon.contextText, style = TextStyle(
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            fontSize = 12.sp
-                        )
-                    )
-                },
-                icon = {
-                    Icon(
-                        item.icon.icon,
-                        tint = MaterialTheme.colorScheme.onPrimary,
-                        contentDescription = item.icon.contextText
-                    )
-                })
+    bottomItems.forEach { item ->
+      BottomNavigationItem(
+        selected = item.selected,
+        onClick = item.onclick,
+        label = {
+          Text(
+            text = item.icon.contextText, style = TextStyle(
+              color = MaterialTheme.colorScheme.onPrimary,
+              fontSize = 12.sp
+            )
+          )
+        },
+        icon = {
+          Icon(
+            item.icon.icon,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            contentDescription = item.icon.contextText
+          )
+        })
 
-        }
     }
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    RecipeFinderTheme {
-        BottomBar(
-            listOf(
-                BottomItem(icon = IconInfo(icon = Icons.Filled.Home, contextText = "Home")),
-                BottomItem(icon = IconInfo(icon = Icons.Filled.AccountCircle, contextText = "Account"))
-            )
-        )
-    }
+  RecipeFinderTheme {
+    BottomBar(
+      listOf(
+        BottomItem(icon = IconInfo(icon = Icons.Filled.Home, contextText = "Home")),
+        BottomItem(icon = IconInfo(icon = Icons.Filled.AccountCircle, contextText = "Account"))
+      )
+    )
+  }
 }

@@ -26,57 +26,57 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun RowScope.FilterIcon(groceryListViewModel: GroceryListViewModel) {
-    val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
-    val allListShowing = groceryUIState.allListShowing
-    val expanded = remember { mutableStateOf(false) }
-    Box(modifier = Modifier.align(Alignment.CenterVertically)) {
-        IconButton(onClick = {
-            expanded.value = !expanded.value
-        }) {
-            Icon(Icons.Filled.FilterAlt, contentDescription = "Filter")
-        }
-        SpacerW4()
-        DropdownMenu(
-            expanded = expanded.value,
-            onDismissRequest = { expanded.value = false }
-        ) {
-            DropdownMenuItem(
-                text = { Text("All") },
-                leadingIcon = {
-                    if (allListShowing) Icon(
-                        imageVector = Icons.Filled.CheckBox,
-                        contentDescription = "All"
-                    )
-                },
-                onClick = {
-                    groceryListViewModel.setAllShowing(true)
-                    expanded.value = false
-                }
-            )
-            DropdownMenuItem(
-                text = { Text("Need/Have") },
-                leadingIcon = {
-                    if (!allListShowing) Icon(
-                        imageVector = Icons.Filled.CheckBox,
-                        contentDescription = "Need"
-                    )
-                },
-                onClick = {
-                    groceryListViewModel.setAllShowing(false)
-                    expanded.value = false
-                }
-            )
-        }
+  val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
+  val allListShowing = groceryUIState.allListShowing
+  val expanded = remember { mutableStateOf(false) }
+  Box(modifier = Modifier.align(Alignment.CenterVertically)) {
+    IconButton(onClick = {
+      expanded.value = !expanded.value
+    }) {
+      Icon(Icons.Filled.FilterAlt, contentDescription = "Filter")
     }
+    SpacerW4()
+    DropdownMenu(
+      expanded = expanded.value,
+      onDismissRequest = { expanded.value = false }
+    ) {
+      DropdownMenuItem(
+        text = { Text("All") },
+        leadingIcon = {
+          if (allListShowing) Icon(
+            imageVector = Icons.Filled.CheckBox,
+            contentDescription = "All"
+          )
+        },
+        onClick = {
+          groceryListViewModel.setAllShowing(true)
+          expanded.value = false
+        }
+      )
+      DropdownMenuItem(
+        text = { Text("Need/Have") },
+        leadingIcon = {
+          if (!allListShowing) Icon(
+            imageVector = Icons.Filled.CheckBox,
+            contentDescription = "Need"
+          )
+        },
+        onClick = {
+          groceryListViewModel.setAllShowing(false)
+          expanded.value = false
+        }
+      )
+    }
+  }
 }
 
 
 @Preview
 @Composable
 fun PreviewFilterIcon() {
-    Surface {
-        Row {
-            FilterIcon(GroceryListViewModel())
-        }
+  Surface {
+    Row {
+      FilterIcon(GroceryListViewModel())
     }
+  }
 }

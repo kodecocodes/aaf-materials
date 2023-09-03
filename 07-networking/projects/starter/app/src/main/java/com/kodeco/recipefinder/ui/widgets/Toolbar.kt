@@ -11,28 +11,28 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun CreateToolbar(toolbarInfo: ToolbarInfo?) {
-    if (toolbarInfo == null) {
-        return
+  if (toolbarInfo == null) {
+    return
+  }
+  val navIcon: ComposeFun = if (toolbarInfo.navInfo != null) {
+    {
+      IconButton(onClick = toolbarInfo.navInfo.navOnClick) {
+        Icon(
+          toolbarInfo.navInfo.icon.icon,
+          tint = Color.Black,
+          contentDescription = toolbarInfo.navInfo.icon.contextText
+        )
+      }
     }
-    val navIcon: ComposeFun = if (toolbarInfo.navInfo != null) {
-        {
-            IconButton(onClick = toolbarInfo.navInfo.navOnClick) {
-                Icon(
-                    toolbarInfo.navInfo.icon.icon,
-                    tint = Color.Black,
-                    contentDescription = toolbarInfo.navInfo.icon.contextText
-                )
-            }
-        }
-    } else EmptyComposeFun
-    TopAppBar(
-        title = {
-            Text(
-                text = toolbarInfo.title, color = MaterialTheme.colorScheme.onPrimary
-            )
-        },
-        colors =  TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
-        actions = toolbarInfo.actions,
-        navigationIcon = navIcon
-    )
+  } else EmptyComposeFun
+  TopAppBar(
+    title = {
+      Text(
+        text = toolbarInfo.title, color = MaterialTheme.colorScheme.onPrimary
+      )
+    },
+    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
+    actions = toolbarInfo.actions,
+    navigationIcon = navIcon
+  )
 }

@@ -11,17 +11,17 @@ typealias ComposeWidget = @Composable () -> Unit
 typealias RowComposeWidget = @Composable RowScope.() -> Unit
 
 val SpacerW4: ComposeWidget = {
-    Spacer(modifier = Modifier.width(4.dp))
+  Spacer(modifier = Modifier.width(4.dp))
 }
 val SpacerW8: ComposeWidget = {
-    Spacer(modifier = Modifier.width(8.dp))
+  Spacer(modifier = Modifier.width(8.dp))
 }
 val SpacerW12: ComposeWidget = {
-    Spacer(modifier = Modifier.width(12.dp))
+  Spacer(modifier = Modifier.width(12.dp))
 }
 val SpacerW16: ComposeWidget = {
-    Spacer(modifier = Modifier.width(16.dp))
+  Spacer(modifier = Modifier.width(16.dp))
 }
 val SpacerMax: RowComposeWidget = {
-    Spacer(modifier = Modifier.weight(1f))
+  Spacer(modifier = Modifier.weight(1f))
 }

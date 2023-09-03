@@ -33,70 +33,70 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun ColumnScope.ShowRecipeList(
-    recipes: MutableState<List<Recipe>>,
-    viewModel: RecipeViewModel
+  recipes: MutableState<List<Recipe>>,
+  viewModel: RecipeViewModel
 ) {
-    val navController = LocalNavigatorProvider.current
-    val queryState by viewModel.queryState.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
-    val lazyGridState: LazyGridState = rememberLazyGridState()
-    val loadMore = remember(lazyGridState) {
-        derivedStateOf {
-            val lastVisibleIndex =
-                lazyGridState.firstVisibleItemIndex + lazyGridState.layoutInfo.visibleItemsInfo.size
-            lastVisibleIndex + PAGING_OFFSET > recipes.value.size &&
-                    lastVisibleIndex < queryState.totalResults
+  val navController = LocalNavigatorProvider.current
+  val queryState by viewModel.queryState.collectAsState()
+  val uiState by viewModel.uiState.collectAsState()
+  val lazyGridState: LazyGridState = rememberLazyGridState()
+  val loadMore = remember(lazyGridState) {
+    derivedStateOf {
+      val lastVisibleIndex =
+        lazyGridState.firstVisibleItemIndex + lazyGridState.layoutInfo.visibleItemsInfo.size
+      lastVisibleIndex + PAGING_OFFSET > recipes.value.size &&
+          lastVisibleIndex < queryState.totalResults
+    }
+  }
+  var firstTime by remember {
+    mutableStateOf(true)
+  }
+  LaunchedEffect(loadMore) {
+    val offset = if (firstTime) 0 else queryState.offset + PAGE_SIZE
+    firstTime = false
+    viewModel.updateQueryState(queryState.copy(offset = offset))
+    searchRecipes(queryState.query, viewModel)
+  }
+  if (uiState.searching) {
+    Progress()
+  } else {
+    LazyVerticalGrid(
+      state = lazyGridState,
+      modifier = Modifier.fillMaxSize(),
+      columns = GridCells.Adaptive(124.dp),
+      // content padding
+      contentPadding = PaddingValues(
+        start = 12.dp,
+        top = 16.dp,
+        end = 12.dp,
+        bottom = 16.dp
+      ),
+      content = {
+        itemsIndexed(recipes.value, key = { _, item ->
+          item.id
+        }) { _, item ->
+          RecipeCard(
+            modifier = Modifier.clickable {
+              navController.navigate("details/${item.id}")
+            },
+            item
+          )
         }
-    }
-    var firstTime by remember {
-        mutableStateOf(true)
-    }
-    LaunchedEffect(loadMore) {
-        val offset = if (firstTime) 0 else queryState.offset + PAGE_SIZE
-        firstTime = false
-        viewModel.updateQueryState(queryState.copy(offset = offset))
-        searchRecipes(queryState.query, viewModel)
-    }
-    if (uiState.searching) {
-        Progress()
-    } else {
-        LazyVerticalGrid(
-            state = lazyGridState,
-            modifier = Modifier.fillMaxSize(),
-            columns = GridCells.Adaptive(124.dp),
-            // content padding
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                top = 16.dp,
-                end = 12.dp,
-                bottom = 16.dp
-            ),
-            content = {
-                itemsIndexed(recipes.value, key = { _, item ->
-                    item.id
-                }) { _, item ->
-                    RecipeCard(
-                        modifier = Modifier.clickable {
-                            navController.navigate("details/${item.id}")
-                        },
-                        item
-                    )
-                }
-            }
-        )
-    }
+      }
+    )
+  }
 }
 
 
 @Preview
 @Composable
 fun PreviewShowRecipeList() {
-    val context = LocalContext.current
-    val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
-    Surface {
-        Column {
-            // TODO: Add Prefs
-            ShowRecipeList(recipeListState, RecipeViewModel())
-        }
+  val context = LocalContext.current
+  val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
+  Surface {
+    Column {
+      // TODO: Add Prefs
+      ShowRecipeList(recipeListState, RecipeViewModel())
     }
+  }
 }

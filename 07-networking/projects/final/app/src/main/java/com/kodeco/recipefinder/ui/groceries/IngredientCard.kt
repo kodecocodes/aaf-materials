@@ -29,70 +29,70 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun IngredientCard(
-    modifier: Modifier = Modifier,
-    groceryListViewModel: GroceryListViewModel,
-    ingredient: Ingredient,
-    index: Int,
-    isEven: Boolean,
-    showCheckbox: Boolean,
+  modifier: Modifier = Modifier,
+  groceryListViewModel: GroceryListViewModel,
+  ingredient: Ingredient,
+  index: Int,
+  isEven: Boolean,
+  showCheckbox: Boolean,
 ) {
-    val cardColor = if (isEven) CardDefaults.cardColors(containerColor = iconBackgroundColor) else
-        CardDefaults.cardColors(containerColor = Color.White)
-    val border = if (isEven) BorderStroke(width = 1.dp, color = Color.Black) else null
-    val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
-    val checkBoxStates = groceryUIState.checkBoxes
-    val checked = checkBoxStates[index]
-    Card(
-        colors = cardColor,
-        border = border,
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
-    ) {
-        val style =
-            if (checked) SpanStyle(textDecoration = TextDecoration.LineThrough) else SpanStyle()
-        Row(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = AnnotatedString(ingredient.name, spanStyle = style),
-                style = BodyLarge,
-                color = Color.Black,
-                modifier = Modifier.padding(16.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            if (showCheckbox) {
-                Checkbox(checked = checked, onCheckedChange = {
-                    val updatedList = checkBoxStates.toMutableList()
-                    updatedList[index] = it
-                    groceryListViewModel.updateCheckList(updatedList)
-                })
-            }
-        }
+  val cardColor = if (isEven) CardDefaults.cardColors(containerColor = iconBackgroundColor) else
+    CardDefaults.cardColors(containerColor = Color.White)
+  val border = if (isEven) BorderStroke(width = 1.dp, color = Color.Black) else null
+  val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
+  val checkBoxStates = groceryUIState.checkBoxes
+  val checked = checkBoxStates[index]
+  Card(
+    colors = cardColor,
+    border = border,
+    modifier = modifier
+      .padding(horizontal = 16.dp)
+      .fillMaxWidth(),
+  ) {
+    val style =
+      if (checked) SpanStyle(textDecoration = TextDecoration.LineThrough) else SpanStyle()
+    Row(modifier = Modifier.fillMaxSize()) {
+      Text(
+        text = AnnotatedString(ingredient.name, spanStyle = style),
+        style = BodyLarge,
+        color = Color.Black,
+        modifier = Modifier.padding(16.dp)
+      )
+      Spacer(modifier = Modifier.weight(1f))
+      if (showCheckbox) {
+        Checkbox(checked = checked, onCheckedChange = {
+          val updatedList = checkBoxStates.toMutableList()
+          updatedList[index] = it
+          groceryListViewModel.updateCheckList(updatedList)
+        })
+      }
     }
+  }
 }
 
 @Preview
 @Composable
 fun PreviewIngredientCard() {
-    val groceryListViewModel = GroceryListViewModel()
-    groceryListViewModel.setIngredients(
-        mutableListOf(
-            Ingredient(
-                id = 1,
-                name = "Test",
-                recipeId = 1,
-                amount = 10.0
-            )
-        )
+  val groceryListViewModel = GroceryListViewModel()
+  groceryListViewModel.setIngredients(
+    mutableListOf(
+      Ingredient(
+        id = 1,
+        name = "Test",
+        recipeId = 1,
+        amount = 10.0
+      )
     )
-    Surface {
-        Row {
-            IngredientCard(
-                groceryListViewModel = groceryListViewModel,
-                ingredient = Ingredient(id = 1, name = "Test", recipeId = 1, amount = 10.0),
-                index = 0,
-                isEven = false,
-                showCheckbox = true
-            )
-        }
+  )
+  Surface {
+    Row {
+      IngredientCard(
+        groceryListViewModel = groceryListViewModel,
+        ingredient = Ingredient(id = 1, name = "Test", recipeId = 1, amount = 10.0),
+        index = 0,
+        isEven = false,
+        showCheckbox = true
+      )
     }
+  }
 }

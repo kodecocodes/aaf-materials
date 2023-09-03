@@ -12,16 +12,16 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ColumnScope.Progress() {
-    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+  CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
 }
 
 
 @Preview
 @Composable
 fun PreviewProgress() {
-    Surface {
-        Column {
-            Progress()
-        }
+  Surface {
+    Column {
+      Progress()
     }
+  }
 }

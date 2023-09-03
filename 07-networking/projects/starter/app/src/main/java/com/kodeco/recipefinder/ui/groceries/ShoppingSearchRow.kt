@@ -34,78 +34,78 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun ShoppingSearchRow(
-    groceryListViewModel: GroceryListViewModel,
+  groceryListViewModel: GroceryListViewModel,
 ) {
-    val searchText = rememberState {
-        ""
-    }
-    val keyboard = LocalSoftwareKeyboardController.current
-    val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
-    val ingredients = groceryUIState.ingredients
-    fun startSearch(searchString: String) {
-        val searchIngredients = ingredients.filter { it.name.contains(searchString) }
-        groceryListViewModel.setSearchIngredients(searchIngredients)
-    }
-    Row(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-    ) {
-        Box(modifier = Modifier
-            .align(Alignment.CenterVertically)
-            .clickable {
-                if (searchText.value.isNotEmpty()) {
-                    startSearch(searchText.value.trim())
-                    keyboard?.hide()
-                }
-            }) {
-            Icon(
-                Icons.Filled.Search,
-                contentDescription = "Search",
-            )
+  val searchText = rememberState {
+    ""
+  }
+  val keyboard = LocalSoftwareKeyboardController.current
+  val groceryUIState by groceryListViewModel.groceryUIState.collectAsState()
+  val ingredients = groceryUIState.ingredients
+  fun startSearch(searchString: String) {
+    val searchIngredients = ingredients.filter { it.name.contains(searchString) }
+    groceryListViewModel.setSearchIngredients(searchIngredients)
+  }
+  Row(
+    modifier = Modifier
+      .padding(8.dp)
+      .fillMaxWidth()
+  ) {
+    Box(modifier = Modifier
+      .align(Alignment.CenterVertically)
+      .clickable {
+        if (searchText.value.isNotEmpty()) {
+          startSearch(searchText.value.trim())
+          keyboard?.hide()
         }
-        SpacerW4()
-        TextField(
-            modifier = Modifier.weight(1f),
-            value = searchText.value,
-            onValueChange = {
-                searchText.value = it
-            },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    if (searchText.value.isNotEmpty()) {
-                        startSearch(searchText.value.trim())
-                        keyboard?.hide()
-                    }
-                },
-            ),
-            singleLine = true,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = transparent,
-                unfocusedContainerColor = transparent,
-                focusedIndicatorColor = transparent,
-                unfocusedIndicatorColor = transparent,
-            ),
-            label = { Text("Search...") },
-        )
-        SpacerMax()
-        Box(modifier = Modifier.align(Alignment.CenterVertically)) {
-            IconButton(onClick = {
-                searchText.value = ""
-                groceryListViewModel.setSearching(false)
-            }) {
-                Icon(Icons.Filled.Clear, contentDescription = "Filter")
-            }
-        }
-        FilterIcon(groceryListViewModel)
+      }) {
+      Icon(
+        Icons.Filled.Search,
+        contentDescription = "Search",
+      )
     }
+    SpacerW4()
+    TextField(
+      modifier = Modifier.weight(1f),
+      value = searchText.value,
+      onValueChange = {
+        searchText.value = it
+      },
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+      keyboardActions = KeyboardActions(
+        onSearch = {
+          if (searchText.value.isNotEmpty()) {
+            startSearch(searchText.value.trim())
+            keyboard?.hide()
+          }
+        },
+      ),
+      singleLine = true,
+      colors = TextFieldDefaults.colors(
+        focusedContainerColor = transparent,
+        unfocusedContainerColor = transparent,
+        focusedIndicatorColor = transparent,
+        unfocusedIndicatorColor = transparent,
+      ),
+      label = { Text("Search...") },
+    )
+    SpacerMax()
+    Box(modifier = Modifier.align(Alignment.CenterVertically)) {
+      IconButton(onClick = {
+        searchText.value = ""
+        groceryListViewModel.setSearching(false)
+      }) {
+        Icon(Icons.Filled.Clear, contentDescription = "Filter")
+      }
+    }
+    FilterIcon(groceryListViewModel)
+  }
 }
 
 @Preview
 @Composable
 fun PreviewShoppingSearchRow() {
-    Surface {
-        ShoppingSearchRow(groceryListViewModel = GroceryListViewModel())
-    }
+  Surface {
+    ShoppingSearchRow(groceryListViewModel = GroceryListViewModel())
+  }
 }
