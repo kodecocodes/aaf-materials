@@ -34,8 +34,15 @@
 
 package com.kodeco.recipefinder.data.models
 
-data class Recipe(
-  val id: Int,
-  val title: String,
-  val image: String?,
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class ExtendedIngredient(
+  val id: Int = 0,
+  val name: String = "",
+  val aisle: String? = "",
+  val image: String? = "",
+  val original: String = "",
+  val amount: Double = 0.0,
+  val unit: String = "",
 )

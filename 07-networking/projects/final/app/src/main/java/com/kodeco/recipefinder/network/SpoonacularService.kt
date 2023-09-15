@@ -34,9 +34,10 @@
 
 package com.kodeco.recipefinder.network
 
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
+import com.kodeco.recipefinder.data.models.SearchRecipesResponse
 import com.kodeco.recipefinder.viewmodels.PAGE_SIZE
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -51,10 +52,10 @@ interface SpoonacularService {
     @Query("query") query: String,
     @Query("offset") offset: Int,
     @Query("number") number: Int = PAGE_SIZE
-  ): RecipeResponse
+  ): SearchRecipesResponse
 
   @GET("recipes/{id}/information?includeNutrition=false&apiKey=$apiKey")
-  suspend fun queryRecipe(@Path("id") id: Int): SpoonacularRecipe
+  suspend fun queryRecipe(@Path("id") id: Int): RecipeInformationResponse
 }
 
 object RetrofitInstance {
@@ -63,7 +64,6 @@ object RetrofitInstance {
   private fun provideMoshi(): Moshi =
     Moshi
       .Builder()
-      .add(KotlinJsonAdapterFactory())
       .build()
 
   private val retrofit: Retrofit by lazy {

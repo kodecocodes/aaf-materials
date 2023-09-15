@@ -32,10 +32,9 @@
  * THE SOFTWARE.
  */
 
-package com.kodeco.recipefinder.network
+package com.kodeco.recipefinder.data.models
 
-
-data class SpoonacularRecipe(
+data class RecipeInformationResponse(
   val id: Int = 0,
   val title: String = "",
   val image: String? = "",
@@ -49,17 +48,4 @@ data class SpoonacularRecipe(
   val extendedIngredients: List<ExtendedIngredient> = listOf(),
   val readyInMinutes: Int = 0,
   val servings: Int = 0,
-
-  )
-
-data class ExtendedIngredient(
-  val id: Int = 0,
-  val name: String = "",
-  val aisle: String? = "",
-  val image: String? = "",
-  val original: String = "",
-  val amount: Double = 0.0,
-  val unit: String = "",
 )
-
-

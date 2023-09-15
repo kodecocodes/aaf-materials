@@ -37,7 +37,7 @@ package com.kodeco.recipefinder.viewmodels
 import androidx.lifecycle.ViewModel
 import com.kodeco.recipefinder.data.models.Ingredient
 import com.kodeco.recipefinder.data.models.Recipe
-import com.kodeco.recipefinder.network.SpoonacularRecipe
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -68,7 +68,7 @@ class RecipeViewModel() : ViewModel() {
   private val _recipeListState = MutableStateFlow<List<Recipe>>(listOf())
   val recipeListState = _recipeListState.asStateFlow()
 
-  private val _recipeState = MutableStateFlow<SpoonacularRecipe?>(null)
+  private val _recipeState = MutableStateFlow<RecipeInformationResponse?>(null)
   val recipeState = _recipeState.asStateFlow()
 
   private val _queryState = MutableStateFlow(QueryState())

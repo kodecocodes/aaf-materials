@@ -71,7 +71,7 @@ import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import com.kodeco.recipefinder.LocalNavigatorProvider
 import com.kodeco.recipefinder.R
-import com.kodeco.recipefinder.network.SpoonacularRecipe
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 import com.kodeco.recipefinder.ui.theme.HeadlineSmall
 import com.kodeco.recipefinder.ui.theme.lighterBlue
 import com.kodeco.recipefinder.ui.widgets.buildRecipeImageBuilder
@@ -88,7 +88,7 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
     // TODO: Add Prefs
     RecipeViewModel()
   })
-  val recipeState = remember { mutableStateOf<SpoonacularRecipe?>(null) }
+  val recipeState = remember { mutableStateOf<RecipeInformationResponse?>(null) }
   val navController = LocalNavigatorProvider.current
   // TODO: Add Repository
   if (recipeId != null) {
@@ -154,7 +154,7 @@ fun TitleRow(
   modifier: Modifier = Modifier,
   navController: NavHostController,
   viewModel: RecipeViewModel,
-  recipe: SpoonacularRecipe,
+  recipe: RecipeInformationResponse,
   isBookmark: Boolean
 ) {
   // TODO: Add Repository

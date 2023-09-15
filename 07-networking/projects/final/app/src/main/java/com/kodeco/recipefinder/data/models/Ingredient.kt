@@ -34,6 +34,9 @@
 
 package com.kodeco.recipefinder.data.models
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Ingredient(
   val id: Int,
   val recipeId: Int?,
