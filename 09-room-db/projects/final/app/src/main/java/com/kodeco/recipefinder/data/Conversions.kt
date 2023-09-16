@@ -3,10 +3,10 @@ package com.kodeco.recipefinder.data
 
 import com.kodeco.recipefinder.data.database.IngredientDb
 import com.kodeco.recipefinder.data.database.RecipeDb
+import com.kodeco.recipefinder.data.models.ExtendedIngredient
 import com.kodeco.recipefinder.data.models.Ingredient
 import com.kodeco.recipefinder.data.models.Recipe
-import com.kodeco.recipefinder.network.ExtendedIngredient
-import com.kodeco.recipefinder.network.SpoonacularRecipe
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 
 fun recipeToDb(recipe: Recipe): RecipeDb {
   return RecipeDb(id = recipe.id, title = recipe.title, image = recipe.image)
@@ -26,8 +26,8 @@ fun recipeDbToRecipe(recipe: RecipeDb): Recipe {
 
 fun recipeToSpoonacularRecipe(
   recipe: RecipeDb, ingredients: List<ExtendedIngredient>
-): SpoonacularRecipe {
-  return SpoonacularRecipe(
+): RecipeInformationResponse {
+  return RecipeInformationResponse(
     id = recipe.id,
     title = recipe.title,
     image = recipe.image,
@@ -42,7 +42,7 @@ fun recipeToSpoonacularRecipe(
   )
 }
 
-fun spoonacularRecipeToRecipe(recipe: SpoonacularRecipe): RecipeDb {
+fun spoonacularRecipeToRecipe(recipe: RecipeInformationResponse): RecipeDb {
   return RecipeDb(
     id = recipe.id,
     title = recipe.title,

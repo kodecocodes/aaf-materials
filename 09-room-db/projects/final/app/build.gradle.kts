@@ -76,9 +76,9 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coroutines.android)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.retrofit.moshi.converter)
+    implementation(libs.moshi)
     ksp (libs.moshiCodeGen)
+    implementation(libs.retrofit.moshi.converter)
     implementation(libs.prefs)
     //Room
     implementation(libs.room)
