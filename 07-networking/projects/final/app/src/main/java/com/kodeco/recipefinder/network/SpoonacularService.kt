@@ -44,7 +44,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val apiKey = "6abcc18295294c48b466ddf1270cddd7"
+const val apiKey = "<Replace with API Key>"
 
 interface SpoonacularService {
   @GET("recipes/complexSearch?&apiKey=$apiKey")
