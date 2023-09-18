@@ -1,3 +1,37 @@
+/*
+ * Copyright (c) 2023 Kodeco Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries and
+ * frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.kodeco.recipefinder.ui.recipes
 
 import androidx.compose.foundation.clickable
@@ -42,7 +76,7 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun SearchRow(
-    viewModel: RecipeViewModel
+  viewModel: RecipeViewModel
 ) {
   var expanded by remember { mutableStateOf(false) }
   var searchText by remember {
@@ -52,47 +86,47 @@ fun SearchRow(
   val keyboard = LocalSoftwareKeyboardController.current
 
   Row(
-      modifier = Modifier
-          .padding(8.dp)
-          .fillMaxWidth()
+    modifier = Modifier
+      .padding(8.dp)
+      .fillMaxWidth()
   ) {
     Box(modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .clickable {
-            if (searchText.isNotEmpty()) {
-                viewModel.setSearching(true)
-                keyboard?.hide()
-                searchRecipes(searchText.trim(), viewModel)
-            }
-        }) {
+      .align(Alignment.CenterVertically)
+      .clickable {
+        if (searchText.isNotEmpty()) {
+          viewModel.setSearching(true)
+          keyboard?.hide()
+          searchRecipes(searchText.trim(), viewModel)
+        }
+      }) {
       Icon(
-          Icons.Filled.Search,
-          contentDescription = "Search",
+        Icons.Filled.Search,
+        contentDescription = "Search",
       )
     }
     SpacerW4()
     TextField(
-        modifier = Modifier.fillMaxWidth(0.8f),
-        value = searchText,
-        onValueChange = {
-          searchText = it
+      modifier = Modifier.fillMaxWidth(0.8f),
+      value = searchText,
+      onValueChange = {
+        searchText = it
+      },
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+      keyboardActions = KeyboardActions(
+        onSearch = {
+          viewModel.setSearching(true)
+          keyboard?.hide()
+          searchRecipes(searchText.trim(), viewModel)
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-              viewModel.setSearching(true)
-              keyboard?.hide()
-              searchRecipes(searchText.trim(), viewModel)
-            },
-        ),
-        singleLine = true,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = transparent,
-            unfocusedContainerColor = transparent,
-            focusedIndicatorColor = transparent,
-            unfocusedIndicatorColor = transparent,
-        ),
-        label = { Text("Search...") },
+      ),
+      singleLine = true,
+      colors = TextFieldDefaults.colors(
+        focusedContainerColor = transparent,
+        unfocusedContainerColor = transparent,
+        focusedIndicatorColor = transparent,
+        unfocusedIndicatorColor = transparent,
+      ),
+      label = { Text("Search...") },
     )
     SpacerMax()
     Box(modifier = Modifier.align(Alignment.CenterVertically)) {
@@ -108,21 +142,21 @@ fun SearchRow(
         expanded = true
       }) {
         Icon(
-            imageVector = Icons.Default.MoreVert,
-            contentDescription = "Open Options"
+          imageVector = Icons.Default.MoreVert,
+          contentDescription = "Open Options"
         )
       }
       DropdownMenu(
-          expanded = expanded,
-          onDismissRequest = { expanded = false }
+        expanded = expanded,
+        onDismissRequest = { expanded = false }
       ) {
         uiState.previousSearches.forEach {
           DropdownMenuItem(
-              text = { Text(it) },
-              onClick = {
-                expanded = false
-                searchText = it
-              }
+            text = { Text(it) },
+            onClick = {
+              expanded = false
+              searchText = it
+            }
           )
         }
       }

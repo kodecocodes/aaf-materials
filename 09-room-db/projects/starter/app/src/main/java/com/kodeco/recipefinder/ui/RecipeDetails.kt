@@ -1,3 +1,37 @@
+/*
+ * Copyright (c) 2023 Kodeco Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries and
+ * frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.kodeco.recipefinder.ui
 
 import android.widget.TextView
@@ -38,7 +72,7 @@ import coil.compose.AsyncImagePainter
 import com.kodeco.recipefinder.LocalNavigatorProvider
 import com.kodeco.recipefinder.LocalPrefsProvider
 import com.kodeco.recipefinder.R
-import com.kodeco.recipefinder.network.SpoonacularRecipe
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 import com.kodeco.recipefinder.ui.theme.HeadlineSmall
 import com.kodeco.recipefinder.ui.theme.lighterBlue
 import com.kodeco.recipefinder.ui.widgets.buildRecipeImageBuilder
@@ -54,7 +88,7 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
   val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
     RecipeViewModel(prefs)
   })
-  val recipeState = remember { mutableStateOf<SpoonacularRecipe?>(null) }
+  val recipeState = remember { mutableStateOf<RecipeInformationResponse?>(null) }
   val navController = LocalNavigatorProvider.current
   // TODO: Add Repository
   if (recipeId != null) {
@@ -87,26 +121,26 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
         Box(modifier = Modifier.height(200.dp)) {
           if (recipe.image != null) {
             AsyncImage(
-                modifier = Modifier.fillMaxWidth(),
-                model = buildRecipeImageBuilder(recipe.image),
-                contentScale = ContentScale.FillWidth,
-                onState = { state ->
-                  if (state is AsyncImagePainter.State.Error) {
-                    Timber.e(
-                        state.result.throwable,
-                        "Problems loading image ${recipe.image}"
-                    )
-                  }
-                },
-                contentDescription = null,
+              modifier = Modifier.fillMaxWidth(),
+              model = buildRecipeImageBuilder(recipe.image),
+              contentScale = ContentScale.FillWidth,
+              onState = { state ->
+                if (state is AsyncImagePainter.State.Error) {
+                  Timber.e(
+                    state.result.throwable,
+                    "Problems loading image ${recipe.image}"
+                  )
+                }
+              },
+              contentDescription = null,
             )
           }
           TitleRow(
-              modifier = Modifier.align(Alignment.BottomStart),
-              navController,
-              viewModel,
-              recipe,
-              databaseRecipeId != null
+            modifier = Modifier.align(Alignment.BottomStart),
+            navController,
+            viewModel,
+            recipe,
+            databaseRecipeId != null
           )
         }
         Description(description = recipe.summary)
@@ -117,28 +151,30 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
 
 @Composable
 fun TitleRow(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    viewModel: RecipeViewModel,
-    recipe: SpoonacularRecipe,
-    isBookmark: Boolean
+  modifier: Modifier = Modifier,
+  navController: NavHostController,
+  viewModel: RecipeViewModel,
+  recipe: RecipeInformationResponse,
+  isBookmark: Boolean
 ) {
   // TODO: Add Repository
   val scope = rememberCoroutineScope()
-  Row(modifier = modifier
+  Row(
+    modifier = modifier
       .fillMaxWidth()
-      .background(lighterBlue)) {
+      .background(lighterBlue)
+  ) {
     IconButton(onClick = { navController.popBackStack() }) {
       Icon(
-          imageVector = Icons.Default.ArrowBack,
-          tint = Color.Black,
-          contentDescription = "Go back"
+        imageVector = Icons.Default.ArrowBack,
+        tint = Color.Black,
+        contentDescription = "Go back"
       )
     }
     Text(
-        modifier = Modifier.align(Alignment.CenterVertically),
-        text = recipe.title,
-        style = HeadlineSmall.copy(color = Color.Black)
+      modifier = Modifier.align(Alignment.CenterVertically),
+      text = recipe.title,
+      style = HeadlineSmall.copy(color = Color.Black)
     )
     Spacer(modifier = Modifier.weight(1f))
     IconButton(onClick = {
@@ -154,10 +190,10 @@ fun TitleRow(
       navController.popBackStack()
     }) {
       val imageVector = ImageVector.vectorResource(
-          if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
+        if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
       )
       Icon(
-          imageVector = imageVector, tint = Color.Black, contentDescription = null
+        imageVector = imageVector, tint = Color.Black, contentDescription = null
       )
     }
   }
@@ -166,11 +202,11 @@ fun TitleRow(
 @Composable
 fun Description(modifier: Modifier = Modifier, description: String) {
   Card(
-      colors = CardDefaults.cardColors(containerColor = Color.White),
-      modifier = modifier
-          .padding(8.dp)
-          .fillMaxSize(1f),
-      elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+    colors = CardDefaults.cardColors(containerColor = Color.White),
+    modifier = modifier
+      .padding(8.dp)
+      .fillMaxSize(1f),
+    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
   ) {
     AndroidView(modifier = modifier.padding(16.dp), factory = {
       TextView(it)

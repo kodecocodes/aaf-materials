@@ -1,24 +1,24 @@
 [versions]
-agp = "8.2.0-alpha16"
+agp = "8.1.1"
 kotlin = "1.9.0"
-core-ktx = "1.10.1"
+core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
-lifecycle-runtime-ktx = "2.6.1"
+lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.7.2"
-compose-bom = "2023.08.00"
-compose-ui = "1.5.0"
-viewModelVersion = "2.6.1"
+compose-bom = "2023.09.00"
+compose-ui = "1.5.1"
+viewModelVersion = "2.6.2"
 androidx-activity = "1.7.2"
-material3 = "1.2.0-alpha06"
-fonts = "1.5.0"
+material3 = "1.2.0-alpha07"
+fonts = "1.5.1"
 coil="2.4.0"
-navigation="2.7.1"
+navigation="2.7.2"
 timberVersion = "5.0.1"
 kotlinx-coroutines = "1.7.2"
 retrofit="2.9.0"
-moshi="1.14.0"
+moshi="1.15.0"
 prefsVersion = "1.0.0"
 
 [libraries]
@@ -66,9 +66,9 @@ coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 
 # Retrofit
 retrofit = {module="com.squareup.retrofit2:retrofit", version.ref="retrofit" }
-retrofit-moshi = {module="com.squareup.moshi:moshi-kotlin", version.ref="moshi" }
-retrofit-moshi-converter = {module="com.squareup.retrofit2:converter-moshi", version.ref="retrofit" }
+moshi = {module="com.squareup.moshi:moshi", version.ref="moshi" }
 moshiCodeGen = {module="com.squareup.moshi:moshi-kotlin-codegen", version.ref="moshi" }
+retrofit-moshi-converter = {module="com.squareup.retrofit2:converter-moshi", version.ref="retrofit" }
 
 # Preferences
 prefs = {module = "androidx.datastore:datastore-preferences", version.ref = "prefsVersion" }

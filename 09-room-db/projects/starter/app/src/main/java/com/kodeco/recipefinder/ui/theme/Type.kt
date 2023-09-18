@@ -1,3 +1,37 @@
+/*
+ * Copyright (c) 2023 Kodeco Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries and
+ * frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.kodeco.recipefinder.ui.theme
 
 import androidx.compose.material3.Typography
@@ -12,84 +46,84 @@ import com.kodeco.recipefinder.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+  bodyLarge = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    lineHeight = 24.sp,
+    letterSpacing = 0.5.sp
+  )
+  /* Other default text styles to override
+  titleLarge = TextStyle(
+      fontFamily = FontFamily.Default,
+      fontWeight = FontWeight.Normal,
+      fontSize = 22.sp,
+      lineHeight = 28.sp,
+      letterSpacing = 0.sp
+  ),
+  labelSmall = TextStyle(
+      fontFamily = FontFamily.Default,
+      fontWeight = FontWeight.Medium,
+      fontSize = 11.sp,
+      lineHeight = 16.sp,
+      letterSpacing = 0.5.sp
+  )
+  */
 )
 
 private val googleFontProvider: Provider by lazy {
   Provider(
-      providerAuthority = "com.google.android.gms.fonts",
-      providerPackage = "com.google.android.gms",
-      certificates = R.array.com_google_android_gms_fonts_certs
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
   )
 }
 
 val robotoFont = GoogleFont(name = "Roboto")
 
 val RobotoFontFamily = FontFamily(
-    Font(googleFont = robotoFont, fontProvider = googleFontProvider),
-    Font(googleFont = robotoFont, fontProvider = googleFontProvider, weight = FontWeight.Medium),
-    Font(googleFont = robotoFont, fontProvider = googleFontProvider, weight = FontWeight.Bold)
+  Font(googleFont = robotoFont, fontProvider = googleFontProvider),
+  Font(googleFont = robotoFont, fontProvider = googleFontProvider, weight = FontWeight.Medium),
+  Font(googleFont = robotoFont, fontProvider = googleFontProvider, weight = FontWeight.Bold)
 )
 
 val GroceryTitle = TextStyle(
-    fontFamily = RobotoFontFamily,
-    fontWeight = FontWeight.W600,
-    fontSize = 24.sp,
-    lineHeight = 24.sp,
+  fontFamily = RobotoFontFamily,
+  fontWeight = FontWeight.W600,
+  fontSize = 24.sp,
+  lineHeight = 24.sp,
 )
 
 val HeadlineSmall = TextStyle(
-    fontFamily = RobotoFontFamily,
-    fontWeight = FontWeight.W400,
-    fontSize = 24.sp,
-    lineHeight = 32.sp,
+  fontFamily = RobotoFontFamily,
+  fontWeight = FontWeight.W400,
+  fontSize = 24.sp,
+  lineHeight = 32.sp,
 )
 
 val LabelLarge = TextStyle(
-    fontFamily = RobotoFontFamily,
-    fontWeight = FontWeight.W500,
-    fontSize = 14.sp,
-    lineHeight = 20.sp,
+  fontFamily = RobotoFontFamily,
+  fontWeight = FontWeight.W500,
+  fontSize = 14.sp,
+  lineHeight = 20.sp,
 )
 
 val BodyLarge = TextStyle(
-    fontFamily = RobotoFontFamily,
-    fontWeight = FontWeight.W400,
-    fontSize = 16.sp,
-    lineHeight = 24.sp,
+  fontFamily = RobotoFontFamily,
+  fontWeight = FontWeight.W400,
+  fontSize = 16.sp,
+  lineHeight = 24.sp,
 )
 
 private fun getGoogleFontFamily(
-    name: String,
-    provider: Provider = googleFontProvider,
-    weights: List<FontWeight>
+  name: String,
+  provider: Provider = googleFontProvider,
+  weights: List<FontWeight>
 ): FontFamily {
   return FontFamily(
-      weights.map {
-        Font(GoogleFont(name), provider, it)
-      }
+    weights.map {
+      Font(GoogleFont(name), provider, it)
+    }
   )
 }
 

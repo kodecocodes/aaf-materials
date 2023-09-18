@@ -32,52 +32,23 @@
  * THE SOFTWARE.
  */
 
-package com.kodeco.recipefinder.viewmodels
+package com.kodeco.recipefinder.data.models
 
-import androidx.lifecycle.ViewModel
-import com.kodeco.recipefinder.data.models.Ingredient
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.squareup.moshi.JsonClass
 
-data class GroceryUIState(
-  val allListShowing: Boolean = true,
-  val searching: Boolean = false,
-  val ingredients: List<Ingredient> = listOf(),
-  val searchIngredients: List<Ingredient> = listOf(),
-  val checkBoxes: List<Boolean> = listOf()
+@JsonClass(generateAdapter = true)
+data class RecipeInformationResponse(
+  val id: Int = 0,
+  val title: String = "",
+  val image: String? = "",
+  val imageType: String = "",
+  val summary: String = "",
+  val instructions: String = "",
+  val sourceUrl: String = "",
+
+  val preparationMinutes: Int = 0,
+  val cookingMinutes: Int = 0,
+  val extendedIngredients: List<ExtendedIngredient> = listOf(),
+  val readyInMinutes: Int = 0,
+  val servings: Int = 0,
 )
-
-class GroceryListViewModel : ViewModel() {
-  private val _groceryUIState: MutableStateFlow<GroceryUIState> =
-    MutableStateFlow(GroceryUIState())
-  val groceryUIState = _groceryUIState.asStateFlow()
-
-  fun setAllShowing(showing: Boolean) {
-    _groceryUIState.value = _groceryUIState.value.copy(allListShowing = showing)
-  }
-
-  fun setSearching(searching: Boolean) {
-    _groceryUIState.value = _groceryUIState.value.copy(searching = searching)
-  }
-
-  fun setSearchIngredients(searchIngredients: List<Ingredient>) {
-    _groceryUIState.value = _groceryUIState.value.copy(
-      searchIngredients = searchIngredients,
-      searching = searchIngredients.isNotEmpty()
-    )
-  }
-
-  fun setIngredients(ingredients: MutableList<Ingredient>) {
-    _groceryUIState.value = _groceryUIState.value.copy(ingredients = ingredients,
-      checkBoxes =
-      MutableList(ingredients.size) {
-        false
-      }
-    )
-  }
-
-  fun updateCheckList(updatedList: MutableList<Boolean>) {
-    _groceryUIState.value = _groceryUIState.value.copy(checkBoxes = updatedList)
-  }
-
-}

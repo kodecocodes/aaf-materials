@@ -1,3 +1,37 @@
+/*
+ * Copyright (c) 2023 Kodeco Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries and
+ * frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.kodeco.recipefinder.ui.groceries
 
 import androidx.compose.foundation.BorderStroke
@@ -29,12 +63,12 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun IngredientCard(
-    modifier: Modifier = Modifier,
-    groceryListViewModel: GroceryListViewModel,
-    ingredient: Ingredient,
-    index: Int,
-    isEven: Boolean,
-    showCheckbox: Boolean,
+  modifier: Modifier = Modifier,
+  groceryListViewModel: GroceryListViewModel,
+  ingredient: Ingredient,
+  index: Int,
+  isEven: Boolean,
+  showCheckbox: Boolean,
 ) {
   val cardColor = if (isEven) CardDefaults.cardColors(containerColor = iconBackgroundColor) else
     CardDefaults.cardColors(containerColor = Color.White)
@@ -43,20 +77,20 @@ fun IngredientCard(
   val checkBoxStates = groceryUIState.checkBoxes
   val checked = checkBoxStates[index]
   Card(
-      colors = cardColor,
-      border = border,
-      modifier = modifier
-          .padding(horizontal = 16.dp)
-          .fillMaxWidth(),
+    colors = cardColor,
+    border = border,
+    modifier = modifier
+      .padding(horizontal = 16.dp)
+      .fillMaxWidth(),
   ) {
     val style =
-        if (checked) SpanStyle(textDecoration = TextDecoration.LineThrough) else SpanStyle()
+      if (checked) SpanStyle(textDecoration = TextDecoration.LineThrough) else SpanStyle()
     Row(modifier = Modifier.fillMaxSize()) {
       Text(
-          text = AnnotatedString(ingredient.name, spanStyle = style),
-          style = BodyLarge,
-          color = Color.Black,
-          modifier = Modifier.padding(16.dp)
+        text = AnnotatedString(ingredient.name, spanStyle = style),
+        style = BodyLarge,
+        color = Color.Black,
+        modifier = Modifier.padding(16.dp)
       )
       Spacer(modifier = Modifier.weight(1f))
       if (showCheckbox) {
@@ -75,23 +109,23 @@ fun IngredientCard(
 fun PreviewIngredientCard() {
   val groceryListViewModel = GroceryListViewModel()
   groceryListViewModel.setIngredients(
-      mutableListOf(
-          Ingredient(
-              id = 1,
-              name = "Test",
-              recipeId = 1,
-              amount = 10.0
-          )
+    mutableListOf(
+      Ingredient(
+        id = 1,
+        name = "Test",
+        recipeId = 1,
+        amount = 10.0
       )
+    )
   )
   Surface {
     Row {
       IngredientCard(
-          groceryListViewModel = groceryListViewModel,
-          ingredient = Ingredient(id = 1, name = "Test", recipeId = 1, amount = 10.0),
-          index = 0,
-          isEven = false,
-          showCheckbox = true
+        groceryListViewModel = groceryListViewModel,
+        ingredient = Ingredient(id = 1, name = "Test", recipeId = 1, amount = 10.0),
+        index = 0,
+        isEven = false,
+        showCheckbox = true
       )
     }
   }
