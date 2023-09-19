@@ -82,6 +82,7 @@ class MainActivity : ComponentActivity() {
           val prefs = remember { Prefs(context) }
           CompositionLocalProvider(
             LocalNavigatorProvider provides navController,
+            LocalPrefsProvider provides prefs,
           ) {
             NavHost(navController = navController, startDestination = "main") {
               composable("main") { MainScreen() }

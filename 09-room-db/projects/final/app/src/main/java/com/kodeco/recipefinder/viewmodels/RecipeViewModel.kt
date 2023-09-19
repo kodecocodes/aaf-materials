@@ -38,16 +38,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.recipefinder.data.Prefs
 import com.kodeco.recipefinder.data.Repository
+import com.kodeco.recipefinder.data.extendedIngredientsToIngredientDbs
+import com.kodeco.recipefinder.data.ingredientDbsToExtendedIngredients
 import com.kodeco.recipefinder.data.ingredientDbsToIngredients
-import com.kodeco.recipefinder.data.ingredientDbsToSpoonacular
 import com.kodeco.recipefinder.data.models.Ingredient
 import com.kodeco.recipefinder.data.models.Recipe
-import com.kodeco.recipefinder.data.recipeDbsToRecipes
-import com.kodeco.recipefinder.data.recipeToDb
-import com.kodeco.recipefinder.data.recipeToSpoonacularRecipe
-import com.kodeco.recipefinder.data.spoonacularIngredientsToIngredients
 import com.kodeco.recipefinder.data.models.RecipeInformationResponse
-import com.kodeco.recipefinder.data.spoonacularRecipeToRecipe
+import com.kodeco.recipefinder.data.recipeDbToRecipeInformation
+import com.kodeco.recipefinder.data.recipeDbsToRecipes
+import com.kodeco.recipefinder.data.recipeInformationToRecipeDb
+import com.kodeco.recipefinder.data.recipeToDb
 import com.kodeco.recipefinder.network.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -167,15 +167,15 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
       val recipe = repository.findRecipeById(bookmarkId)
       val ingredients = repository.findRecipeIngredients(bookmarkId)
       _recipeState.value =
-        recipeToSpoonacularRecipe(recipe, ingredientDbsToSpoonacular(ingredients))
+        recipeDbToRecipeInformation(recipe, ingredientDbsToExtendedIngredients(ingredients))
     }
   }
 
   suspend fun bookmarkRecipe(repository: Repository, recipe: RecipeInformationResponse) {
     withContext(Dispatchers.IO) {
-      repository.insertRecipe(spoonacularRecipeToRecipe(recipe))
+      repository.insertRecipe(recipeInformationToRecipeDb(recipe))
       repository.insertIngredients(
-        spoonacularIngredientsToIngredients(
+        extendedIngredientsToIngredientDbs(
           recipe.id,
           recipe.extendedIngredients
         )

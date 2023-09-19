@@ -60,5 +60,4 @@ interface RecipeDao {
 
   @Query("DELETE FROM recipes WHERE id = :recipeId")
   suspend fun deleteRecipeById(recipeId: Long)
-
 }

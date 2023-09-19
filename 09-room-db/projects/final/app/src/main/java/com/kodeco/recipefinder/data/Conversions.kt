@@ -34,7 +34,6 @@
 
 package com.kodeco.recipefinder.data
 
-
 import com.kodeco.recipefinder.data.database.IngredientDb
 import com.kodeco.recipefinder.data.database.RecipeDb
 import com.kodeco.recipefinder.data.models.ExtendedIngredient
@@ -58,7 +57,7 @@ fun recipeDbToRecipe(recipe: RecipeDb): Recipe {
   return Recipe(id = recipe.id, title = recipe.title, image = recipe.image)
 }
 
-fun recipeToSpoonacularRecipe(
+fun recipeDbToRecipeInformation(
   recipe: RecipeDb, ingredients: List<ExtendedIngredient>
 ): RecipeInformationResponse {
   return RecipeInformationResponse(
@@ -76,7 +75,7 @@ fun recipeToSpoonacularRecipe(
   )
 }
 
-fun spoonacularRecipeToRecipe(recipe: RecipeInformationResponse): RecipeDb {
+fun recipeInformationToRecipeDb(recipe: RecipeInformationResponse): RecipeDb {
   return RecipeDb(
     id = recipe.id,
     title = recipe.title,
@@ -91,17 +90,17 @@ fun spoonacularRecipeToRecipe(recipe: RecipeInformationResponse): RecipeDb {
   )
 }
 
-fun spoonacularIngredientsToIngredients(
+fun extendedIngredientsToIngredientDbs(
   recipeId: Int, ingredients: List<ExtendedIngredient>
 ): List<IngredientDb> {
   val modelIngredients = mutableListOf<IngredientDb>()
   ingredients.forEach {
-    modelIngredients.add(spoonacularIngredientToIngredientDb(recipeId, it))
+    modelIngredients.add(extendedIngredientToIngredientDb(recipeId, it))
   }
   return modelIngredients
 }
 
-fun ingredientToSpoonacular(ingredient: IngredientDb): ExtendedIngredient {
+fun ingredientDbToExtendedIngredient(ingredient: IngredientDb): ExtendedIngredient {
   return ExtendedIngredient(
     id = ingredient.id,
     name = ingredient.name,
@@ -113,10 +112,10 @@ fun ingredientToSpoonacular(ingredient: IngredientDb): ExtendedIngredient {
   )
 }
 
-fun ingredientDbsToSpoonacular(ingredients: List<IngredientDb>): List<ExtendedIngredient> {
+fun ingredientDbsToExtendedIngredients(ingredients: List<IngredientDb>): List<ExtendedIngredient> {
   val modelIngredients = mutableListOf<ExtendedIngredient>()
   ingredients.forEach {
-    modelIngredients.add(ingredientToSpoonacular(it))
+    modelIngredients.add(ingredientDbToExtendedIngredient(it))
   }
   return modelIngredients
 }
@@ -142,7 +141,7 @@ fun ingredientDbToIngredient(ingredient: IngredientDb): Ingredient {
   )
 }
 
-fun spoonacularIngredientToIngredientDb(
+fun extendedIngredientToIngredientDb(
   recipeId: Int, ingredient: ExtendedIngredient
 ): IngredientDb {
   return IngredientDb(
@@ -156,4 +155,3 @@ fun spoonacularIngredientToIngredientDb(
     amount = ingredient.amount
   )
 }
-
