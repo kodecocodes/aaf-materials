@@ -43,7 +43,7 @@ data class RecipeInformationResponse(
   val image: String? = "",
   val imageType: String = "",
   val summary: String = "",
-  val instructions: String = "",
+  val instructions: String? = "",
   val sourceUrl: String = "",
 
   val preparationMinutes: Int = 0,
