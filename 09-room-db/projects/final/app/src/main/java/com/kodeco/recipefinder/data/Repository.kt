@@ -78,7 +78,7 @@ class Repository(recipeDatabase: RecipeDatabase) {
     recipeDao.deleteRecipe(recipe)
   }
 
-  suspend fun deleteRecipeById(recipeId: Long) {
+  suspend fun deleteRecipeById(recipeId: Int) {
     recipeDao.deleteRecipeById(recipeId)
   }
 
