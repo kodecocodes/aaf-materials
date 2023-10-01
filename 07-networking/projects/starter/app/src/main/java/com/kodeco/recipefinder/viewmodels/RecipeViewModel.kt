@@ -87,7 +87,7 @@ class RecipeViewModel() : ViewModel() {
     // TODO: Retrieve previous searches
   }
 
-  fun queryRecipies(
+  fun queryRecipes(
     query: String,
     offset: Int,
     number: Int = PAGE_SIZE

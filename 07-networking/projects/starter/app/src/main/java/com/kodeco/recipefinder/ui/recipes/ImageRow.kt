@@ -70,7 +70,7 @@ fun ImageRow() {
 fun searchRecipes(searchString: String, viewModel: RecipeViewModel) {
   if (searchString.isNotEmpty()) {
     viewModel.addPreviousSearch(searchString)
-    viewModel.queryRecipies(searchString, viewModel.queryState.value.offset)
+    viewModel.queryRecipes(searchString, viewModel.queryState.value.offset)
   } else {
     viewModel.setSearching(false)
   }
