@@ -92,7 +92,7 @@ class RecipeViewModel() : ViewModel() {
     // TODO: Retrieve previous searches
   }
 
-  fun queryRecipies(
+  fun queryRecipes(
     query: String,
     offset: Int,
     number: Int = PAGE_SIZE
@@ -100,7 +100,7 @@ class RecipeViewModel() : ViewModel() {
     viewModelScope.launch {
       try {
         val response = spoonacularService.queryRecipes(query, offset, number)
-        _recipeListState.value = _recipeListState.value.plus(response.recipes)
+        _recipeListState.value = response.recipes
         _queryState.value =
           QueryState(query, offset, number, response.totalResults)
       } catch (e: Exception) {
