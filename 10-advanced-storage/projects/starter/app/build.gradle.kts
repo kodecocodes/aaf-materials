@@ -54,7 +54,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -84,7 +84,6 @@ dependencies {
     implementation(libs.room)
     implementation(libs.room.runtime)
     ksp (libs.room.compiler)
-    ksp (libs.moshiCodeGen)
 
     implementation(libs.timber)
 

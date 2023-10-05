@@ -213,6 +213,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     withContext(Dispatchers.IO) {
       val recipeDb = recipeToDb(recipe)
       repository.deleteRecipe(recipeDb)
+      repository.deleteRecipeIngredients(recipeDb.id)
       val localList = _bookmarksState.value.toMutableList()
       localList.remove(recipe)
       _bookmarksState.value = localList
@@ -221,7 +222,8 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
 
   suspend fun deleteBookmark(repository: Repository, recipeId: Int) {
     withContext(Dispatchers.IO) {
-      repository.deleteRecipeById(recipeId.toLong())
+      repository.deleteRecipeById(recipeId)
+      repository.deleteRecipeIngredients(recipeId)
       val localList = _bookmarksState.value.toMutableList()
       localList.removeIf {
         it.id == recipeId

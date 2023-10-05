@@ -73,7 +73,6 @@ import com.kodeco.recipefinder.ui.widgets.SpacerMax
 import com.kodeco.recipefinder.ui.widgets.SpacerW4
 import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
-
 @Composable
 fun SearchRow(
   viewModel: RecipeViewModel

@@ -91,7 +91,7 @@ fun NeedIngredientCard(
 fun PreviewNeedIngredientCard() {
   Surface {
     NeedIngredientCard(
-      index = 0, need = true, ingredients = mutableListOf(
+      index = 0, need = false, ingredients = mutableListOf(
         Ingredient(
           id = 1,
           name = "Test",

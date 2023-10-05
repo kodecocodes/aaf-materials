@@ -122,11 +122,9 @@ fun ColumnScope.ShowRecipeList(
   }
 }
 
-
 @Preview
 @Composable
 fun PreviewShowRecipeList() {
-  val context = LocalContext.current
   val prefs = LocalPrefsProvider.current
   val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
   Surface {

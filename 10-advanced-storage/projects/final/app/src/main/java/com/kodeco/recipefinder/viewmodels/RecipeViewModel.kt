@@ -36,18 +36,17 @@ package com.kodeco.recipefinder.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kodeco.recipefinder.data.Prefs
 import com.kodeco.recipefinder.data.Repository
-import com.kodeco.recipefinder.data.StoredPreferences
+import com.kodeco.recipefinder.data.SecurePrefs
 import com.kodeco.recipefinder.data.ingredientDbsToIngredients
 import com.kodeco.recipefinder.data.ingredientDbsToSpoonacular
 import com.kodeco.recipefinder.data.models.Ingredient
 import com.kodeco.recipefinder.data.models.Recipe
+import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 import com.kodeco.recipefinder.data.recipeDbsToRecipes
 import com.kodeco.recipefinder.data.recipeToDb
 import com.kodeco.recipefinder.data.recipeToSpoonacularRecipe
 import com.kodeco.recipefinder.data.spoonacularIngredientsToIngredients
-import com.kodeco.recipefinder.data.models.RecipeInformationResponse
 import com.kodeco.recipefinder.data.spoonacularRecipeToRecipe
 import com.kodeco.recipefinder.network.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +72,7 @@ data class UIState(
 
 const val PAGE_SIZE = 20
 
-class RecipeViewModel(private val prefs: StoredPreferences) : ViewModel() {
+class RecipeViewModel(private val prefs: SecurePrefs) : ViewModel() {
   companion object {
     const val PREVIOUS_SEARCH_KEY = "PREVIOUS_SEARCH_KEY"
   }
@@ -214,6 +213,7 @@ class RecipeViewModel(private val prefs: StoredPreferences) : ViewModel() {
     withContext(Dispatchers.IO) {
       val recipeDb = recipeToDb(recipe)
       repository.deleteRecipe(recipeDb)
+      repository.deleteRecipeIngredients(recipeDb.id)
       val localList = _bookmarksState.value.toMutableList()
       localList.remove(recipe)
       _bookmarksState.value = localList
@@ -222,7 +222,8 @@ class RecipeViewModel(private val prefs: StoredPreferences) : ViewModel() {
 
   suspend fun deleteBookmark(repository: Repository, recipeId: Int) {
     withContext(Dispatchers.IO) {
-      repository.deleteRecipeById(recipeId.toLong())
+      repository.deleteRecipeById(recipeId)
+      repository.deleteRecipeIngredients(recipeId)
       val localList = _bookmarksState.value.toMutableList()
       localList.removeIf {
         it.id == recipeId
