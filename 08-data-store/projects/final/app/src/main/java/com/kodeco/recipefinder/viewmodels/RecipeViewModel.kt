@@ -58,10 +58,8 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     viewModelScope.launch {
       val previousSearchString = prefs.getString(PREVIOUS_SEARCH_KEY)
       if (!previousSearchString.isNullOrEmpty()) {
-        val currentList = previousSearchString.split(",")
-        val updatedList = mutableListOf<String>()
-        updatedList.addAll(currentList)
-        _uiState.value = _uiState.value.copy(previousSearches = updatedList)
+        val storedList = previousSearchString.split(",")
+        _uiState.value = _uiState.value.copy(previousSearches = storedList.toMutableList())
       }
     }
   }
