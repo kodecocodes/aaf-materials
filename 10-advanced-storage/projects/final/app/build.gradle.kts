@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.fonts)
     implementation(libs.coil)
     implementation(libs.coroutines.android)
+
     implementation(libs.retrofit)
     implementation(libs.moshi)
     ksp (libs.moshiCodeGen)
