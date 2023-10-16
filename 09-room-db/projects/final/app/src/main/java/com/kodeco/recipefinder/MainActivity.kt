@@ -55,7 +55,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.room.Room
 import com.kodeco.recipefinder.data.Prefs
-import com.kodeco.recipefinder.data.Repository
+import com.kodeco.recipefinder.data.RecipeRepository
 import com.kodeco.recipefinder.data.database.RecipeDatabase
 import com.kodeco.recipefinder.ui.MainScreen
 import com.kodeco.recipefinder.ui.RecipeDetails
@@ -65,7 +65,7 @@ val LocalNavigatorProvider =
   compositionLocalOf<NavHostController> { error("No navigation provided") }
 
 val LocalRepositoryProvider =
-  compositionLocalOf<Repository> { error("No repository provided") }
+  compositionLocalOf<RecipeRepository> { error("No repository provided") }
 
 val LocalPrefsProvider =
   compositionLocalOf<Prefs> { error("No prefs provided") }
@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
           val context = LocalContext.current
           val navController = rememberNavController()
           val repository = remember {
-            Repository(
+            RecipeRepository(
               Room.databaseBuilder(
                 context,
                 RecipeDatabase::class.java,

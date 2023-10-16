@@ -37,7 +37,7 @@ package com.kodeco.recipefinder.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.recipefinder.data.Prefs
-import com.kodeco.recipefinder.data.Repository
+import com.kodeco.recipefinder.data.RecipeRepository
 import com.kodeco.recipefinder.data.extendedIngredientsToIngredientDbs
 import com.kodeco.recipefinder.data.ingredientDbsToExtendedIngredients
 import com.kodeco.recipefinder.data.ingredientDbsToIngredients
@@ -148,21 +148,21 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun getBookmarks(repository: Repository) {
+  suspend fun getBookmarks(repository: RecipeRepository) {
     withContext(Dispatchers.IO) {
       val allRecipes = repository.findAllRecipes()
       _bookmarksState.value = recipeDbsToRecipes(allRecipes).toMutableList()
     }
   }
 
-  suspend fun getIngredients(repository: Repository) {
+  suspend fun getIngredients(repository: RecipeRepository) {
     withContext(Dispatchers.IO) {
       val allIngredients = repository.findAllIngredients()
       _ingredientsState.value = ingredientDbsToIngredients(allIngredients).toMutableList()
     }
   }
 
-  suspend fun getBookmark(repository: Repository, bookmarkId: Int) {
+  suspend fun getBookmark(repository: RecipeRepository, bookmarkId: Int) {
     withContext(Dispatchers.IO) {
       val recipe = repository.findRecipeById(bookmarkId)
       val ingredients = repository.findRecipeIngredients(bookmarkId)
@@ -171,7 +171,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun bookmarkRecipe(repository: Repository, recipe: RecipeInformationResponse) {
+  suspend fun bookmarkRecipe(repository: RecipeRepository, recipe: RecipeInformationResponse) {
     withContext(Dispatchers.IO) {
       repository.insertRecipe(recipeInformationToRecipeDb(recipe))
       repository.insertIngredients(
@@ -209,7 +209,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     _uiState.value = _uiState.value.copy(bookmarksChecked = bookmarksChecked)
   }
 
-  suspend fun deleteBookmark(repository: Repository, recipe: Recipe) {
+  suspend fun deleteBookmark(repository: RecipeRepository, recipe: Recipe) {
     withContext(Dispatchers.IO) {
       val recipeDb = recipeToDb(recipe)
       repository.deleteRecipe(recipeDb)
@@ -220,7 +220,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun deleteBookmark(repository: Repository, recipeId: Int) {
+  suspend fun deleteBookmark(repository: RecipeRepository, recipeId: Int) {
     withContext(Dispatchers.IO) {
       repository.deleteRecipeById(recipeId)
       repository.deleteRecipeIngredients(recipeId)
