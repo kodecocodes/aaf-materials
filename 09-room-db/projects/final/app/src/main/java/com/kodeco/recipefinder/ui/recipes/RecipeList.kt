@@ -48,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kodeco.recipefinder.LocalPrefsProvider
+import com.kodeco.recipefinder.LocalRepositoryProvider
 import com.kodeco.recipefinder.data.models.Recipe
 import com.kodeco.recipefinder.utils.viewModelFactory
 import com.kodeco.recipefinder.viewmodels.RecipeViewModel
@@ -58,8 +59,9 @@ const val PAGING_OFFSET = 6
 @Composable
 fun RecipeList() {
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
-    RecipeViewModel(prefs)
+    RecipeViewModel(prefs, repository)
   })
   val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
   val scope = rememberCoroutineScope()

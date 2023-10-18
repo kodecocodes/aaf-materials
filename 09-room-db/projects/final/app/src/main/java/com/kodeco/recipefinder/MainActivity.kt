@@ -43,9 +43,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -53,10 +51,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.room.Room
 import com.kodeco.recipefinder.data.Prefs
 import com.kodeco.recipefinder.data.RecipeRepository
-import com.kodeco.recipefinder.data.database.RecipeDatabase
 import com.kodeco.recipefinder.ui.MainScreen
 import com.kodeco.recipefinder.ui.RecipeDetails
 import com.kodeco.recipefinder.ui.theme.RecipeFinderTheme
@@ -80,22 +76,11 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background
         ) {
-          val context = LocalContext.current
           val navController = rememberNavController()
-          val repository = remember {
-            RecipeRepository(
-              Room.databaseBuilder(
-                context,
-                RecipeDatabase::class.java,
-                "Recipes"
-              ).build()
-            )
-          }
-          val prefs = remember { Prefs(context) }
           CompositionLocalProvider(
             LocalNavigatorProvider provides navController,
-            LocalPrefsProvider provides prefs,
-            LocalRepositoryProvider provides repository,
+            LocalPrefsProvider provides (application as RecipeApp).prefs,
+            LocalRepositoryProvider provides (application as RecipeApp).repository,
           ) {
             NavHost(navController = navController, startDestination = "main") {
               composable("main") { MainScreen() }

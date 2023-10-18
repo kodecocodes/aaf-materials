@@ -35,16 +35,32 @@
 package com.kodeco.recipefinder
 
 import android.app.Application
+import androidx.room.Room
+import com.kodeco.recipefinder.data.Prefs
+import com.kodeco.recipefinder.data.RecipeRepository
+import com.kodeco.recipefinder.data.database.RecipeDatabase
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 
 class RecipeApp : Application() {
+  lateinit var prefs: Prefs
+  lateinit var repository: RecipeRepository
+
   override fun onCreate() {
     super.onCreate()
     // Install a Timber tree.
     if (BuildConfig.DEBUG) {
       plant(Timber.DebugTree())
     }
+
+    prefs = Prefs(this)
+    repository = RecipeRepository(
+      Room.databaseBuilder(
+        this,
+        RecipeDatabase::class.java,
+        "Recipes"
+      ).build()
+    )
   }
 }

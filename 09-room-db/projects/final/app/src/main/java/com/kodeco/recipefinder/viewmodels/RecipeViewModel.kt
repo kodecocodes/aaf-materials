@@ -72,7 +72,10 @@ data class UIState(
 
 const val PAGE_SIZE = 20
 
-class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
+class RecipeViewModel(
+  private val prefs: Prefs,
+  private val repository: RecipeRepository,
+) : ViewModel() {
   companion object {
     const val PREVIOUS_SEARCH_KEY = "PREVIOUS_SEARCH_KEY"
   }
@@ -148,21 +151,21 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun getBookmarks(repository: RecipeRepository) {
+  suspend fun getBookmarks() {
     withContext(Dispatchers.IO) {
       val allRecipes = repository.findAllRecipes()
       _bookmarksState.value = recipeDbsToRecipes(allRecipes).toMutableList()
     }
   }
 
-  suspend fun getIngredients(repository: RecipeRepository) {
+  suspend fun getIngredients() {
     withContext(Dispatchers.IO) {
       val allIngredients = repository.findAllIngredients()
       _ingredientsState.value = ingredientDbsToIngredients(allIngredients).toMutableList()
     }
   }
 
-  suspend fun getBookmark(repository: RecipeRepository, bookmarkId: Int) {
+  suspend fun getBookmark(bookmarkId: Int) {
     withContext(Dispatchers.IO) {
       val recipe = repository.findRecipeById(bookmarkId)
       val ingredients = repository.findRecipeIngredients(bookmarkId)
@@ -171,7 +174,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun bookmarkRecipe(repository: RecipeRepository, recipe: RecipeInformationResponse) {
+  suspend fun bookmarkRecipe(recipe: RecipeInformationResponse) {
     withContext(Dispatchers.IO) {
       repository.insertRecipe(recipeInformationToRecipeDb(recipe))
       repository.insertIngredients(
@@ -209,7 +212,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     _uiState.value = _uiState.value.copy(bookmarksChecked = bookmarksChecked)
   }
 
-  suspend fun deleteBookmark(repository: RecipeRepository, recipe: Recipe) {
+  suspend fun deleteBookmark(recipe: Recipe) {
     withContext(Dispatchers.IO) {
       val recipeDb = recipeToDb(recipe)
       repository.deleteRecipe(recipeDb)
@@ -220,7 +223,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun deleteBookmark(repository: RecipeRepository, recipeId: Int) {
+  suspend fun deleteBookmark(recipeId: Int) {
     withContext(Dispatchers.IO) {
       repository.deleteRecipeById(recipeId)
       repository.deleteRecipeIngredients(recipeId)

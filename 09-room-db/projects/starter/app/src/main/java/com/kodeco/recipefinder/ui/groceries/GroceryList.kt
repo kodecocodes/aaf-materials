@@ -51,11 +51,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun GroceryList() {
   val prefs = LocalPrefsProvider.current
+  // TODO: Add Repository
   val recipeViewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
     RecipeViewModel(prefs)
   })
   val groceryListViewModel: GroceryListViewModel = viewModel()
-  // TODO: Add Repository
   val scope = rememberCoroutineScope()
 
   LaunchedEffect(Unit) {

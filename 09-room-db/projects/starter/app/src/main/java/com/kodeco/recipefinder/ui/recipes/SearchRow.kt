@@ -62,7 +62,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -168,8 +167,8 @@ fun SearchRow(
 @Preview
 @Composable
 fun PreviewSearchRow() {
-  val context = LocalContext.current
   val prefs = LocalPrefsProvider.current
+  // TODO: Add Repository
   Surface {
     Column {
       SearchRow(RecipeViewModel(prefs))

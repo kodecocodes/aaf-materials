@@ -43,9 +43,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -76,13 +74,11 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background
         ) {
-          val context = LocalContext.current
           val navController = rememberNavController()
-          // TODO: Add Repository
-          val prefs = remember { Prefs(context) }
           CompositionLocalProvider(
             LocalNavigatorProvider provides navController,
-            LocalPrefsProvider provides prefs,
+            LocalPrefsProvider provides (application as RecipeApp).prefs,
+            // TODO: Add LocalRepositoryProvider
           ) {
             NavHost(navController = navController, startDestination = "main") {
               composable("main") { MainScreen() }

@@ -63,6 +63,7 @@ data class UIState(
 
 const val PAGE_SIZE = 20
 
+// TODO: Add Repository
 class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
   companion object {
     const val PREVIOUS_SEARCH_KEY = "PREVIOUS_SEARCH_KEY"
