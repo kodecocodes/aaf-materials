@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,20 +29,14 @@ class MainActivity : ComponentActivity() {
                     label = { Text("Label") }
                 )
 
-                Button(onClick = { chatOutputText = chatInputText}) {
+                Button(onClick = {
+                    chatOutputText = chatInputText
+                    chatInputText = ""
+                }) {
                     Text(text = "Send")
                 }
             }
         }
     }
-
-    @Composable
-    fun Greeting(name: String, modifier: Modifier = Modifier) {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier
-        )
-    }
-
 }
 
