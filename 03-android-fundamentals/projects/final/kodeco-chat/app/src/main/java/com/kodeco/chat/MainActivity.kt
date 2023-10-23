@@ -11,14 +11,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Column {
-                var chatInputText by remember { mutableStateOf("Type your text here") }
-                var chatOutputText by remember { mutableStateOf("Press Send to update this text")}
+                val context = LocalContext.current
+                var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
+                var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default))}
                 Text(text = chatOutputText)
 
                 OutlinedTextField(
@@ -26,14 +29,16 @@ class MainActivity : ComponentActivity() {
                     onValueChange = {
                         chatInputText = it
                                     },
-                    label = { Text("Label") }
+//                    label = { stringResource(id = R.string.chat_entry_label) }
+                    label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
                 )
 
                 Button(onClick = {
                     chatOutputText = chatInputText
                     chatInputText = ""
                 }) {
-                    Text(text = "Send")
+                    Text(text = stringResource(id = R.string.send_button))
+
                 }
             }
         }
