@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
                     onValueChange = {
                         chatInputText = it
                                     },
-//                    label = { stringResource(id = R.string.chat_entry_label) }
                     label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
                 )
 
