@@ -66,7 +66,7 @@ class RecipeViewModel() : ViewModel() {
     viewModelScope.launch {
       try {
         val response = spoonacularService.queryRecipes(query, offset, number)
-        _recipeListState.value = _recipeListState.value.plus(response.recipes)
+        _recipeListState.value = response.recipes
         _queryState.value =
             QueryState(query, offset, number, response.totalResults)
       } catch (e: Exception) {
