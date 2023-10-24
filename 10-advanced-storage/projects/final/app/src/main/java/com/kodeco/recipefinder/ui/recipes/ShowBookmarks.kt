@@ -57,7 +57,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kodeco.recipefinder.LocalPrefsProvider
@@ -74,7 +73,6 @@ import kotlinx.coroutines.withContext
 @Composable
 fun ShowBookmarks(viewModel: RecipeViewModel) {
   val scope = rememberCoroutineScope()
-  val repository = LocalRepositoryProvider.current
   val bookmarkListState = remember { mutableStateOf(listOf<Recipe>()) }
   LaunchedEffect(Unit) {
     scope.launch {
@@ -84,7 +82,7 @@ fun ShowBookmarks(viewModel: RecipeViewModel) {
     }
     scope.launch {
       withContext(Dispatchers.IO) {
-        viewModel.getBookmarks(repository)
+        viewModel.getBookmarks()
       }
     }
   }
@@ -100,7 +98,7 @@ fun ShowBookmarks(viewModel: RecipeViewModel) {
           confirmValueChange = {
             scope.launch {
               withContext(Dispatchers.IO) {
-                viewModel.deleteBookmark(repository, currentItem)
+                viewModel.deleteBookmark(currentItem)
               }
             }
             true
@@ -136,11 +134,11 @@ fun ShowBookmarks(viewModel: RecipeViewModel) {
 @Preview
 @Composable
 fun PreviewShowBookmarks() {
-  val context = LocalContext.current
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   Surface {
     Column {
-      ShowBookmarks(RecipeViewModel(prefs))
+      ShowBookmarks(RecipeViewModel(prefs, repository))
     }
   }
 }

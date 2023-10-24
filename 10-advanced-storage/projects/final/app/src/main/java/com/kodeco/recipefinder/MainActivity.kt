@@ -43,7 +43,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -52,11 +51,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.kodeco.recipefinder.data.Repository
+import com.kodeco.recipefinder.data.RecipeRepository
 import com.kodeco.recipefinder.data.SecurePrefs
-import com.kodeco.recipefinder.data.database.RecipeDatabase
-import com.kodeco.recipefinder.data.database.RecipeDatabase.Companion.PASSCODE_KEY
-import com.kodeco.recipefinder.data.database.RecipeDatabase.Companion.getInstance
 import com.kodeco.recipefinder.ui.MainScreen
 import com.kodeco.recipefinder.ui.RecipeDetails
 import com.kodeco.recipefinder.ui.theme.RecipeFinderTheme
@@ -65,7 +61,7 @@ val LocalNavigatorProvider =
   compositionLocalOf<NavHostController> { error("No navigation provided") }
 
 val LocalRepositoryProvider =
-  compositionLocalOf<Repository> { error("No repository provided") }
+  compositionLocalOf<RecipeRepository> { error("No repository provided") }
 
 val LocalPrefsProvider =
   compositionLocalOf<SecurePrefs> { error("No prefs provided") }
@@ -73,17 +69,6 @@ val LocalPrefsProvider =
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val securePrefs = SecurePrefs(this)
-    val randomPassCode: String
-    if (!securePrefs.hasKey(PASSCODE_KEY)) {
-      randomPassCode = RecipeDatabase.getPassCode(15)
-      securePrefs.saveString(PASSCODE_KEY, randomPassCode)
-    } else {
-      randomPassCode = securePrefs.getString(PASSCODE_KEY)!!
-    }
-    val repo = Repository(
-      getInstance(this@MainActivity, randomPassCode.toCharArray())
-    )
     setContent {
       RecipeFinderTheme(darkTheme = false) {
         // A surface container using the 'background' color from the theme
@@ -91,13 +76,11 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background
         ) {
-          val prefs = remember { securePrefs }
           val navController = rememberNavController()
-          val repository = remember { repo }
           CompositionLocalProvider(
             LocalNavigatorProvider provides navController,
-            LocalPrefsProvider provides prefs,
-            LocalRepositoryProvider provides repository,
+            LocalPrefsProvider provides (application as RecipeApp).securePrefs,
+            LocalRepositoryProvider provides (application as RecipeApp).repository,
           ) {
             NavHost(navController = navController, startDestination = "main") {
               composable("main") { MainScreen() }

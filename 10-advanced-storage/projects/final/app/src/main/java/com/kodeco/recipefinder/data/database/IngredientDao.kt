@@ -47,13 +47,13 @@ interface IngredientDao {
   suspend fun addIngredient(ingredientDb: IngredientDb)
 
   @Query("SELECT * FROM ingredients WHERE id = :id")
-  fun findIngredientById(id: Int): IngredientDb
+  suspend fun findIngredientById(id: Int): IngredientDb
 
   @Query("SELECT * FROM ingredients WHERE recipeId = :id")
-  fun findIngredientsByRecipe(id: Int): List<IngredientDb>
+  suspend fun findIngredientsByRecipe(id: Int): List<IngredientDb>
 
   @Query("SELECT * FROM ingredients")
-  fun getAllIngredients(): List<IngredientDb>
+  suspend fun getAllIngredients(): List<IngredientDb>
 
   @Update
   suspend fun updateIngredientDetails(ingredientDb: IngredientDb)

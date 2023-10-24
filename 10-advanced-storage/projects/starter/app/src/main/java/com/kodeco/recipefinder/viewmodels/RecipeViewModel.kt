@@ -37,17 +37,17 @@ package com.kodeco.recipefinder.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.recipefinder.data.Prefs
-import com.kodeco.recipefinder.data.Repository
+import com.kodeco.recipefinder.data.RecipeRepository
+import com.kodeco.recipefinder.data.extendedIngredientsToIngredientDbs
+import com.kodeco.recipefinder.data.ingredientDbsToExtendedIngredients
 import com.kodeco.recipefinder.data.ingredientDbsToIngredients
-import com.kodeco.recipefinder.data.ingredientDbsToSpoonacular
 import com.kodeco.recipefinder.data.models.Ingredient
 import com.kodeco.recipefinder.data.models.Recipe
-import com.kodeco.recipefinder.data.recipeDbsToRecipes
-import com.kodeco.recipefinder.data.recipeToDb
-import com.kodeco.recipefinder.data.recipeToSpoonacularRecipe
-import com.kodeco.recipefinder.data.spoonacularIngredientsToIngredients
 import com.kodeco.recipefinder.data.models.RecipeInformationResponse
-import com.kodeco.recipefinder.data.spoonacularRecipeToRecipe
+import com.kodeco.recipefinder.data.recipeDbToRecipeInformation
+import com.kodeco.recipefinder.data.recipeDbsToRecipes
+import com.kodeco.recipefinder.data.recipeInformationToRecipeDb
+import com.kodeco.recipefinder.data.recipeToDb
 import com.kodeco.recipefinder.network.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,7 +72,10 @@ data class UIState(
 
 const val PAGE_SIZE = 20
 
-class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
+class RecipeViewModel(
+  private val prefs: Prefs,
+  private val repository: RecipeRepository,
+) : ViewModel() {
   companion object {
     const val PREVIOUS_SEARCH_KEY = "PREVIOUS_SEARCH_KEY"
   }
@@ -117,7 +120,7 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     viewModelScope.launch {
       try {
         val response = spoonacularService.queryRecipes(query, offset, number)
-        _recipeListState.value = _recipeListState.value.plus(response.recipes)
+        _recipeListState.value = response.recipes
         _queryState.value =
           QueryState(query, offset, number, response.totalResults)
       } catch (e: Exception) {
@@ -148,34 +151,34 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     }
   }
 
-  suspend fun getBookmarks(repository: Repository) {
+  suspend fun getBookmarks() {
     withContext(Dispatchers.IO) {
       val allRecipes = repository.findAllRecipes()
       _bookmarksState.value = recipeDbsToRecipes(allRecipes).toMutableList()
     }
   }
 
-  suspend fun getIngredients(repository: Repository) {
+  suspend fun getIngredients() {
     withContext(Dispatchers.IO) {
       val allIngredients = repository.findAllIngredients()
       _ingredientsState.value = ingredientDbsToIngredients(allIngredients).toMutableList()
     }
   }
 
-  suspend fun getBookmark(repository: Repository, bookmarkId: Int) {
+  suspend fun getBookmark(bookmarkId: Int) {
     withContext(Dispatchers.IO) {
       val recipe = repository.findRecipeById(bookmarkId)
       val ingredients = repository.findRecipeIngredients(bookmarkId)
       _recipeState.value =
-        recipeToSpoonacularRecipe(recipe, ingredientDbsToSpoonacular(ingredients))
+        recipeDbToRecipeInformation(recipe, ingredientDbsToExtendedIngredients(ingredients))
     }
   }
 
-  suspend fun bookmarkRecipe(repository: Repository, recipe: RecipeInformationResponse) {
+  suspend fun bookmarkRecipe(recipe: RecipeInformationResponse) {
     withContext(Dispatchers.IO) {
-      repository.insertRecipe(spoonacularRecipeToRecipe(recipe))
+      repository.insertRecipe(recipeInformationToRecipeDb(recipe))
       repository.insertIngredients(
-        spoonacularIngredientsToIngredients(
+        extendedIngredientsToIngredientDbs(
           recipe.id,
           recipe.extendedIngredients
         )
@@ -209,18 +212,18 @@ class RecipeViewModel(private val prefs: Prefs) : ViewModel() {
     _uiState.value = _uiState.value.copy(bookmarksChecked = bookmarksChecked)
   }
 
-  suspend fun deleteBookmark(repository: Repository, recipe: Recipe) {
+  suspend fun deleteBookmark(recipe: Recipe) {
     withContext(Dispatchers.IO) {
       val recipeDb = recipeToDb(recipe)
       repository.deleteRecipe(recipeDb)
-      repository.deleteRecipeIngredients(recipeDb.id)
+      repository.deleteRecipeIngredients(recipe.id)
       val localList = _bookmarksState.value.toMutableList()
       localList.remove(recipe)
       _bookmarksState.value = localList
     }
   }
 
-  suspend fun deleteBookmark(repository: Repository, recipeId: Int) {
+  suspend fun deleteBookmark(recipeId: Int) {
     withContext(Dispatchers.IO) {
       repository.deleteRecipeById(recipeId)
       repository.deleteRecipeIngredients(recipeId)

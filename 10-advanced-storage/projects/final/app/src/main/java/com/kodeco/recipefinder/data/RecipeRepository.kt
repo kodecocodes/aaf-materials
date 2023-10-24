@@ -31,6 +31,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.kodeco.recipefinder.data
 
 import com.kodeco.recipefinder.data.database.IngredientDao
@@ -39,7 +40,7 @@ import com.kodeco.recipefinder.data.database.RecipeDao
 import com.kodeco.recipefinder.data.database.RecipeDatabase
 import com.kodeco.recipefinder.data.database.RecipeDb
 
-class Repository(recipeDatabase: RecipeDatabase) {
+class RecipeRepository(recipeDatabase: RecipeDatabase) {
   private val recipeDao: RecipeDao = recipeDatabase.recipeDao()
   private val ingredientDao: IngredientDao = recipeDatabase.ingredientDao()
 

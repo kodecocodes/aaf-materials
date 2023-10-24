@@ -62,16 +62,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kodeco.recipefinder.LocalPrefsProvider
+import com.kodeco.recipefinder.LocalRepositoryProvider
 import com.kodeco.recipefinder.ui.theme.transparent
 import com.kodeco.recipefinder.ui.widgets.SpacerMax
 import com.kodeco.recipefinder.ui.widgets.SpacerW4
 import com.kodeco.recipefinder.viewmodels.RecipeViewModel
+
 
 @Composable
 fun SearchRow(
@@ -167,11 +168,11 @@ fun SearchRow(
 @Preview
 @Composable
 fun PreviewSearchRow() {
-  val context = LocalContext.current
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   Surface {
     Column {
-      SearchRow(RecipeViewModel(prefs))
+      SearchRow(RecipeViewModel(prefs, repository))
     }
   }
 }

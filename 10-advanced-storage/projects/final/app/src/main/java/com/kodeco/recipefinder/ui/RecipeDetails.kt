@@ -86,12 +86,12 @@ import timber.log.Timber
 fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
   val scope = rememberCoroutineScope()
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   val viewModel: RecipeViewModel = viewModel(factory = viewModelFactory {
-    RecipeViewModel(prefs)
+    RecipeViewModel(prefs, repository)
   })
   val recipeState = remember { mutableStateOf<RecipeInformationResponse?>(null) }
   val navController = LocalNavigatorProvider.current
-  val repository = LocalRepositoryProvider.current
   if (recipeId != null) {
     LaunchedEffect(Unit) {
       scope.launch {
@@ -111,7 +111,7 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
         }
       }
       scope.launch {
-        viewModel.getBookmark(repository, databaseRecipeId)
+        viewModel.getBookmark(databaseRecipeId)
       }
     }
   }
@@ -157,7 +157,6 @@ fun TitleRow(
   recipe: RecipeInformationResponse,
   isBookmark: Boolean
 ) {
-  val repository = LocalRepositoryProvider.current
   val scope = rememberCoroutineScope()
   Row(
     modifier = modifier
@@ -180,9 +179,9 @@ fun TitleRow(
     IconButton(onClick = {
       scope.launch {
         if (isBookmark) {
-          viewModel.deleteBookmark(repository, recipe.id)
+          viewModel.deleteBookmark(recipe.id)
         } else {
-          viewModel.bookmarkRecipe(repository, recipe)
+          viewModel.bookmarkRecipe(recipe)
         }
       }
       navController.popBackStack()

@@ -50,9 +50,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.kodeco.recipefinder.LocalPrefsProvider
+import com.kodeco.recipefinder.LocalRepositoryProvider
 import com.kodeco.recipefinder.ui.theme.LabelLarge
 import com.kodeco.recipefinder.ui.widgets.SpacerW4
 import com.kodeco.recipefinder.viewmodels.RecipeViewModel
@@ -99,11 +99,11 @@ fun ColumnScope.ChipRow(
 @Preview
 @Composable
 fun PreviewChipRow() {
-  val context = LocalContext.current
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   Surface {
     Column {
-      ChipRow(RecipeViewModel(prefs))
+      ChipRow(RecipeViewModel(prefs, repository))
     }
   }
 }

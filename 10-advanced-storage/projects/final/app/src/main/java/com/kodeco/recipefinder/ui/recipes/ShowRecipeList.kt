@@ -60,6 +60,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kodeco.recipefinder.LocalNavigatorProvider
 import com.kodeco.recipefinder.LocalPrefsProvider
+import com.kodeco.recipefinder.LocalRepositoryProvider
 import com.kodeco.recipefinder.data.models.Recipe
 import com.kodeco.recipefinder.ui.widgets.RecipeCard
 import com.kodeco.recipefinder.viewmodels.PAGE_SIZE
@@ -126,10 +127,11 @@ fun ColumnScope.ShowRecipeList(
 @Composable
 fun PreviewShowRecipeList() {
   val prefs = LocalPrefsProvider.current
+  val repository = LocalRepositoryProvider.current
   val recipeListState = remember { mutableStateOf(listOf<Recipe>()) }
   Surface {
     Column {
-      ShowRecipeList(recipeListState, RecipeViewModel(prefs))
+      ShowRecipeList(recipeListState, RecipeViewModel(prefs, repository))
     }
   }
 }
