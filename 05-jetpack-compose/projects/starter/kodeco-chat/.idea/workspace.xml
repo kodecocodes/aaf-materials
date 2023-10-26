@@ -73,17 +73,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;03-android-fundamentals&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "03-android-fundamentals",
+    "settings.editor.selected.configurable": "copyright"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Kodeco_Chat.app.main" />
@@ -249,16 +249,5 @@
       <updated>1697160114396</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/kodeco/chat/MainActivity.kt</url>
-          <line>36</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
