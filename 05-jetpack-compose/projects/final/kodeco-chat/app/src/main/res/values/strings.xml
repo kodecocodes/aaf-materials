@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kodeco Chat</string>
+    <string name="chat_display_default">Messages will display here</string>
+    <string name="chat_entry_default">Type your text here</string>
+    <string name="send_button">Send</string>
+    <string name="chat_entry_label">Enter Chat Text</string>
+</resources>
