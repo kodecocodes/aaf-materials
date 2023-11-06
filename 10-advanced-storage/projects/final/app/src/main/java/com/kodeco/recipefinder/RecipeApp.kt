@@ -56,6 +56,8 @@ class RecipeApp : Application() {
       plant(Timber.DebugTree())
     }
 
+    prefs = Prefs(this)
+
     securePrefs = SecurePrefs(this)
     val randomPassCode: String
     if (!securePrefs.hasKey(RecipeDatabase.PASSCODE_KEY)) {
@@ -64,7 +66,7 @@ class RecipeApp : Application() {
     } else {
       randomPassCode = securePrefs.getString(RecipeDatabase.PASSCODE_KEY)!!
     }
-    prefs = Prefs(this)
+
     repository = RecipeRepository(
       RecipeDatabase.getInstance(this, randomPassCode.toCharArray())
     )
