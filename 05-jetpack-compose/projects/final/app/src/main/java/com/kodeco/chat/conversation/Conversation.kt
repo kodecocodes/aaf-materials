@@ -15,27 +15,27 @@ import com.kodeco.chat.R
 
 @Composable
 fun ConversationContent() {
-    Column {
-        val context = LocalContext.current
-        var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
-        var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default)) }
-        Text(text = chatOutputText)
+  Column {
+    val context = LocalContext.current
+    var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
+    var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default)) }
+    Text(text = chatOutputText)
 
-        OutlinedTextField(
-            value = chatInputText,
-            onValueChange = {
-                chatInputText = it
-            },
-            label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
-        )
+    OutlinedTextField(
+      value = chatInputText,
+      onValueChange = {
+        chatInputText = it
+      },
+      label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
+    )
 
-        Button(onClick = {
-            chatOutputText = chatInputText
-            chatInputText = ""
-        }) {
-            Text(text = stringResource(id = R.string.send_button))
-        }
-
-
+    Button(onClick = {
+      chatOutputText = chatInputText
+      chatInputText = ""
+    }) {
+      Text(text = stringResource(id = R.string.send_button))
     }
+
+
+  }
 }
