@@ -48,32 +48,32 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Column {
-                val context = LocalContext.current
-                var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
-                var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default))}
-                Text(text = chatOutputText)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      Column {
+        val context = LocalContext.current
+        var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
+        var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default)) }
+        Text(text = chatOutputText)
 
-                OutlinedTextField(
-                    value = chatInputText,
-                    onValueChange = {
-                        chatInputText = it
-                                    },
-                    label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
-                )
+        OutlinedTextField(
+          value = chatInputText,
+          onValueChange = {
+            chatInputText = it
+          },
+          label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
+        )
 
-                Button(onClick = {
-                    chatOutputText = chatInputText
-                    chatInputText = ""
-                }) {
-                    Text(text = stringResource(id = R.string.send_button))
+        Button(onClick = {
+          chatOutputText = chatInputText
+          chatInputText = ""
+        }) {
+          Text(text = stringResource(id = R.string.send_button))
 
-                }
-            }
         }
+      }
     }
+  }
 }
 
