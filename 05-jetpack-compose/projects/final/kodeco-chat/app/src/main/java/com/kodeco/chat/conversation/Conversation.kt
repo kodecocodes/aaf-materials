@@ -34,7 +34,8 @@ fun ConversationContent() {
             chatInputText = ""
         }) {
             Text(text = stringResource(id = R.string.send_button))
-
         }
+
+
     }
 }
