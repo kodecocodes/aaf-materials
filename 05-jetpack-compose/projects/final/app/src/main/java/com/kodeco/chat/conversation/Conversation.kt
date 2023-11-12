@@ -17,16 +17,16 @@ import com.kodeco.chat.R
 fun ConversationContent() {
   Column {
     val context = LocalContext.current
-    var chatInputText by remember { mutableStateOf(context.getString(R.string.chat_entry_default)) }
+    var chatInputText by remember { mutableStateOf("") }
     var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default)) }
     Text(text = chatOutputText)
 
     OutlinedTextField(
       value = chatInputText,
+      placeholder = { Text(text = stringResource(id = R.string.chat_entry_default)) },
       onValueChange = {
         chatInputText = it
       },
-      label = { Text(text = stringResource(id = R.string.chat_entry_label)) }
     )
 
     Button(onClick = {
