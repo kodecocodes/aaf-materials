@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2023  Kodeco Inc.
+  ~ Copyright (c) 2023 Kodeco Inc.
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -38,4 +38,5 @@
     <string name="chat_entry_default">Type your text here</string>
     <string name="send_button">Send</string>
     <string name="chat_entry_label">Enter Chat Text</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
 </resources>

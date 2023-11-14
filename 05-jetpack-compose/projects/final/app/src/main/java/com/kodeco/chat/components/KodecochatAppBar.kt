@@ -32,55 +32,66 @@
  * THE SOFTWARE.
  */
 
-package com.kodeco.chat.conversation
+@file:OptIn(ExperimentalMaterial3Api::class)
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
+package com.kodeco.chat.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.kodeco.chat.R
+import com.kodeco.chat.theme.KodecochatTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConversationContent() {
-
-  Surface() {
-    Box() {
-      Column {
-        Messages()
-        UserInput()
-
-      }
-      // Channel name bar floats above the messages
-      ChannelNameBar(channelName = "Android Apprentice")
-    }
-
-  }
-
-
-}
-
-@Composable
-fun Messages() {
-
-}
-
-@Composable
-fun UserInput() {
-  TODO("Not yet implemented")
-}
-
-@Composable
-fun ChannelNameBar(
-  channelName: String,
+fun KodecochatAppBar(
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    onNavIconPressed: () -> Unit = { },
+    title: @Composable () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {}
 ) {
+    CenterAlignedTopAppBar(
+        modifier = modifier,
+        actions = actions,
+        title = title,
+        scrollBehavior = scrollBehavior,
+        navigationIcon = {
+            KodecoChatIcon(
+                contentDescription = stringResource(id = R.string.navigation_drawer_open),
+                modifier = Modifier
+                    .size(64.dp)
+                    .clickable(onClick = onNavIconPressed)
+                    .padding(16.dp)
+            )
+        }
+    )
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun KodecochatAppBarPreview() {
+    KodecochatTheme {
+        KodecochatAppBar(title = { Text("Preview!") })
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun KodecohatAppBarPreviewDark() {
+    KodecochatTheme(isDarkTheme = true) {
+        KodecochatAppBar(title = { Text("Preview!") })
+    }
 }
