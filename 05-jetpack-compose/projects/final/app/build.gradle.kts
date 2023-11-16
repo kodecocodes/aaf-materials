@@ -94,6 +94,7 @@ dependencies {
 
     // Compose
     implementation ("androidx.compose.material3:material3:1.1.2")
+    implementation ("androidx.compose.material:material-icons-extended:1.4.3")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
