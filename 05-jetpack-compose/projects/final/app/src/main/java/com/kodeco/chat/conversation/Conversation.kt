@@ -34,9 +34,17 @@
 
 package com.kodeco.chat.conversation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -45,9 +53,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.kodeco.chat.R
+import com.kodeco.chat.components.KodecochatAppBar
 
 @Composable
 fun ConversationContent() {
@@ -70,17 +82,37 @@ fun ConversationContent() {
 
 @Composable
 fun Messages() {
-
+  //
 }
 
 @Composable
 fun UserInput() {
-  TODO("Not yet implemented")
+  //
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelNameBar(
-  channelName: String,
-) {
-
+fun ChannelNameBar(channelName: String) {
+  KodecochatAppBar(
+    title = {
+      Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        // Channel name
+        Text(
+          text = channelName,
+        )
+      }
+    },
+    actions = {
+      // Info icon
+      Icon(
+        imageVector = Icons.Outlined.Info,
+        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier
+          .clickable(onClick = { })
+          .padding(horizontal = 12.dp, vertical = 16.dp)
+          .height(24.dp),
+        contentDescription = stringResource(id = R.string.info)
+      )
+    }
+  )
 }

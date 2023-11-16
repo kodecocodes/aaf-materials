@@ -39,6 +39,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -61,9 +62,14 @@ fun KodecoChatIcon(
     }
     Box(modifier = modifier.then(semantics)) {
         Icon(
+            painter = painterResource(id = R.drawable.kodeco_logo_back),
+            contentDescription = null,
+            tint = Color(0xFFFF5A00)
+        )
+        Icon(
             painter = painterResource(id = R.drawable.kodeco_logo),
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primaryContainer
+            tint = Color.White
         )
     }
 }
