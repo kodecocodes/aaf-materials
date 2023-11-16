@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2023 Kodeco Inc.
  *
@@ -33,9 +32,28 @@
  * THE SOFTWARE.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id("com.android.application") version "8.2.0-rc03" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
-    id("com.android.library") version "8.1.0" apply false
+package com.kodeco.chat.utilities
+
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+
+@Composable
+fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text = {
+            Text(
+                text = "Functionality not available \uD83D\uDE48",
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = "CLOSE")
+            }
+        }
+    )
 }

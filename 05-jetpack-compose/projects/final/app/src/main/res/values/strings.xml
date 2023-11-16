@@ -40,7 +40,7 @@
     <string name="chat_entry_label">Enter Chat Text</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="send">Send</string>
-    <string name="textfield_hint">Message #public</string>
+    <string name="textfield_hint">Message #Android Apprentice</string>
     <string name="emojis_label">Emojis</string>
     <string name="stickers_label">Stickers</string>
 

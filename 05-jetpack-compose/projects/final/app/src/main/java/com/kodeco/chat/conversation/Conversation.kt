@@ -37,38 +37,66 @@ package com.kodeco.chat.conversation
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun ConversationContent() {
+
+  val scrollState = rememberLazyListState()
+  val scope = rememberCoroutineScope()
 
   Surface() {
     Box() {
       Column {
         Messages()
-        UserInput()
+        UserInput(
+          onMessageSent = { content ->
+            // TODO - implment
+          },
+          resetScroll = {
+            scope.launch {
+              scrollState.scrollToItem(0)
+            }
+          },
+          // Use navigationBarsPadding() imePadding() and , to move the input panel above both the
+          // navigation bar, and on-screen keyboard (IME)
+          modifier = Modifier
+            .navigationBarsPadding()
+            .imePadding(),
+        )
 
       }
       // Channel name bar floats above the messages
@@ -81,13 +109,56 @@ fun ConversationContent() {
 }
 
 @Composable
-fun Messages() {
-  //
-}
+fun Messages(
+  messages: List<String>
+) {
+  Box() {
+    LazyColumn(
+//      reverseLayout = true,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      itemsIndexed(
+        items = messages,
+      ) { index, content ->
 
-@Composable
-fun UserInput() {
-  //
+        MessageUi(
+          onAuthorClick = { name -> navigateToProfile(name) },
+          msg = content,
+          authorId = authorId,
+          userId = userId ?: "",
+          isFirstMessageByAuthor = isFirstMessageByAuthor,
+          isLastMessageByAuthor = isLastMessageByAuthor,
+          viewModel = viewModel
+        )
+      }
+    }
+    // Jump to bottom button shows up when user scrolls past a threshold.
+    // Convert to pixels:
+    val jumpThreshold = with(LocalDensity.current) {
+      JumpToBottomThreshold.toPx()
+    }
+
+    // Show the button if the first visible item is not the first one or if the offset is
+    // greater than the threshold.
+    val jumpToBottomButtonEnabled by remember {
+      derivedStateOf {
+        scrollState.firstVisibleItemIndex != 0 ||
+            scrollState.firstVisibleItemScrollOffset > jumpThreshold
+      }
+    }
+
+    JumpToBottom(
+      // Only show if the scroller is not at the bottom
+      enabled = jumpToBottomButtonEnabled,
+      onClicked = {
+        scope.launch {
+          scrollState.animateScrollToItem(0)
+        }
+      },
+      modifier = Modifier.align(Alignment.BottomCenter)
+    )
+  }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
