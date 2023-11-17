@@ -39,14 +39,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.kodeco.chat.conversation.ConversationContent
 import com.kodeco.chat.data.exampleUiState
+import com.kodeco.chat.theme.KodecochatTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      ConversationContent(
-        uiState = exampleUiState
-      )
+      KodecochatTheme {
+        ConversationContent(
+          uiState = exampleUiState
+        )
+      }
     }
   }
 }
