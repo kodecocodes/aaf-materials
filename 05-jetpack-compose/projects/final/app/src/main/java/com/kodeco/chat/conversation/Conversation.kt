@@ -34,6 +34,7 @@
 
 package com.kodeco.chat.conversation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -71,6 +72,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -96,12 +98,12 @@ fun ConversationContent() {
       Column(
         Modifier
           .fillMaxSize()
-          .nestedScroll(scrollBehavior.nestedScrollConnection)
+//          .nestedScroll(scrollBehavior.nestedScrollConnection)
       ) {
         Messages(
           messages,
-          modifier = Modifier.weight(1f),
-          scrollState = scrollState
+          modifier = Modifier.weight(1f)
+//          scrollState = scrollState
         )
         SimpleUserInput()
       }
@@ -142,13 +144,13 @@ fun SimpleUserInput() {
 @Composable
 fun Messages(
   messages: List<String>,
-  scrollState: LazyListState,
+//  scrollState: LazyListState,
   modifier: Modifier = Modifier
 ) {
   Box(modifier = modifier) {
     LazyColumn(
       reverseLayout = true,
-      state = scrollState,
+//      state = scrollState,
       // Add content padding so that the content can be scrolled (y-axis)
       // below the status bar + app bar
       // TODO: Get height from somewhere
