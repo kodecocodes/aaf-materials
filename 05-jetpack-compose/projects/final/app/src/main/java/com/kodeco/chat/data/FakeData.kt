@@ -44,7 +44,7 @@ private val sampleMessageTexts = listOf(
     Message(
         roomId = "Android Apprentice",
         createdOn = Instant.parse("2023-11-16T05:48:01Z"),
-        text = "Hey what do you think of this new Android Apprentice book 📖 from Kodeco.com?",
+        text = "Hey what do you think of this new Android Apprentice book 📖 from https://Kodeco.com ?",
         userId = "other"
     ),
     Message(
