@@ -145,7 +145,7 @@ fun ConversationContent(uiState: ConversationUiState) {
           modifier = Modifier.weight(1f)
 //          scrollState = scrollState
         )
-        SimpleUserInput()
+        UserInput(onMessageSent = {})
       }
       // Channel name bar floats above the messages
       ChannelNameBar(channelName = "Android Apprentice")
