@@ -86,24 +86,13 @@ android {
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-
-
-    // Compose
     implementation(composeBom)
-    implementation(libs.androidx.compose.ui.ui)
-    implementation(libs.androidx.compose.ui.ui.graphics)
-    implementation(libs.androidx.compose.ui.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.compose)
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.bundles.unit.tests)
     androidTestImplementation(composeBom)
-    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
+    androidTestImplementation(libs.bundles.instrumented.tests)
+
+    debugImplementation(libs.bundles.compose.debug)
 }
