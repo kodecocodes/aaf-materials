@@ -34,19 +34,9 @@
 
 package com.kodeco.chat.conversation
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -56,15 +46,12 @@ import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -83,11 +70,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -95,34 +78,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.utilities.isoToTimeAgo
-import kotlinx.coroutines.launch
-import java.io.ByteArrayInputStream
-import kotlin.math.floor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -138,12 +105,10 @@ fun ConversationContent(uiState: ConversationUiState) {
       Column(
         Modifier
           .fillMaxSize()
-//          .nestedScroll(scrollBehavior.nestedScrollConnection)
       ) {
         Messages(
           messages = uiState.messages,
           modifier = Modifier.weight(1f)
-//          scrollState = scrollState
         )
         UserInput(onMessageSent = {})
       }
@@ -151,8 +116,6 @@ fun ConversationContent(uiState: ConversationUiState) {
       ChannelNameBar(channelName = "Android Apprentice")
     }
   }
-
-
 }
 
 @Composable
@@ -177,7 +140,6 @@ fun SimpleUserInput() {
     }) {
       Text(text = stringResource(id = R.string.send_button))
     }
-
   }
 }
 
@@ -189,7 +151,6 @@ fun Messages(
 ) {
   Box(modifier = modifier) {
     LazyColumn(
-//      state = scrollState,
       // Add content padding so that the content can be scrolled (y-axis)
       // below the status bar + app bar
       contentPadding =
@@ -218,31 +179,6 @@ fun Messages(
 
 
     }
-    // Jump to bottom button shows up when user scrolls past a threshold.
-    // Convert to pixels:
-//    val jumpThreshold = with(LocalDensity.current) {
-//      JumpToBottomThreshold.toPx()
-//    }
-
-    // Show the button if the first visible item is not the first one or if the offset is
-    // greater than the threshold.
-//    val jumpToBottomButtonEnabled by remember {
-//      derivedStateOf {
-//        scrollState.firstVisibleItemIndex != 0 ||
-//            scrollState.firstVisibleItemScrollOffset > jumpThreshold
-//      }
-//    }
-
-//    JumpToBottom(
-//      // Only show if the scroller is not at the bottom
-//      enabled = jumpToBottomButtonEnabled,
-//      onClicked = {
-//        scope.launch {
-//          scrollState.animateScrollToItem(0)
-//        }
-//      },
-//      modifier = Modifier.align(Alignment.BottomCenter)
-//    )
   }
 }
 
