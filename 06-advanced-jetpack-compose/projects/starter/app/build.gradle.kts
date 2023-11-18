@@ -84,39 +84,31 @@ android {
 }
 
 dependencies {
+    val composeBom = platform(libs.androidx.compose.bom)
 
-    // Support Libraries
-    implementation ("androidx.appcompat:appcompat:1.6.1")
-    implementation ("com.google.android.material:material:1.10.0")
+    implementation(composeBom)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.compose)
+
+    // used by theme
+    implementation (libs.androidx.appcompat)
+    // additional material icons
+    implementation (libs.androidx.material.icons.extended)
 
     // SplashScreen compat library
-    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation (libs.androidx.core.splashscreen)
 
-    // Compose
-    implementation ("androidx.compose.material3:material3:1.1.2")
-    implementation ("androidx.compose.material:material-icons-extended:1.5.4")
-
+    // downloadable fonts
+    implementation(libs.androidx.ui.text.google.fonts)
     //for rememberImagePainter and image loading functionality
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
+    implementation(libs.coil.compose)
 
     // Date Time Library - the latest way to handle dates in Kotlin
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+    implementation(libs.kotlinx.datetime)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation(libs.bundles.unit.tests)
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.bundles.instrumented.tests)
+
+    debugImplementation(libs.bundles.compose.debug)
 }

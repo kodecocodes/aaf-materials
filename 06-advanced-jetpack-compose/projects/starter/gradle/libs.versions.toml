@@ -1,0 +1,65 @@
+[versions]
+# Plugin versions
+android-gradle-plugin = "8.2.0-rc03"
+android-library = "8.1.4"
+appcompat = "1.6.1"
+coil-compose = "2.4.0"
+core-splashscreen = "1.0.1"
+kotlin = "1.9.0"
+
+# Dependency versions
+activity-compose = "1.8.0"
+androidx-compose-bom = "2023.10.01"
+core-ktx = "1.12.0"
+kotlinx-datetime = "0.4.0"
+lifecycle-runtime-ktx = "2.6.2"
+
+# Instrumented tests versions
+androidx-junit = "1.1.5"
+espresso-core = "3.5.1"
+
+# Unit tests versions
+junit = "4.13.2"
+material = "1.10.0"
+material-icons-extended = "1.5.4"
+material3 = "1.1.2"
+ui-text-google-fonts = "1.5.4"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
+androidx-compose-ui-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
+androidx-compose-ui-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
+
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "ui-text-google-fonts" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = {id = "com.android.library", version.ref ="android-library"}
+
+[bundles]
+androidx = ["androidx-activity-compose", "androidx-core-ktx", "androidx-lifecycle-runtime-ktx"]
+compose = ["androidx-compose-material3", "androidx-compose-ui-ui-graphics", "androidx-compose-ui-ui", "androidx-compose-ui-ui-tooling-preview"]
+compose-debug = ["androidx-compose-ui-ui-tooling", "androidx-compose-ui-ui-test-manifest"]
+instrumented-tests = ["androidx-junit", "androidx-espresso-core", "androidx-compose-ui-ui-test-junit4"]
+unit-tests = ["junit"]
