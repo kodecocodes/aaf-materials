@@ -156,32 +156,6 @@ fun ConversationContent(uiState: ConversationUiState) {
 }
 
 @Composable
-fun SimpleUserInput() {
-  val context = LocalContext.current
-  var chatInputText by remember { mutableStateOf("") }
-  var chatOutputText by remember { mutableStateOf(context.getString(R.string.chat_display_default)) }
-  Text(text = chatOutputText)
-
-  Row {
-    OutlinedTextField(
-      value = chatInputText,
-      placeholder = { Text(text = stringResource(id = R.string.chat_entry_default)) },
-      onValueChange = {
-        chatInputText = it
-      },
-    )
-
-    Button(onClick = {
-      chatOutputText = chatInputText
-      chatInputText = ""
-    }) {
-      Text(text = stringResource(id = R.string.send_button))
-    }
-
-  }
-}
-
-@Composable
 fun Messages(
   messages: List<MessageUiModel>,
 //  scrollState: LazyListState,
