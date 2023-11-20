@@ -55,43 +55,43 @@ import com.kodeco.chat.theme.KodecochatTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KodecochatAppBar(
-    modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
-    onNavIconPressed: () -> Unit = { },
-    title: @Composable () -> Unit,
-    actions: @Composable RowScope.() -> Unit = {}
+  modifier: Modifier = Modifier,
+  scrollBehavior: TopAppBarScrollBehavior? = null,
+  onNavIconPressed: () -> Unit = { },
+  title: @Composable () -> Unit,
+  actions: @Composable RowScope.() -> Unit = {}
 ) {
-    CenterAlignedTopAppBar(
-        modifier = modifier,
-        actions = actions,
-        title = title,
-        scrollBehavior = scrollBehavior,
-        navigationIcon = {
-            KodecoChatIcon(
-                contentDescription = stringResource(id = R.string.navigation_drawer_open),
-                modifier = Modifier
-                    .size(64.dp)
-                    .clickable(onClick = onNavIconPressed)
-                    .padding(16.dp)
-            )
-        }
-    )
+  CenterAlignedTopAppBar(
+    modifier = modifier,
+    actions = actions,
+    title = title,
+    scrollBehavior = scrollBehavior,
+    navigationIcon = {
+      KodecoChatIcon(
+        contentDescription = stringResource(id = R.string.navigation_drawer_open),
+        modifier = Modifier
+            .size(64.dp)
+            .clickable(onClick = onNavIconPressed)
+            .padding(16.dp)
+      )
+    }
+  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun KodecochatAppBarPreview() {
-    KodecochatTheme {
-        KodecochatAppBar(title = { Text("Preview!") })
-    }
+  KodecochatTheme {
+    KodecochatAppBar(title = { Text("Preview!") })
+  }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun KodecohatAppBarPreviewDark() {
-    KodecochatTheme(isDarkTheme = true) {
-        KodecochatAppBar(title = { Text("Preview!") })
-    }
+  KodecochatTheme(isDarkTheme = true) {
+    KodecochatAppBar(title = { Text("Preview!") })
+  }
 }
