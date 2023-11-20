@@ -34,7 +34,78 @@
 
 package com.kodeco.chat.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kodeco.chat.conversation.Message
+import com.kodeco.chat.data.DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID
+import com.kodeco.chat.data.model.ChatRoom
+import com.kodeco.chat.data.model.toIso8601String
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import java.util.UUID
 
 class MainViewModel : ViewModel() {
+  /**
+   * hard coding the userID here
+   * ideally you would generate this on first app launch, then store it for future use
+   * see chapter 8 to see how you would store a value like this in Data Store
+   * for example
+   * `userID = userPreferencesRepository.fetchInitialPreferences().currentUserId`
+   */
+  private val userId = UUID.randomUUID().toString()
+
+  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
+    MutableStateFlow(emptyList())
+  }
+
+  private val emptyChatRoom = ChatRoom(
+    id = "public",
+    name = "Android Apprentice",
+    createdOn = Clock.System.now(),
+    messagesCollectionId = DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID,
+    isPrivate = false,
+    collectionID = "public",
+    createdBy = "Kodeco User"
+  )
+
+  private val _currentChatRoom = MutableStateFlow(emptyChatRoom)
+  val currentRoom = _currentChatRoom.asStateFlow()
+
+  fun onCreateNewMessageClick(messageText: String, photoUri: Uri?) {
+    val currentMoment: Instant = Clock.System.now()
+    val message = Message(
+      UUID.randomUUID().toString(),
+      currentMoment,
+      currentRoom.value.id,
+      messageText,
+      userId,
+      photoUri
+    )
+
+    if (message.photoUri == null) {
+      createMessageForRoom(message, currentRoom.value)
+      createMessageForRoom(message, currentRoom.value)
+    }
+  }
+
+  fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
+    val currentMoment: Instant = Clock.System.now()
+    val userID = userId
+    val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
+    val dateString = datetimeInUtc.toIso8601String()
+
+
+
+  }
+
+
+
 }

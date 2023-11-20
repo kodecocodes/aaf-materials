@@ -32,39 +32,9 @@
  * THE SOFTWARE.
  */
 
-package com.kodeco.chat.conversation
+package com.kodeco.chat.data
 
-import android.net.Uri
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.toMutableStateList
-import com.kodeco.chat.R
-import com.kodeco.chat.data.model.MessageUiModel
-import com.kodeco.chat.viewmodel.MainViewModel
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import java.util.UUID
-
-class ConversationUiState(
-  val channelName: String,
-  initialMessages: List<MessageUiModel>,
-  val viewModel: MainViewModel
-) {
-  private val _messages: MutableList<MessageUiModel> = initialMessages.toMutableStateList()
-
-  val messages: List<MessageUiModel> = _messages
-
-  fun addMessage(msg: String, photoUri: Uri?) {
-    viewModel.onCreateNewMessageClick(msg, photoUri)
-  }
-}
-
-@Immutable
-data class Message(
-  val _id: String = UUID.randomUUID().toString(),
-  val createdOn: Instant? = Clock.System.now(),
-  val roomId: String = "public", // "public" is the roomID for the default public chat room
-  val text: String = "test",
-  val userId: String = UUID.randomUUID().toString(),
-  val photoUri: Uri? = null,
-  val authorImage: Int = if (userId == "me") R.drawable.profile_photo_android_developer else R.drawable.someone_else
-)
+/**
+ * collection name for default public room
+ */
+const val DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID = "1440174b9330e430b46da939f0b04a34a40e10ac8073671156da174fef1ffaef" //"Public Room Messages Collection ID"
