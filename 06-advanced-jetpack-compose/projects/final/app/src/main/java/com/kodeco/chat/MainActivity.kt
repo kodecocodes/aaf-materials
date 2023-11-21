@@ -37,17 +37,31 @@ package com.kodeco.chat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import com.kodeco.chat.conversation.ConversationContent
-import com.kodeco.chat.data.exampleUiState
+import com.kodeco.chat.conversation.ConversationUiState
+import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.theme.KodecochatTheme
+import com.kodeco.chat.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
+
+  private val activityViewModel: MainViewModel by viewModels()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      val messages: List<MessageUiModel> = emptyList()
+      val currentUiState =
+        ConversationUiState(
+          channelName = "Android Apprentice",
+          initialMessages = messages,
+          viewModel = activityViewModel
+        )
+
       KodecochatTheme {
         ConversationContent(
-          uiState = exampleUiState
+          currentUiState
         )
       }
     }

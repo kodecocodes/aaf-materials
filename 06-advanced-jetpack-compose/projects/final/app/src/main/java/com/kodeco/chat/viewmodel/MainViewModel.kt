@@ -35,11 +35,15 @@
 package com.kodeco.chat.viewmodel
 
 import android.net.Uri
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.chat.conversation.Message
 import com.kodeco.chat.data.DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID
+import com.kodeco.chat.data.initialMessages
 import com.kodeco.chat.data.model.ChatRoom
+import com.kodeco.chat.data.model.MessageUiModel
+import com.kodeco.chat.data.model.User
 import com.kodeco.chat.data.model.toIso8601String
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,6 +70,13 @@ class MainViewModel : ViewModel() {
     MutableStateFlow(emptyList())
   }
 
+  private val _messages: MutableList<MessageUiModel> = initialMessages.toMutableStateList()
+
+  private val _messagesFlow: MutableStateFlow<List<MessageUiModel>> by lazy {
+    MutableStateFlow(emptyList())
+  }
+  val messages = _messagesFlow.asStateFlow()
+
   private val emptyChatRoom = ChatRoom(
     id = "public",
     name = "Android Apprentice",
@@ -79,6 +90,10 @@ class MainViewModel : ViewModel() {
   private val _currentChatRoom = MutableStateFlow(emptyChatRoom)
   val currentRoom = _currentChatRoom.asStateFlow()
 
+  fun setCurrentChatRoom(newChatChatRoom: ChatRoom) {
+    _currentChatRoom.value = newChatChatRoom
+  }
+
   fun onCreateNewMessageClick(messageText: String, photoUri: Uri?) {
     val currentMoment: Instant = Clock.System.now()
     val message = Message(
@@ -91,18 +106,21 @@ class MainViewModel : ViewModel() {
     )
 
     if (message.photoUri == null) {
-      createMessageForRoom(message, currentRoom.value)
-      createMessageForRoom(message, currentRoom.value)
+      viewModelScope.launch(Dispatchers.Default) {
+        createMessageForRoom(message, currentRoom.value)
+      }
     }
   }
 
-  fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
+  suspend fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
     val currentMoment: Instant = Clock.System.now()
-    val userID = userId
     val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
     val dateString = datetimeInUtc.toIso8601String()
 
-
+    val user = User(userId)
+    val messageUIModel = MessageUiModel(message, user)
+    _messages.add(messageUIModel)
+    _messagesFlow.emit(_messages)
 
   }
 

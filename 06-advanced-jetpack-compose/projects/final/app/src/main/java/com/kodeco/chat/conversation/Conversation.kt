@@ -46,6 +46,8 @@ import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.layout.size
@@ -85,6 +87,7 @@ import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.utilities.isoToTimeAgo
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +110,22 @@ fun ConversationContent(uiState: ConversationUiState) {
           modifier = Modifier.weight(1f)
 //          scrollState = scrollState
         )
-        UserInput(onMessageSent = {})
+        UserInput(onMessageSent = { content ->
+          uiState.addMessage(content, null)
+
+
+        },
+          resetScroll = {
+            scope.launch {
+              scrollState.scrollToItem(0)
+            }
+          },
+          // Use navigationBarsPadding() imePadding() and , to move the input panel above both the
+          // navigation bar, and on-screen keyboard (IME)
+          modifier = Modifier
+            .navigationBarsPadding()
+            .imePadding(),
+        )
       }
       // Channel name bar floats above the messages
       ChannelNameBar(channelName = "Android Apprentice")

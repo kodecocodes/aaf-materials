@@ -63,13 +63,13 @@ private val sampleMessageTexts = listOf(
 private val meUser = User(id = "me", firstName = "Fuad", lastName = "Kamal")
 private val otherUser = User(id = "other", firstName = "Sally", lastName = "Walden")
 
-private val initialMessages = listOf(
+val initialMessages = listOf(
     MessageUiModel(message = sampleMessageTexts[0], user = otherUser, id = "0"),
     MessageUiModel(message = sampleMessageTexts[1], user = meUser, id = "1"),
     MessageUiModel(message = sampleMessageTexts[2], user = otherUser, id = "2")
 )
 
-val exampleUiState = ConversationUiState(
-    initialMessages = initialMessages,
-    channelName = "#Android Apprentice",
-)
+//val exampleUiState = ConversationUiState(
+//    initialMessages = initialMessages,
+//    channelName = "#Android Apprentice",
+//)
