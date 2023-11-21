@@ -45,7 +45,6 @@ import timber.log.Timber.Forest.plant
 
 
 class RecipeApp : Application() {
-  lateinit var prefs: Prefs
   lateinit var securePrefs: SecurePrefs
   lateinit var repository: RecipeRepository
 
@@ -55,8 +54,6 @@ class RecipeApp : Application() {
     if (BuildConfig.DEBUG) {
       plant(Timber.DebugTree())
     }
-
-    prefs = Prefs(this)
 
     securePrefs = SecurePrefs(this)
     val randomPassCode: String
