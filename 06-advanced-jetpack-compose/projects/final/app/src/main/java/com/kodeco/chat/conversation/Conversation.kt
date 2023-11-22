@@ -54,6 +54,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -87,16 +88,21 @@ import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.utilities.isoToTimeAgo
+import com.kodeco.chat.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConversationContent(uiState: ConversationUiState) {
+fun ConversationContent(
+  uiState: ConversationUiState,
+  viewModel: MainViewModel
+  ) {
 
   val scrollState = rememberLazyListState()
   val scope = rememberCoroutineScope()
   val topBarState = rememberTopAppBarState()
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
+
 
   Surface() {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -107,8 +113,8 @@ fun ConversationContent(uiState: ConversationUiState) {
       ) {
         Messages(
           messages = uiState.messages,
-          modifier = Modifier.weight(1f)
-//          scrollState = scrollState
+          scrollState = scrollState,
+          modifier = Modifier.weight(1f),
         )
         UserInput(onMessageSent = { content ->
           uiState.addMessage(content, null)
@@ -136,12 +142,12 @@ fun ConversationContent(uiState: ConversationUiState) {
 @Composable
 fun Messages(
   messages: List<MessageUiModel>,
-//  scrollState: LazyListState,
-  modifier: Modifier = Modifier
+  scrollState: LazyListState,
+  modifier: Modifier = Modifier,
 ) {
   Box(modifier = modifier) {
     LazyColumn(
-//      state = scrollState,
+      state = scrollState,
       // Add content padding so that the content can be scrolled (y-axis)
       // below the status bar + app bar
       contentPadding =
