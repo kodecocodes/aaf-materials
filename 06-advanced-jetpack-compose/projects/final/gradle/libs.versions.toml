@@ -8,10 +8,11 @@ core-splashscreen = "1.0.1"
 kotlin = "1.9.0"
 
 # Dependency versions
-activity-compose = "1.8.0"
+activity-compose = "1.8.1"
 androidx-compose-bom = "2023.10.01"
 core-ktx = "1.12.0"
 kotlinx-datetime = "0.4.0"
+lifecycle-runtime-compose = "2.6.2"
 lifecycle-runtime-ktx = "2.6.2"
 
 # Instrumented tests versions
@@ -30,6 +31,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }

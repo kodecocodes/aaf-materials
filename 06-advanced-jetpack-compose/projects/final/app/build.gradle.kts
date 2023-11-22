@@ -90,6 +90,9 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.compose)
 
+    // compose lifecycle
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // used by theme
     implementation (libs.androidx.appcompat)
     // additional material icons
