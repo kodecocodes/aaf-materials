@@ -109,6 +109,9 @@ dependencies {
     // Date Time Library - the latest way to handle dates in Kotlin
     implementation(libs.kotlinx.datetime)
 
+    // Ditto SDK
+    implementation (libs.ditto)
+
     testImplementation(libs.bundles.unit.tests)
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.bundles.instrumented.tests)
