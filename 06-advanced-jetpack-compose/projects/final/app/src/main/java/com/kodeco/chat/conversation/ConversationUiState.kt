@@ -40,6 +40,7 @@ import androidx.compose.runtime.toMutableStateList
 import com.kodeco.chat.R
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.util.UUID
@@ -52,6 +53,8 @@ class ConversationUiState(
   private val _messages: MutableList<MessageUiModel> = initialMessages.toMutableStateList()
 
   val messages: List<MessageUiModel> = _messages
+  //author ID is set to the user ID - it's used to tell if the message is sent from this user (self) when rendering the UI
+  val authorId: MutableStateFlow<String> = viewModel.currentUserId
 
   fun addMessage(msg: String, photoUri: Uri?) {
     viewModel.onCreateNewMessageClick(msg, photoUri)

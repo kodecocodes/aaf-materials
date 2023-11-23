@@ -84,6 +84,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
 import com.kodeco.chat.data.model.MessageUiModel
@@ -101,7 +102,7 @@ fun ConversationContent(
   val scope = rememberCoroutineScope()
   val topBarState = rememberTopAppBarState()
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
-
+  val authorId = uiState.authorId.collectAsStateWithLifecycle()
 
   Surface() {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -112,6 +113,7 @@ fun ConversationContent(
       ) {
         Messages(
           messages = uiState.messages,
+          authorId = authorId.value,
           scrollState = scrollState,
           modifier = Modifier.weight(1f),
         )
@@ -139,6 +141,7 @@ fun ConversationContent(
 @Composable
 fun Messages(
   messages: List<MessageUiModel>,
+  authorId: String,
   scrollState: LazyListState,
   modifier: Modifier = Modifier,
 ) {
@@ -164,7 +167,7 @@ fun Messages(
         MessageUi(
           onAuthorClick = {  },
           msg = content,
-          authorId = "me",
+          authorId = authorId,
           userId = userId ?: "",
           isFirstMessageByAuthor = isFirstMessageByAuthor,
           isLastMessageByAuthor = isLastMessageByAuthor,
@@ -210,7 +213,7 @@ fun MessageUi(
   isFirstMessageByAuthor: Boolean,
   isLastMessageByAuthor: Boolean,
 ) {
-  val isUserMe = userId == "me" // hard coded for now, next chapter will be = authorId == userId
+  val isUserMe = authorId == userId
   val borderColor = if (isUserMe) {
     MaterialTheme.colorScheme.primary
   } else {

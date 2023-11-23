@@ -65,6 +65,7 @@ class MainViewModel : ViewModel() {
    * `userID = userPreferencesRepository.fetchInitialPreferences().currentUserId`
    */
   private val userId = UUID.randomUUID().toString()
+  var currentUserId = MutableStateFlow(userId)
 
 //  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
 //    MutableStateFlow(emptyList())
@@ -94,6 +95,11 @@ class MainViewModel : ViewModel() {
 //    _currentChatRoom.value = newChatChatRoom
 //  }
 
+//  init {
+//    currentUserId.value = userId
+//  }
+
+
   fun onCreateNewMessageClick(messageText: String, photoUri: Uri?) {
     val currentMoment: Instant = Clock.System.now()
     val message = Message(
@@ -117,7 +123,6 @@ class MainViewModel : ViewModel() {
     val messageUIModel = MessageUiModel(message, user)
     _messages.add(messageUIModel)
     _messagesFlow.emit(_messages)
-
   }
 
 
