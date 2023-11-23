@@ -121,7 +121,8 @@ class MainViewModel : ViewModel() {
   suspend fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
     val user = User(userId)
     val messageUIModel = MessageUiModel(message, user)
-    _messages.add(messageUIModel)
+    // Add to the beginning of the list
+    _messages.add(0, messageUIModel)
     _messagesFlow.emit(_messages)
   }
 

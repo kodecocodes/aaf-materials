@@ -43,6 +43,7 @@
     <string name="textfield_hint">Message #Android Apprentice</string>
     <string name="emojis_label">Emojis</string>
     <string name="stickers_label">Stickers</string>
+    <string name="jumpBottom">Jump to bottom</string>
 
     <!-- Accessibility descriptions -->
     <string name="emoji_selector_desc">Emoji selector</string>

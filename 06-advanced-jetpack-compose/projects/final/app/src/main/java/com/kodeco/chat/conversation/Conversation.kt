@@ -69,16 +69,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LastBaseline
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -89,7 +95,6 @@ import com.kodeco.chat.R
 import com.kodeco.chat.components.KodecochatAppBar
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.utilities.isoToTimeAgo
-import com.kodeco.chat.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,12 +109,18 @@ fun ConversationContent(
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
   val authorId = uiState.authorId.collectAsStateWithLifecycle()
 
+  LaunchedEffect(key1 = uiState.messages) {
+    scope.launch {
+      scrollState.scrollToItem(0)
+    }
+  }
+
   Surface() {
     Box(modifier = Modifier.fillMaxSize()) {
       Column(
         Modifier
           .fillMaxSize()
-//          .nestedScroll(scrollBehavior.nestedScrollConnection)
+          .nestedScroll(scrollBehavior.nestedScrollConnection)
       ) {
         Messages(
           messages = uiState.messages,
@@ -133,7 +144,10 @@ fun ConversationContent(
         )
       }
       // Channel name bar floats above the messages
-      ChannelNameBar(channelName = "Android Apprentice")
+      ChannelNameBar(
+        channelName = uiState.channelName,
+        scrollBehavior = scrollBehavior
+        )
     }
   }
 }
@@ -145,8 +159,10 @@ fun Messages(
   scrollState: LazyListState,
   modifier: Modifier = Modifier,
 ) {
+  val scope = rememberCoroutineScope()
   Box(modifier = modifier) {
     LazyColumn(
+      reverseLayout = true,
       state = scrollState,
       // Add content padding so that the content can be scrolled (y-axis)
       // below the status bar + app bar
@@ -173,34 +189,32 @@ fun Messages(
           isLastMessageByAuthor = isLastMessageByAuthor,
         )
       }
-
-
     }
     // Jump to bottom button shows up when user scrolls past a threshold.
     // Convert to pixels:
-//    val jumpThreshold = with(LocalDensity.current) {
-//      JumpToBottomThreshold.toPx()
-//    }
+    val jumpThreshold = with(LocalDensity.current) {
+      JumpToBottomThreshold.toPx()
+    }
 
     // Show the button if the first visible item is not the first one or if the offset is
     // greater than the threshold.
-//    val jumpToBottomButtonEnabled by remember {
-//      derivedStateOf {
-//        scrollState.firstVisibleItemIndex != 0 ||
-//            scrollState.firstVisibleItemScrollOffset > jumpThreshold
-//      }
-//    }
+    val jumpToBottomButtonEnabled by remember {
+      derivedStateOf {
+        scrollState.firstVisibleItemIndex != 0 ||
+            scrollState.firstVisibleItemScrollOffset > jumpThreshold
+      }
+    }
 
-//    JumpToBottom(
-//      // Only show if the scroller is not at the bottom
-//      enabled = jumpToBottomButtonEnabled,
-//      onClicked = {
-//        scope.launch {
-//          scrollState.animateScrollToItem(0)
-//        }
-//      },
-//      modifier = Modifier.align(Alignment.BottomCenter)
-//    )
+    JumpToBottom(
+      // Only show if the scroller is not at the bottom
+      enabled = jumpToBottomButtonEnabled,
+      onClicked = {
+        scope.launch {
+          scrollState.animateScrollToItem(0)
+        }
+      },
+      modifier = Modifier.align(Alignment.BottomCenter)
+    )
   }
 }
 
@@ -373,13 +387,20 @@ fun ClickableMessage(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelNameBar(channelName: String) {
+fun ChannelNameBar(
+  channelName: String,
+  modifier: Modifier = Modifier,
+  scrollBehavior: TopAppBarScrollBehavior? = null
+  ) {
   KodecochatAppBar(
+    modifier = modifier,
+    scrollBehavior = scrollBehavior,
     title = {
       Column(horizontalAlignment = Alignment.CenterHorizontally) {
         // Channel name
         Text(
           text = channelName,
+          style = MaterialTheme.typography.titleMedium
         )
       }
     },
@@ -397,3 +418,5 @@ fun ChannelNameBar(channelName: String) {
     }
   )
 }
+
+private val JumpToBottomThreshold = 56.dp
