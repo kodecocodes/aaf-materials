@@ -95,7 +95,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConversationContent(
   uiState: ConversationUiState,
-  viewModel: MainViewModel
   ) {
 
   val scrollState = rememberLazyListState()
@@ -118,8 +117,6 @@ fun ConversationContent(
         )
         UserInput(onMessageSent = { content ->
           uiState.addMessage(content, null)
-
-
         },
           resetScroll = {
             scope.launch {

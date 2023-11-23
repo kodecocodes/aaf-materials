@@ -59,8 +59,7 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-
-      val messagesWithUsers by viewModel.messages.collectAsStateWithLifecycle() //: List<MessageUiModel> = emptyList()
+      val messagesWithUsers by viewModel.messages.collectAsStateWithLifecycle()
       val currentUiState =
         ConversationUiState(
           channelName = "Android Apprentice",
@@ -71,7 +70,6 @@ class MainActivity : ComponentActivity() {
       KodecochatTheme {
         ConversationContent(
           currentUiState,
-          viewModel
         )
       }
     }

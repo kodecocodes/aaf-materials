@@ -66,9 +66,9 @@ class MainViewModel : ViewModel() {
    */
   private val userId = UUID.randomUUID().toString()
 
-  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
-    MutableStateFlow(emptyList())
-  }
+//  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
+//    MutableStateFlow(emptyList())
+//  }
 
   private val _messages: MutableList<MessageUiModel> = initialMessages.toMutableStateList()
 
@@ -90,9 +90,9 @@ class MainViewModel : ViewModel() {
   private val _currentChatRoom = MutableStateFlow(emptyChatRoom)
   val currentRoom = _currentChatRoom.asStateFlow()
 
-  fun setCurrentChatRoom(newChatChatRoom: ChatRoom) {
-    _currentChatRoom.value = newChatChatRoom
-  }
+//  fun setCurrentChatRoom(newChatChatRoom: ChatRoom) {
+//    _currentChatRoom.value = newChatChatRoom
+//  }
 
   fun onCreateNewMessageClick(messageText: String, photoUri: Uri?) {
     val currentMoment: Instant = Clock.System.now()
@@ -113,10 +113,6 @@ class MainViewModel : ViewModel() {
   }
 
   suspend fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
-    val currentMoment: Instant = Clock.System.now()
-    val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
-    val dateString = datetimeInUtc.toIso8601String()
-
     val user = User(userId)
     val messageUIModel = MessageUiModel(message, user)
     _messages.add(messageUIModel)
