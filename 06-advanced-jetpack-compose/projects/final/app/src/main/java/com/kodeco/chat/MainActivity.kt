@@ -38,19 +38,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.kodeco.chat.conversation.ConversationContent
 import com.kodeco.chat.conversation.ConversationUiState
-import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.theme.KodecochatTheme
 import com.kodeco.chat.viewmodel.MainViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import live.ditto.transports.DittoSyncPermissions
 
 class MainActivity : ComponentActivity() {
 
@@ -73,6 +67,15 @@ class MainActivity : ComponentActivity() {
         )
       }
     }
+    checkPermissions()
   }
+
+  fun checkPermissions() {
+    val missing = DittoSyncPermissions(this).missingPermissions()
+    if (missing.isNotEmpty()) {
+      this.requestPermissions(missing, 0)
+    }
+  }
+
 }
 
