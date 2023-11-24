@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 /*
  * Copyright (c) 2023 Kodeco Inc.
  *
@@ -37,6 +40,11 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val keysPropertiesFile: File = rootProject.file("keys.properties")
+val keysProperties = Properties()
+
+keysProperties.load(FileInputStream(keysPropertiesFile))
+
 android {
     namespace = "com.kodeco.chat"
     compileSdk = 34
@@ -61,6 +69,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug{
+            buildConfigField("String","DITTO_APP_ID", keysProperties["DITTO_APP_ID"] as String)
+            buildConfigField("String","DITTO_TOKEN", keysProperties["DITTO_TOKEN"] as String)
         }
     }
     compileOptions {
