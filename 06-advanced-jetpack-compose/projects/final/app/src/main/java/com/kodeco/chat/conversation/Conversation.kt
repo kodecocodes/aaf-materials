@@ -101,7 +101,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ConversationContent(
   uiState: ConversationUiState,
-  ) {
+) {
 
   val scrollState = rememberLazyListState()
   val scope = rememberCoroutineScope()
@@ -128,9 +128,10 @@ fun ConversationContent(
           scrollState = scrollState,
           modifier = Modifier.weight(1f),
         )
-        UserInput(onMessageSent = { content ->
-          uiState.addMessage(content, null)
-        },
+        UserInput(
+          onMessageSent = { content ->
+            uiState.addMessage(content, null)
+          },
           resetScroll = {
             scope.launch {
               scrollState.scrollToItem(0)
@@ -147,7 +148,7 @@ fun ConversationContent(
       ChannelNameBar(
         channelName = uiState.channelName,
         scrollBehavior = scrollBehavior
-        )
+      )
     }
   }
 }
@@ -173,7 +174,7 @@ fun Messages(
     ) {
       itemsIndexed(
         items = messages,
-        key= { _, message -> message.id }
+        key = { _, message -> message.id }
       ) { index, content ->
         val prevAuthor = messages.getOrNull(index - 1)?.message?.userId
         val nextAuthor = messages.getOrNull(index + 1)?.message?.userId
@@ -181,7 +182,7 @@ fun Messages(
         val isFirstMessageByAuthor = prevAuthor != content.message.userId
         val isLastMessageByAuthor = nextAuthor != content.message.userId
         MessageUi(
-          onAuthorClick = {  },
+          onAuthorClick = { },
           msg = content,
           authorId = authorId,
           userId = userId ?: "",
@@ -234,7 +235,8 @@ fun MessageUi(
     MaterialTheme.colorScheme.tertiary
   }
 
-  val authorImageId: Int = if (isUserMe) R.drawable.profile_photo_android_developer else R.drawable.someone_else
+  val authorImageId: Int =
+    if (isUserMe) R.drawable.profile_photo_android_developer else R.drawable.someone_else
   val spaceBetweenAuthors = if (isLastMessageByAuthor) Modifier.padding(top = 8.dp) else Modifier
   Row(modifier = spaceBetweenAuthors) {
     if (isLastMessageByAuthor) {
@@ -285,7 +287,8 @@ fun AuthorAndTextMessage(
     ChatItemBubble(
       msg.message,
       isUserMe,
-      authorClicked = authorClicked)
+      authorClicked = authorClicked
+    )
     if (isFirstMessageByAuthor) {
       // Last bubble before next author
       Spacer(modifier = Modifier.height(8.dp))
@@ -391,7 +394,7 @@ fun ChannelNameBar(
   channelName: String,
   modifier: Modifier = Modifier,
   scrollBehavior: TopAppBarScrollBehavior? = null
-  ) {
+) {
   KodecochatAppBar(
     modifier = modifier,
     scrollBehavior = scrollBehavior,
