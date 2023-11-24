@@ -44,16 +44,12 @@ import com.kodeco.chat.data.initialMessages
 import com.kodeco.chat.data.model.ChatRoom
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.data.model.User
-import com.kodeco.chat.data.model.toIso8601String
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import java.util.UUID
 
 class MainViewModel : ViewModel() {
@@ -125,7 +121,6 @@ class MainViewModel : ViewModel() {
     _messages.add(0, messageUIModel)
     _messagesFlow.emit(_messages)
   }
-
 
 
 }
