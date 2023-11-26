@@ -40,10 +40,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kodeco.chat.DittoHandler.Companion.ditto
 import com.kodeco.chat.conversation.ConversationContent
 import com.kodeco.chat.conversation.ConversationUiState
 import com.kodeco.chat.theme.KodecochatTheme
 import com.kodeco.chat.viewmodel.MainViewModel
+import live.ditto.Ditto
+import live.ditto.DittoIdentity
+import live.ditto.DittoLogLevel
+import live.ditto.DittoLogger
+import live.ditto.android.DefaultAndroidDittoDependencies
 import live.ditto.transports.DittoSyncPermissions
 
 class MainActivity : ComponentActivity() {
@@ -68,6 +74,7 @@ class MainActivity : ComponentActivity() {
       }
     }
     checkPermissions()
+    setupDitto()
   }
 
   fun checkPermissions() {
@@ -75,6 +82,15 @@ class MainActivity : ComponentActivity() {
     if (missing.isNotEmpty()) {
       this.requestPermissions(missing, 0)
     }
+  }
+  private fun setupDitto() {
+    val androidDependencies = DefaultAndroidDittoDependencies(applicationContext)
+    DittoLogger.minimumLogLevel = DittoLogLevel.DEBUG
+    ditto = Ditto(
+      androidDependencies,
+      DittoIdentity.OnlinePlayground(androidDependencies, appId = BuildConfig.DITTO_APP_ID, token = BuildConfig.DITTO_TOKEN)
+    )
+    ditto.startSync()
   }
 
 }

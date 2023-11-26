@@ -42,7 +42,6 @@ plugins {
 
 val keysPropertiesFile: File = rootProject.file("keys.properties")
 val keysProperties = Properties()
-
 keysProperties.load(FileInputStream(keysPropertiesFile))
 
 android {
@@ -69,6 +68,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String","DITTO_APP_ID", keysProperties["DITTO_APP_ID"] as String)
+            buildConfigField("String","DITTO_TOKEN", keysProperties["DITTO_TOKEN"] as String)
         }
         debug{
             buildConfigField("String","DITTO_APP_ID", keysProperties["DITTO_APP_ID"] as String)
@@ -84,6 +85,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
