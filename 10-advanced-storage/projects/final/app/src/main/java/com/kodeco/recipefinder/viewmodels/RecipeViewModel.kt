@@ -109,7 +109,7 @@ class RecipeViewModel(private val prefs: SecurePrefs, private val repository: Re
     }
   }
 
-  fun queryRecipies(
+  fun queryRecipes(
     query: String,
     offset: Int,
     number: Int = PAGE_SIZE

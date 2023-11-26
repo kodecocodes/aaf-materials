@@ -112,7 +112,7 @@ class RecipeViewModel(
     }
   }
 
-  fun queryRecipies(
+  fun queryRecipes(
     query: String,
     offset: Int,
     number: Int = PAGE_SIZE
