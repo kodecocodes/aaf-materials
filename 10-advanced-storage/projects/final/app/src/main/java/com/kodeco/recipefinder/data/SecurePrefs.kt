@@ -38,7 +38,7 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
-class SecurePrefs(val context: Context) {
+class SecurePrefs(context: Context) {
   private val prefs: SharedPreferences
 
   init {
@@ -65,7 +65,7 @@ class SecurePrefs(val context: Context) {
     prefs.edit().putInt(key, value).apply()
   }
 
-  fun getInt(key: String): Int? {
+  fun getInt(key: String): Int {
     return prefs.getInt(key, 0)
   }
 
