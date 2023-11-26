@@ -77,12 +77,13 @@ class MainActivity : ComponentActivity() {
     setupDitto()
   }
 
-  fun checkPermissions() {
+  private fun checkPermissions() {
     val missing = DittoSyncPermissions(this).missingPermissions()
     if (missing.isNotEmpty()) {
       this.requestPermissions(missing, 0)
     }
   }
+
   private fun setupDitto() {
     val androidDependencies = DefaultAndroidDittoDependencies(applicationContext)
     DittoLogger.minimumLogLevel = DittoLogLevel.DEBUG
