@@ -38,11 +38,20 @@ import android.net.Uri
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.toMutableStateList
 import com.kodeco.chat.R
+import com.kodeco.chat.data.createdOnKey
+import com.kodeco.chat.data.dbIdKey
 import com.kodeco.chat.data.model.MessageUiModel
+import com.kodeco.chat.data.model.toInstant
+import com.kodeco.chat.data.roomIdKey
+import com.kodeco.chat.data.textKey
+import com.kodeco.chat.data.thumbnailKey
+import com.kodeco.chat.data.userIdKey
 import com.kodeco.chat.viewmodel.MainViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import live.ditto.DittoAttachmentToken
+import live.ditto.DittoDocument
 import java.util.UUID
 
 class ConversationUiState(
@@ -58,7 +67,7 @@ class ConversationUiState(
   val authorId: MutableStateFlow<String> = viewModel.currentUserId
 
   fun addMessage(msg: String, photoUri: Uri?) {
-    viewModel.onCreateNewMessageClick(msg, photoUri)
+    viewModel.onCreateNewMessageClick(msg, photoUri, null)
   }
 }
 
@@ -69,6 +78,16 @@ data class Message(
   val roomId: String = "public", // "public" is the roomID for the default public chat room
   val text: String = "test",
   val userId: String = UUID.randomUUID().toString(),
+  val attachmentToken: DittoAttachmentToken?,
   val photoUri: Uri? = null,
   val authorImage: Int = if (userId == "me") R.drawable.profile_photo_android_developer else R.drawable.someone_else
-)
+){
+  constructor(document: DittoDocument) :this(
+    document[dbIdKey].stringValue,
+    document[createdOnKey].stringValue.toInstant(),
+    document[roomIdKey].stringValue,
+    document[textKey].stringValue,
+    document[userIdKey].stringValue,
+    document[thumbnailKey].attachmentToken
+  )
+}

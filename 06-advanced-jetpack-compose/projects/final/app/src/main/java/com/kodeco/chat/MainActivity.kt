@@ -43,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kodeco.chat.DittoHandler.Companion.ditto
 import com.kodeco.chat.conversation.ConversationContent
 import com.kodeco.chat.conversation.ConversationUiState
+import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.theme.KodecochatTheme
 import com.kodeco.chat.viewmodel.MainViewModel
 import live.ditto.Ditto
@@ -59,11 +60,14 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      val messagesWithUsers by viewModel.messages.collectAsStateWithLifecycle()
+      val messagesWithUsers: List<MessageUiModel> by viewModel
+        .roomMessagesWithUsersFlow
+        .collectAsStateWithLifecycle(initialValue = emptyList())
+
       val currentUiState =
         ConversationUiState(
           channelName = "Android Apprentice",
-          initialMessages = messagesWithUsers,
+          initialMessages = messagesWithUsers.asReversed(),
           viewModel = viewModel
         )
 

@@ -39,3 +39,56 @@ package com.kodeco.chat.data
  */
 const val DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID =
   "1440174b9330e430b46da939f0b04a34a40e10ac8073671156da174fef1ffaef" //"Public Room Messages Collection ID"
+
+// Model Keys
+const val collectionIdKey = "collectionId"
+const val createdByKey = "createdBy"
+const val createdOnKey = "createdOn"
+const val dbIdKey = "_id"
+const val firstNameKey = "firstName"
+const val idKey = "id"
+const val isArchivedKey = "isArchived"
+const val isPrivateKey = "isPrivate"
+const val lastNameKey = "lastName"
+const val messagesIdKey = "messagesId"
+const val messagesKey = "messages"
+const val nameKey = "name"
+const val privateRoomsKey = "privateRooms"
+const val publicKey = "public"
+const val roomIdKey = "roomId"
+const val publicRoomsCollectionId = "rooms"
+const val textKey = "text"
+const val userIdKey = "userId"
+const val userIdsKey = "userIds"
+const val usersKey = "users"
+const val thumbnailKey = "thumbnailImageToken"
+const val metadataFilenameKey = "filename"
+const val metadataFileformatKey = "fileformat"
+const val metadataTimestampKey = "timestamp"
+const val metadataFilesizeKey = "filesize"
+
+// UI Keys
+const val appTitleKey = "Ditto Chat"
+const val cancelTitleKey = "Cancel"
+const val firstNameTitleKey = "First Name"
+const val lastNameTitleKey = "Last Name"
+const val messageTitleKey = "Message"
+const val messagesTitleKey = "Messages"
+const val newRoomTitleKey = "New Room"
+const val profileTitleKey  = "Profile"
+const val publicRoomTitleKey = "Public Room"
+const val saveChangesTitleKey = "Save Changes"
+const val scanPrivateRoomTitleKey = "Scan Private Room"
+
+// UserDefaults Keys
+const val archivedPublicRoomsKey = "archivedPublicRooms"
+const val publicRoomsIDArchiveKey = "publicRoomsIDArchive"
+const val archivedPrivateRoomsKey = "archivedPrivateRooms"
+const val privateRoomsIDArchiveKey = "privateRoomsIDArchive"
+
+// Image Keys
+const val arrowUpKey = "arrow.up"
+const val messageKey = "message"
+const val messageFillKey = "message.fill"
+const val personCircleKey = "person.circle"
+const val plusMessageFillKey = "plus.message.fill"

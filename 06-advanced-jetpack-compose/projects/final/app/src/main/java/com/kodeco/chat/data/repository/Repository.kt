@@ -53,6 +53,7 @@ interface Repository {
   // messages
   fun getAllMessagesForRoom(chatRoom: ChatRoom): Flow<List<Message>>
   suspend fun createMessageForRoom(
+    userId: String,
     message: Message,
     chatRoom: ChatRoom,
     attachment: DittoAttachment?
@@ -65,7 +66,7 @@ interface Repository {
   // users
   suspend fun addUser(user: User)
   fun getAllUsers(): Flow<List<User>>
-  suspend fun saveCurrentUser(firstName: String, lastName: String)
+  suspend fun saveCurrentUser(userId: String, firstName: String, lastName: String)
 
   // rooms
   suspend fun createRoom(name: String, isPrivate: Boolean = false, userId: String = "Ditto System")
@@ -73,7 +74,7 @@ interface Repository {
   suspend fun archivePublicRoom(chatRoom: ChatRoom)
   suspend fun unarchivePublicRoom(chatRoom: ChatRoom)
 
-  suspend fun saveRoom(chatRoom: ChatRoom)
+//  suspend fun saveRoom(chatRoom: ChatRoom)
 
-  suspend fun getAllPrivateRooms(): Flow<List<ChatRoom>>
+//  suspend fun getAllPrivateRooms(): Flow<List<ChatRoom>>
 }
