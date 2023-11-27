@@ -40,7 +40,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.chat.conversation.Message
 import com.kodeco.chat.data.DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID
-import com.kodeco.chat.data.initialMessages
 import com.kodeco.chat.data.model.ChatRoom
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.data.model.User
