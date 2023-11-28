@@ -35,7 +35,6 @@
 package com.kodeco.chat.viewmodel
 
 import android.net.Uri
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.chat.conversation.Message
@@ -71,17 +70,6 @@ class MainViewModel : ViewModel() {
 
   private val repository = RepositoryImpl.getInstance()
 
-//  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
-//    MutableStateFlow(emptyList())
-//  }
-
-//  private val _messages: MutableList<MessageUiModel>
-
-  private val _messagesFlow: MutableStateFlow<List<MessageUiModel>> by lazy {
-    MutableStateFlow(emptyList())
-  }
-  val messages = _messagesFlow.asStateFlow()
-
   private val emptyChatRoom = ChatRoom(
     id = "public",
     name = "Android Apprentice",
@@ -99,7 +87,7 @@ class MainViewModel : ViewModel() {
   val roomMessagesWithUsersFlow: Flow<List<MessageUiModel>> = combine(
     repository.getAllUsers(),
     repository.getAllMessagesForRoom(currentRoom.value)
-  ) { users: List<User>, messages:List<Message> ->
+  ) { users: List<User>, messages: List<Message> ->
 
     messages.map {
       MessageUiModel.invoke(
@@ -110,10 +98,10 @@ class MainViewModel : ViewModel() {
   }
 
   init {
-      // user initialziation - we use the device name for the user's name
-      val firstName = "My"
-      val lastName = android.os.Build.MODEL
-      updateUserInfo(firstName, lastName)
+    // user initialziation - we use the device name for the user's name
+    val firstName = "My"
+    val lastName = android.os.Build.MODEL
+    updateUserInfo(firstName, lastName)
   }
 
   fun updateUserInfo(firstName: String = this.firstName, lastName: String = this.lastName) {
@@ -122,7 +110,11 @@ class MainViewModel : ViewModel() {
     }
   }
 
-  fun onCreateNewMessageClick(messageText: String, photoUri: Uri?, attachmentToken: DittoAttachmentToken?) {
+  fun onCreateNewMessageClick(
+    messageText: String,
+    photoUri: Uri?,
+    attachmentToken: DittoAttachmentToken?
+  ) {
     val currentMoment: Instant = Clock.System.now()
     val message = Message(
       UUID.randomUUID().toString(),
@@ -140,6 +132,4 @@ class MainViewModel : ViewModel() {
       }
     }
   }
-
-
 }
