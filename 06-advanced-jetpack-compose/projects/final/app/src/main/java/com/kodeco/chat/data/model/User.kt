@@ -34,21 +34,11 @@
 
 package com.kodeco.chat.data.model
 
-import com.kodeco.chat.data.dbIdKey
-import com.kodeco.chat.data.firstNameKey
-import com.kodeco.chat.data.lastNameKey
-import live.ditto.DittoDocument
 import java.util.UUID
 
 data class User(
-  val id: String = UUID.randomUUID().toString(),
-  val firstName: String = "",
-  val lastName: String = "",
-  val fullName: String = firstName + " " + lastName
-){
-  constructor(document: DittoDocument) :this(
-    document[dbIdKey].stringValue,
-    document[firstNameKey].stringValue,
-    document[lastNameKey].stringValue
-  )
-}
+    val id: String = UUID.randomUUID().toString(),
+    val firstName: String = "",
+    val lastName: String = "",
+    val fullName: String = firstName + " " + lastName
+)

@@ -5,7 +5,6 @@ android-library = "8.1.4"
 appcompat = "1.6.1"
 coil-compose = "2.4.0"
 core-splashscreen = "1.0.1"
-ditto = "4.4.5"
 kotlin = "1.9.0"
 
 # Dependency versions
@@ -51,7 +50,6 @@ androidx-material-icons-extended = { module = "androidx.compose.material:materia
 androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "ui-text-google-fonts" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
-ditto = { module = "live.ditto:ditto", version.ref = "ditto" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 material = { module = "com.google.android.material:material", version.ref = "material" }

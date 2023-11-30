@@ -35,23 +35,25 @@
 package com.kodeco.chat.viewmodel
 
 import android.net.Uri
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kodeco.chat.conversation.Message
 import com.kodeco.chat.data.DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID
+import com.kodeco.chat.data.initialMessages
 import com.kodeco.chat.data.model.ChatRoom
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.data.model.User
+import com.kodeco.chat.data.model.toIso8601String
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import live.ditto.DittoAttachmentToken
-import live.dittolive.chat.data.repository.RepositoryImpl
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import java.util.UUID
 
 class MainViewModel : ViewModel() {
@@ -65,10 +67,16 @@ class MainViewModel : ViewModel() {
   private val userId = UUID.randomUUID().toString()
   var currentUserId = MutableStateFlow(userId)
 
-  private var firstName: String = ""
-  private var lastName: String = ""
+//  private val allMessagesForRoom: MutableStateFlow<List<Message>> by lazy {
+//    MutableStateFlow(emptyList())
+//  }
 
-  private val repository = RepositoryImpl.getInstance()
+  private val _messages: MutableList<MessageUiModel> = initialMessages.toMutableStateList()
+
+  private val _messagesFlow: MutableStateFlow<List<MessageUiModel>> by lazy {
+    MutableStateFlow(emptyList())
+  }
+  val messages = _messagesFlow.asStateFlow()
 
   private val emptyChatRoom = ChatRoom(
     id = "public",
@@ -83,38 +91,16 @@ class MainViewModel : ViewModel() {
   private val _currentChatRoom = MutableStateFlow(emptyChatRoom)
   val currentRoom = _currentChatRoom.asStateFlow()
 
-  // messages for a particular chat room
-  val roomMessagesWithUsersFlow: Flow<List<MessageUiModel>> = combine(
-    repository.getAllUsers(),
-    repository.getAllMessagesForRoom(currentRoom.value)
-  ) { users: List<User>, messages: List<Message> ->
+//  fun setCurrentChatRoom(newChatChatRoom: ChatRoom) {
+//    _currentChatRoom.value = newChatChatRoom
+//  }
 
-    messages.map {
-      MessageUiModel.invoke(
-        message = it,
-        users = users
-      )
-    }
-  }
+//  init {
+//    currentUserId.value = userId
+//  }
 
-  init {
-    // user initialziation - we use the device name for the user's name
-    val firstName = "My"
-    val lastName = android.os.Build.MODEL
-    updateUserInfo(firstName, lastName)
-  }
 
-  fun updateUserInfo(firstName: String = this.firstName, lastName: String = this.lastName) {
-    viewModelScope.launch {
-      repository.saveCurrentUser(userId, firstName, lastName)
-    }
-  }
-
-  fun onCreateNewMessageClick(
-    messageText: String,
-    photoUri: Uri?,
-    attachmentToken: DittoAttachmentToken?
-  ) {
+  fun onCreateNewMessageClick(messageText: String, photoUri: Uri?) {
     val currentMoment: Instant = Clock.System.now()
     val message = Message(
       UUID.randomUUID().toString(),
@@ -122,14 +108,24 @@ class MainViewModel : ViewModel() {
       currentRoom.value.id,
       messageText,
       userId,
-      attachmentToken,
       photoUri
     )
 
     if (message.photoUri == null) {
       viewModelScope.launch(Dispatchers.Default) {
-        repository.createMessageForRoom(userId, message, currentRoom.value, null)
+        createMessageForRoom(message, currentRoom.value)
       }
     }
   }
+
+  suspend fun createMessageForRoom(message: Message, chatRoom: ChatRoom) {
+    val user = User(userId)
+    val messageUIModel = MessageUiModel(message, user)
+    // Add to the beginning of the list
+    _messages.add(0, messageUIModel)
+    _messagesFlow.emit(_messages)
+  }
+
+
+
 }

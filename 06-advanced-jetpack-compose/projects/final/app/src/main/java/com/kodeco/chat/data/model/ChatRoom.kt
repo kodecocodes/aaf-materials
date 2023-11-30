@@ -35,34 +35,16 @@
 package com.kodeco.chat.data.model
 
 import androidx.compose.runtime.Immutable
-import com.kodeco.chat.data.collectionIdKey
-import com.kodeco.chat.data.createdByKey
-import com.kodeco.chat.data.createdOnKey
-import com.kodeco.chat.data.dbIdKey
-import com.kodeco.chat.data.isPrivateKey
-import com.kodeco.chat.data.messagesIdKey
-import com.kodeco.chat.data.nameKey
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import live.ditto.DittoDocument
 
 @Immutable
 data class ChatRoom(
-  val id: String,
-  val name: String,
-  val createdOn: Instant? = Clock.System.now(),
-  val messagesCollectionId: String,
-  val isPrivate: Boolean = false,
-  val collectionID: String?,
-  val createdBy: String
-){
-  constructor(document: DittoDocument) :this(
-    document[dbIdKey].stringValue,
-    document[nameKey].stringValue,
-    document[createdOnKey].stringValue.toInstant(),
-    document[messagesIdKey].stringValue,
-    document[isPrivateKey].booleanValue,
-    document[collectionIdKey].stringValue,
-    document[createdByKey].stringValue,
-  )
-}
+    val id: String,
+    val name: String,
+    val createdOn: Instant? = Clock.System.now(),
+    val messagesCollectionId: String,
+    val isPrivate: Boolean = false,
+    val collectionID : String?,
+    val createdBy: String
+)

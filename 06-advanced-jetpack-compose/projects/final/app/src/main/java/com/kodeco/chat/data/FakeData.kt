@@ -32,49 +32,44 @@
  * THE SOFTWARE.
  */
 
-package live.dittolive.chat.data.repository
+package com.kodeco.chat.data
 
+import com.kodeco.chat.conversation.ConversationUiState
 import com.kodeco.chat.conversation.Message
-import com.kodeco.chat.data.model.ChatRoom
+import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.data.model.User
-import kotlinx.coroutines.flow.Flow
-import live.ditto.DittoAttachment
+import kotlinx.datetime.Instant
 
-/**
- * Interface for communication with Ditto Layer
- */
-interface Repository {
+private val sampleMessageTexts = listOf(
+    Message(
+        roomId = "Android Apprentice",
+        createdOn = Instant.parse("2023-11-16T05:48:01Z"),
+        text = "Hey what do you think of this new Android Apprentice book 📖 from https://Kodeco.com ?",
+        userId = "other"
+    ),
+    Message(
+        roomId = "Android Apprentice",
+        createdOn = Instant.parse("2023-11-17T05:48:01Z"),
+        text = "it's pretty 😍 awesome 💯😎. I learned how to make some cool apps including this chat app! 😄🤩🎉",
+        userId = "me"
+    ),
+    Message(
+        roomId = "Android Apprentice",
+        text = "Wow!",
+        userId = "other"
+    ),
+)
 
-  fun getDittoSdkVersion(): String
+private val meUser = User(id = "me", firstName = "Fuad", lastName = "Kamal")
+private val otherUser = User(id = "other", firstName = "Sally", lastName = "Walden")
 
-  // rooms
-  fun getAllPublicRooms(): Flow<List<ChatRoom>>
+val initialMessages = listOf(
+    MessageUiModel(message = sampleMessageTexts[2], user = otherUser, id = "2"),
+    MessageUiModel(message = sampleMessageTexts[1], user = meUser, id = "1"),
+    MessageUiModel(message = sampleMessageTexts[0], user = otherUser, id = "0")
+)
 
-  // messages
-  fun getAllMessagesForRoom(chatRoom: ChatRoom): Flow<List<Message>>
-  suspend fun createMessageForRoom(
-    userId: String,
-    message: Message,
-    chatRoom: ChatRoom,
-    attachment: DittoAttachment?
-  )
-
-  suspend fun deleteMessage(id: Long)
-
-  suspend fun deleteMessages(messageIds: List<Long>)
-
-  // users
-  suspend fun addUser(user: User)
-  fun getAllUsers(): Flow<List<User>>
-  suspend fun saveCurrentUser(userId: String, firstName: String, lastName: String)
-
-  // rooms
-  suspend fun createRoom(name: String, isPrivate: Boolean = false, userId: String = "Ditto System")
-  suspend fun publicRoomForId(roomId: String): ChatRoom
-  suspend fun archivePublicRoom(chatRoom: ChatRoom)
-  suspend fun unarchivePublicRoom(chatRoom: ChatRoom)
-
-//  suspend fun saveRoom(chatRoom: ChatRoom)
-
-//  suspend fun getAllPrivateRooms(): Flow<List<ChatRoom>>
-}
+//val exampleUiState = ConversationUiState(
+//    initialMessages = initialMessages,
+//    channelName = "#Android Apprentice",
+//)
