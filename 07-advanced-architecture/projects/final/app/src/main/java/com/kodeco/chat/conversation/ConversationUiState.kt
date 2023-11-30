@@ -81,8 +81,8 @@ data class Message(
   val attachmentToken: DittoAttachmentToken?,
   val photoUri: Uri? = null,
   val authorImage: Int = if (userId == "me") R.drawable.profile_photo_android_developer else R.drawable.someone_else
-){
-  constructor(document: DittoDocument) :this(
+) {
+  constructor(document: DittoDocument) : this(
     document[dbIdKey].stringValue,
     document[createdOnKey].stringValue.toInstant(),
     document[roomIdKey].stringValue,

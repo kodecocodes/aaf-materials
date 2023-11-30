@@ -93,7 +93,11 @@ class MainActivity : ComponentActivity() {
     DittoLogger.minimumLogLevel = DittoLogLevel.DEBUG
     ditto = Ditto(
       androidDependencies,
-      DittoIdentity.OnlinePlayground(androidDependencies, appId = BuildConfig.DITTO_APP_ID, token = BuildConfig.DITTO_TOKEN)
+      DittoIdentity.OnlinePlayground(
+        androidDependencies,
+        appId = BuildConfig.DITTO_APP_ID,
+        token = BuildConfig.DITTO_TOKEN
+      )
     )
     ditto.startSync()
   }

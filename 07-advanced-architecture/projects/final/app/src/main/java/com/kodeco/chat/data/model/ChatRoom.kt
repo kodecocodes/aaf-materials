@@ -55,8 +55,8 @@ data class ChatRoom(
   val isPrivate: Boolean = false,
   val collectionID: String?,
   val createdBy: String
-){
-  constructor(document: DittoDocument) :this(
+) {
+  constructor(document: DittoDocument) : this(
     document[dbIdKey].stringValue,
     document[nameKey].stringValue,
     document[createdOnKey].stringValue.toInstant(),

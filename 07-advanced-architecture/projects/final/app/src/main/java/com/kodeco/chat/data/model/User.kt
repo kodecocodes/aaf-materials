@@ -45,8 +45,8 @@ data class User(
   val firstName: String = "",
   val lastName: String = "",
   val fullName: String = firstName + " " + lastName
-){
-  constructor(document: DittoDocument) :this(
+) {
+  constructor(document: DittoDocument) : this(
     document[dbIdKey].stringValue,
     document[firstNameKey].stringValue,
     document[lastNameKey].stringValue
