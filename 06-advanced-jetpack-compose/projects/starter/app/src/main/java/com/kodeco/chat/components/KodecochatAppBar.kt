@@ -70,9 +70,9 @@ fun KodecochatAppBar(
       KodecoChatIcon(
         contentDescription = stringResource(id = R.string.navigation_drawer_open),
         modifier = Modifier
-            .size(64.dp)
-            .clickable(onClick = onNavIconPressed)
-            .padding(16.dp)
+          .size(64.dp)
+          .clickable(onClick = onNavIconPressed)
+          .padding(16.dp)
       )
     }
   )

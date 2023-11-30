@@ -33,8 +33,8 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#006837</color>
-    <color name="colorPrimaryDark">#004012</color>
-    <color name="colorAccent">#c75f00</color>
-    <color name="colorOnPrimary">#ffffff</color>
+  <color name="colorPrimary">#006837</color>
+  <color name="colorPrimaryDark">#004012</color>
+  <color name="colorAccent">#c75f00</color>
+  <color name="colorOnPrimary">#ffffff</color>
 </resources>

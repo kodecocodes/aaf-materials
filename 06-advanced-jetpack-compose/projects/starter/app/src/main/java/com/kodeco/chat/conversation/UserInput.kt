@@ -275,9 +275,9 @@ private fun UserInputSelector(
 ) {
   Row(
     modifier = modifier
-        .height(72.dp)
-        .wrapContentHeight()
-        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+      .height(72.dp)
+      .wrapContentHeight()
+      .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     verticalAlignment = Alignment.CenterVertically
   ) {
     InputSelectorButton(
@@ -347,8 +347,8 @@ private fun InputSelectorButton(
   IconButton(
     onClick = onClick,
     modifier = Modifier
-        .size(56.dp)
-        .then(backgroundModifier)
+      .size(56.dp)
+      .then(backgroundModifier)
   ) {
     val tint = if (selected) {
       MaterialTheme.colorScheme.onSecondary
@@ -387,21 +387,21 @@ private fun UserInputText(
   val a11ylabel = stringResource(id = R.string.textfield_desc)
   Row(
     modifier = Modifier
-        .fillMaxWidth()
-        .height(64.dp)
-        .semantics {
-            contentDescription = a11ylabel
-            keyboardShownProperty = keyboardShown
-        },
+      .fillMaxWidth()
+      .height(64.dp)
+      .semantics {
+        contentDescription = a11ylabel
+        keyboardShownProperty = keyboardShown
+      },
     horizontalArrangement = Arrangement.End
   ) {
     Surface {
       Box(
 //                Modifier.fillMaxSize()
         modifier = Modifier
-            .height(64.dp)
-            .weight(1f)
-            .align(Alignment.Bottom)
+          .height(64.dp)
+          .weight(1f)
+          .align(Alignment.Bottom)
       ) {
         var lastFocusState by remember { mutableStateOf(false) }
 //                if (photoUri != null) {
@@ -422,15 +422,15 @@ private fun UserInputText(
           value = textFieldValue,
           onValueChange = { onTextChanged(it) },
           modifier = Modifier
-              .fillMaxWidth()
-              .padding(start = 32.dp)
-              .align(Alignment.CenterStart)
-              .onFocusChanged { state ->
-                  if (lastFocusState != state.isFocused) {
-                      onTextFieldFocused(state.isFocused)
-                  }
-                  lastFocusState = state.isFocused
-              },
+            .fillMaxWidth()
+            .padding(start = 32.dp)
+            .align(Alignment.CenterStart)
+            .onFocusChanged { state ->
+              if (lastFocusState != state.isFocused) {
+                onTextFieldFocused(state.isFocused)
+              }
+              lastFocusState = state.isFocused
+            },
           keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
             autoCorrect = true,
@@ -449,8 +449,8 @@ private fun UserInputText(
         if (textFieldValue.text.isEmpty() && !focusState) {
           Text(
             modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 32.dp),
+              .align(Alignment.CenterStart)
+              .padding(start = 32.dp),
             text = stringResource(id = R.string.textfield_hint),
             style = MaterialTheme.typography.bodyLarge.copy(color = disableContentColor)
           )
@@ -470,15 +470,15 @@ fun EmojiSelector(
   val a11yLabel = stringResource(id = R.string.emoji_selector_desc)
   Column(
     modifier = Modifier
-        .focusRequester(focusRequester) // Requests focus when the Emoji selector is displayed
-        // Make the emoji selector focusable so it can steal focus from TextField
-        .focusTarget()
-        .semantics { contentDescription = a11yLabel }
+      .focusRequester(focusRequester) // Requests focus when the Emoji selector is displayed
+      // Make the emoji selector focusable so it can steal focus from TextField
+      .focusTarget()
+      .semantics { contentDescription = a11yLabel }
   ) {
     Row(
       modifier = Modifier
-          .fillMaxWidth()
-          .padding(horizontal = 8.dp)
+        .fillMaxWidth()
+        .padding(horizontal = 8.dp)
     ) {
       ExtendedSelectorInnerButton(
         text = stringResource(id = R.string.emojis_label),
@@ -519,8 +519,8 @@ fun ExtendedSelectorInnerButton(
   TextButton(
     onClick = onClick,
     modifier = modifier
-        .padding(8.dp)
-        .height(36.dp),
+      .padding(8.dp)
+      .height(36.dp),
     colors = colors,
     contentPadding = PaddingValues(0.dp)
   ) {
@@ -546,9 +546,9 @@ fun EmojiTable(
           val emoji = emojis[x * EMOJI_COLUMNS + y]
           Text(
             modifier = Modifier
-                .clickable(onClick = { onTextAdded(emoji) })
-                .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
-                .padding(8.dp),
+              .clickable(onClick = { onTextAdded(emoji) })
+              .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
+              .padding(8.dp),
             text = emoji,
             style = LocalTextStyle.current.copy(
               fontSize = 18.sp,
