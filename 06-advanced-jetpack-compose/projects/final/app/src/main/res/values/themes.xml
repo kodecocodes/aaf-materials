@@ -35,5 +35,5 @@
 
 <resources>
 
-    <style name="Theme.KodecoChat" parent="android:Theme.Material.Light.NoActionBar" />
+  <style name="Theme.KodecoChat" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
