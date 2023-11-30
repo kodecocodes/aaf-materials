@@ -94,8 +94,8 @@ fun JumpToBottom(
       containerColor = MaterialTheme.colorScheme.surface,
       contentColor = MaterialTheme.colorScheme.primary,
       modifier = modifier
-          .offset(x = 0.dp, y = -bottomOffset)
-          .height(36.dp)
+        .offset(x = 0.dp, y = -bottomOffset)
+        .height(36.dp)
     )
   }
 }

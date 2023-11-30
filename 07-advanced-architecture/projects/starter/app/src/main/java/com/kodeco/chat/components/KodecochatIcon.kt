@@ -49,27 +49,27 @@ import com.kodeco.chat.R
 
 @Composable
 fun KodecoChatIcon(
-    contentDescription: String?,
-    modifier: Modifier = Modifier
+  contentDescription: String?,
+  modifier: Modifier = Modifier
 ) {
-    val semantics = if (contentDescription != null) {
-        Modifier.semantics {
-            this.contentDescription = contentDescription
-            this.role = Role.Image
-        }
-    } else {
-        Modifier
+  val semantics = if (contentDescription != null) {
+    Modifier.semantics {
+      this.contentDescription = contentDescription
+      this.role = Role.Image
     }
-    Box(modifier = modifier.then(semantics)) {
-        Icon(
-            painter = painterResource(id = R.drawable.kodeco_logo_back),
-            contentDescription = null,
-            tint = Color(0xFFFF5A00)
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.kodeco_logo),
-            contentDescription = null,
-            tint = Color.White
-        )
-    }
+  } else {
+    Modifier
+  }
+  Box(modifier = modifier.then(semantics)) {
+    Icon(
+      painter = painterResource(id = R.drawable.kodeco_logo_back),
+      contentDescription = null,
+      tint = Color(0xFFFF5A00)
+    )
+    Icon(
+      painter = painterResource(id = R.drawable.kodeco_logo),
+      contentDescription = null,
+      tint = Color.White
+    )
+  }
 }
