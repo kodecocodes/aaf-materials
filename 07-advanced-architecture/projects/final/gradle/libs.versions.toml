@@ -5,7 +5,7 @@ android-library = "8.1.4"
 appcompat = "1.6.1"
 coil-compose = "2.4.0"
 core-splashscreen = "1.0.1"
-ditto = "4.4.5"
+ditto = "4.5.0"
 kotlin = "1.9.10"
 
 # Dependency versions
