@@ -42,6 +42,7 @@ import com.kodeco.chat.data.DEFAULT_PUBLIC_ROOM_MESSAGES_COLLECTION_ID
 import com.kodeco.chat.data.model.ChatRoom
 import com.kodeco.chat.data.model.MessageUiModel
 import com.kodeco.chat.data.model.User
+import com.kodeco.chat.data.repository.RepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +52,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import live.ditto.DittoAttachmentToken
-import live.dittolive.chat.data.repository.RepositoryImpl
 import java.util.UUID
 
 class MainViewModel : ViewModel() {

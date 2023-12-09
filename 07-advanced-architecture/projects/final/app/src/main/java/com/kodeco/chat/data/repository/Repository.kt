@@ -32,7 +32,7 @@
  * THE SOFTWARE.
  */
 
-package live.dittolive.chat.data.repository
+package com.kodeco.chat.data.repository
 
 import com.kodeco.chat.conversation.Message
 import com.kodeco.chat.data.model.ChatRoom
