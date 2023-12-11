@@ -44,7 +44,7 @@ data class User(
   val id: String = UUID.randomUUID().toString(),
   val firstName: String = "",
   val lastName: String = "",
-  val fullName: String = firstName + " " + lastName
+  val fullName: String = "$firstName $lastName"
 ) {
   constructor(document: DittoDocument) : this(
     document[dbIdKey].stringValue,

@@ -332,7 +332,7 @@ fun ChatItemBubble(
   isUserMe: Boolean,
   authorClicked: (String) -> Unit
 ) {
-  val ChatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+  val chatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
   val pressedState = remember { mutableStateOf(false) }
   val backgroundBubbleColor = if (isUserMe) {
     MaterialTheme.colorScheme.primary
@@ -343,7 +343,7 @@ fun ChatItemBubble(
   Column {
     Surface(
       color = backgroundBubbleColor,
-      shape = ChatBubbleShape
+      shape = chatBubbleShape
     ) {
       if (message.text.isNotEmpty()) {
         ClickableMessage(
