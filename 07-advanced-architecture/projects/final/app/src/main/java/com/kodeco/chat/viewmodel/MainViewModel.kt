@@ -98,7 +98,7 @@ class MainViewModel : ViewModel() {
   }
 
   init {
-    // user initialziation - we use the device name for the user's name
+    // user initialization - we use the device name for the user's name
     val firstName = "My"
     val lastName = android.os.Build.MODEL
     updateUserInfo(firstName, lastName)
