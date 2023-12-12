@@ -333,7 +333,7 @@ fun ChatItemBubble(
   authorClicked: (String) -> Unit
 ) {
   val chatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
-  val pressedState = remember { mutableStateOf(false) }
+  remember { mutableStateOf(false) }
   val backgroundBubbleColor = if (isUserMe) {
     MaterialTheme.colorScheme.primary
   } else {

@@ -261,12 +261,8 @@ class RepositoryImpl : Repository {
   }
 
   private fun postInitActions() {
-    updateUsersLiveData()
-    getPublicRoomsFromDitto()
-  }
-
-  private fun updateUsersLiveData() {
     getAllUsersFromDitto()
+    getPublicRoomsFromDitto()
   }
 
   private fun getAllMessagesForRoomFromDitto(chatRoom: ChatRoom) {

@@ -183,16 +183,14 @@ fun UserInput(
         currentInputSelector = currentInputSelector
       )
       SelectorExpanded(
-        onCloseRequested = dismissKeyboard,
-        onTextAdded = { textState = textState.addText(it) },
-        onImageAdded = {
-          if (it != null) {
-            photoUri = it
-          }
-          handleKeyboardInputText()
-        },
-        currentSelector = currentInputSelector
-      )
+        currentSelector = currentInputSelector,
+        onTextAdded = { textState = textState.addText(it) }
+      ) {
+        if (it != null) {
+          photoUri = it
+        }
+        handleKeyboardInputText()
+      }
     }
   }
 }
@@ -214,7 +212,6 @@ private fun TextFieldValue.addText(newString: String): TextFieldValue {
 @Composable
 private fun SelectorExpanded(
   currentSelector: InputSelector,
-  onCloseRequested: () -> Unit,
   onTextAdded: (String) -> Unit,
   onImageAdded: (Uri?) -> Unit
 ) {
@@ -398,20 +395,6 @@ private fun UserInputText(
           .align(Alignment.Bottom)
       ) {
         var lastFocusState by remember { mutableStateOf(false) }
-//                if (photoUri != null) {
-//                    //Use Coil to display the selected image
-//                    val painter = rememberAsyncImagePainter(
-//                        ImageRequest
-//                            .Builder(LocalContext.current)
-//                            .data(data = photoUri)
-//                            .build()
-//                    )
-//
-//                    Image(
-//                        painter = painter,
-//                        contentDescription = null
-//                    )
-//                }
         BasicTextField(
           value = textFieldValue,
           onValueChange = { onTextChanged(it) },

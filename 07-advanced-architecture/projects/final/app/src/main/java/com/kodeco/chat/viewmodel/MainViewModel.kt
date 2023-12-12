@@ -81,7 +81,7 @@ class MainViewModel : ViewModel() {
   )
 
   private val _currentChatRoom = MutableStateFlow(emptyChatRoom)
-  val currentRoom = _currentChatRoom.asStateFlow()
+  private val currentRoom = _currentChatRoom.asStateFlow()
 
   // messages for a particular chat room
   val roomMessagesWithUsersFlow: Flow<List<MessageUiModel>> = combine(
@@ -104,7 +104,7 @@ class MainViewModel : ViewModel() {
     updateUserInfo(firstName, lastName)
   }
 
-  fun updateUserInfo(firstName: String = this.firstName, lastName: String = this.lastName) {
+  private fun updateUserInfo(firstName: String = this.firstName, lastName: String = this.lastName) {
     viewModelScope.launch {
       repository.saveCurrentUser(userId, firstName, lastName)
     }
