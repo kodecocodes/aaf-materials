@@ -127,10 +127,6 @@ class RepositoryImpl : Repository {
   private lateinit var usersLiveQuery: DittoLiveQuery
   private lateinit var usersSubscription: DittoSubscription
 
-  // private in-memory stores of subscriptions for rooms and messages
-//  private var privateRoomSubscriptions = listOf<>() [String: DittoSubscription]()
-//  private var privateRoomMessagesSubscriptions = [String: DittoSubscription]()
-
   init {
     initDatabase(this::postInitActions)
   }
@@ -190,15 +186,6 @@ class RepositoryImpl : Repository {
     collection.upsert(doc)
   }
 
-  override suspend fun deleteMessage(id: Long) {
-    // TODO : Implement
-  }
-
-  override suspend fun deleteMessages(messageIds: List<Long>) {
-    // TODO : Implement
-  }
-
-
   override suspend fun addUser(user: User) {
     ditto.store.collection(usersKey)
       .upsert(
@@ -241,7 +228,6 @@ class RepositoryImpl : Repository {
     )
 
 
-    // TODO : possibly remove this - b/c we are using Flow to keep a live update of public rooms
     addSubscriptionForRoom(chatRoom)
 
     ditto.let {
@@ -250,13 +236,7 @@ class RepositoryImpl : Repository {
   }
 
   private fun addSubscriptionForRoom(chatRoom: ChatRoom) {
-    if (chatRoom.isPrivate) {
-      // TODO
-    } else {
       val messageSubscription = ditto.store[chatRoom.messagesCollectionId].findAll().subscribe()
-      // TODO : for hide / unhide public room
-//            publicRoomMessagesSubscriptions[room.id] = messageSubscription
-    }
   }
 
   // This function without room param is for qrCode join private room, where there isn't yet a room
@@ -275,102 +255,10 @@ class RepositoryImpl : Repository {
         .observeLocal { docs, _ ->
           val roomDocs = docs
           val privateChatRooms = docs.map { ChatRoom(it) }
-          // TODO : insert to Room db
         }
       val messagesSubscription = ditto.store.collection(messagesId).findAll().subscribe()
-
-      //track private room details locally
-
     }
   }
-
-  override suspend fun archivePublicRoom(chatRoom: ChatRoom) {
-    // TODO : implement
-  }
-
-  override suspend fun unarchivePublicRoom(chatRoom: ChatRoom) {
-    // TODO : implement
-  }
-
-//  override suspend fun joinPrivateRoom(qrCode: String): ChatRoom? {
-//    val parts = qrCode.split("\n")
-//    if (parts.count() != 3) {
-//      println("DittoService: Error - expected 3 parts to QR code: $qrCode --> RETURN")
-//      return null
-//    }
-//
-//    // parse qrCode for roomId, collectionId, messagesId
-//    val roomId = parts[0]
-//    val collectionId = parts[1]
-//    val messagesId = parts[2]
-//
-//    return privateRoomForId(roomId, collectionId, messagesId)
-//  }
-
-  /**
-   * Searches Ditto Mesh for a Private Room and returns it if found
-   * If not found, returns a new private chat room with the supplied arguments
-   * @param roomId unique ID of the chat room, also used as the primary key in Room databse
-   * @param collectionId unique collection ID for this collection of a single private chat room
-   * @param messagesId handle used to retrieve messages for this private chat room
-   */
-//  override suspend fun privateRoomForId(
-//    roomId: String,
-//    collectionId: String,
-//    messagesId: String
-//  ): ChatRoom {
-//
-//    var emptyChatRoom = ChatRoom(
-//      id = roomId,
-//      name = "some private room",
-//      createdOn = Clock.System.now(),
-//      messagesCollectionId = messagesId,
-//      isPrivate = true,
-//      collectionID = collectionId,
-//      createdBy = "Ditto System"
-//    )
-//
-//    val privateRoomCollection = ditto.store.collection(collectionId)
-//    val privateRoomSubscription = privateRoomCollection.findAll().subscribe()
-//    val privateRoomLiveQuery = privateRoomCollection
-//      .findById(roomId)
-//      .observeLocal { document, _ ->
-//        document?.let {
-//          emptyChatRoom = ChatRoom(document)
-//        }
-//      }
-//
-//    /*
-//      ok, so we found the room in the mesh,
-//      but is it tracked locally, yet?
-//      if not, add it to local Room database to keep track of it
-//    */
-//    val localChatRoom = chatRoomDao.getPrivateChatRoom(emptyChatRoom.id)
-//    localChatRoom?.let {
-//      // we found the chatroom already in the local room DB
-//      return emptyChatRoom
-//    }
-//    // we didn't find the chat room in the local Room DB...
-//    chatRoomDao.insert(emptyChatRoom)
-//    return emptyChatRoom
-//  }
-//
-//  override suspend fun archivePrivateRoom(chatRoom: ChatRoom) {
-//    // TODO : implement
-//  }
-//
-//  override suspend fun unarchivePrivateRoom(chatRoom: ChatRoom) {
-//    // TODO : implement
-//  }
-//
-//  override suspend fun deletePrivateRoom(chatRoom: ChatRoom) {
-//    // TODO : implement
-//  }
-//
-//  override suspend fun saveRoom(chatRoom: ChatRoom) {
-//    chatRoomDao.insert(chatRoom)
-//
-//  }
 
   private fun postInitActions() {
     updateUsersLiveData()

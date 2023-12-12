@@ -59,10 +59,6 @@ interface Repository {
     attachment: DittoAttachment?
   )
 
-  suspend fun deleteMessage(id: Long)
-
-  suspend fun deleteMessages(messageIds: List<Long>)
-
   // users
   suspend fun addUser(user: User)
   fun getAllUsers(): Flow<List<User>>
@@ -71,10 +67,4 @@ interface Repository {
   // rooms
   suspend fun createRoom(name: String, isPrivate: Boolean = false, userId: String = "Ditto System")
   suspend fun publicRoomForId(roomId: String): ChatRoom
-  suspend fun archivePublicRoom(chatRoom: ChatRoom)
-  suspend fun unarchivePublicRoom(chatRoom: ChatRoom)
-
-//  suspend fun saveRoom(chatRoom: ChatRoom)
-
-//  suspend fun getAllPrivateRooms(): Flow<List<ChatRoom>>
 }

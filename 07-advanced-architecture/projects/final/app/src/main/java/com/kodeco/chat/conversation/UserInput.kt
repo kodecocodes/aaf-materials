@@ -133,12 +133,6 @@ fun UserInput(
   var currentInputSelector by rememberSaveable { mutableStateOf(InputSelector.NONE) }
   val dismissKeyboard = { currentInputSelector = InputSelector.NONE }
 
-  // Intercept back navigation if there's a InputSelector visible
-  if (currentInputSelector != InputSelector.NONE) {
-    // TODO
-//        BackPressHandler(onBackPressed = dismissKeyboard)
-  }
-
   var textState by rememberSaveable(stateSaver = TextFieldValue.Saver) {
     mutableStateOf(TextFieldValue())
   }
