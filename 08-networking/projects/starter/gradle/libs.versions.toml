@@ -1,13 +1,13 @@
 [versions]
-agp = "8.1.4"
+agp = "8.2.0"
 kotlin = "1.9.10"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
-activity-compose = "1.7.2"
-compose-bom = "2023.09.00"
+activity-compose = "1.8.2"
+compose-bom = "2023.10.00"
 compose-ui = "1.5.1"
 viewModelVersion = "2.6.2"
 androidx-activity = "1.7.2"
@@ -16,6 +16,7 @@ fonts = "1.5.1"
 coil="2.4.0"
 navigation="2.7.2"
 timberVersion = "5.0.1"
+devtoolsKsp = "1.9.0-1.0.13"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -61,6 +62,7 @@ timber = {module = "com.jakewharton.timber:timber", version.ref="timberVersion"}
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 
 [bundles]
 androidx-activity = ["androidx-activity", "androidx-activity-ktx", "compose-viewmodel"]
