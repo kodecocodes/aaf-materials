@@ -13,17 +13,17 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 data class QueryState(
-    val query: String = "",
-    val offset: Int = 0,
-    val number: Int = 20,
-    val totalResults: Int = 0,
+  val query: String = "",
+  val offset: Int = 0,
+  val number: Int = 20,
+  val totalResults: Int = 0,
 )
 
 data class UIState(
-    val searching: Boolean = false,
-    val allChecked: Boolean = true,
-    val bookmarksChecked: Boolean = false,
-    val previousSearches: MutableList<String> = arrayListOf()
+  val searching: Boolean = false,
+  val allChecked: Boolean = true,
+  val bookmarksChecked: Boolean = false,
+  val previousSearches: MutableList<String> = arrayListOf()
 )
 
 const val PAGE_SIZE = 20
@@ -59,16 +59,16 @@ class RecipeViewModel() : ViewModel() {
   }
 
   fun queryRecipies(
-      query: String,
-      offset: Int,
-      number: Int = PAGE_SIZE
+    query: String,
+    offset: Int,
+    number: Int = PAGE_SIZE
   ) {
     viewModelScope.launch {
       try {
         val response = spoonacularService.queryRecipes(query, offset, number)
         _recipeListState.value = response.recipes
         _queryState.value =
-            QueryState(query, offset, number, response.totalResults)
+          QueryState(query, offset, number, response.totalResults)
       } catch (e: Exception) {
         Timber.e(e, "Problems getting Recipes")
         _recipeListState.value = listOf()
@@ -81,7 +81,7 @@ class RecipeViewModel() : ViewModel() {
   }
 
   suspend fun queryRecipe(
-      id: Int,
+    id: Int,
   ) {
     viewModelScope.launch(Dispatchers.Default) {
       try {

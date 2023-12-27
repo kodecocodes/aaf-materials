@@ -36,7 +36,7 @@ fun GroceryList() {
     ShoppingImageRow()
     ShoppingSearchRow(groceryListViewModel)
     IngredientList(
-        groceryListViewModel
+      groceryListViewModel
     )
   }
 }

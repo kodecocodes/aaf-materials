@@ -34,7 +34,7 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun ShoppingSearchRow(
-    groceryListViewModel: GroceryListViewModel,
+  groceryListViewModel: GroceryListViewModel,
 ) {
   val searchText = rememberState {
     ""
@@ -47,47 +47,47 @@ fun ShoppingSearchRow(
     groceryListViewModel.setSearchIngredients(searchIngredients)
   }
   Row(
-      modifier = Modifier
-          .padding(8.dp)
-          .fillMaxWidth()
+    modifier = Modifier
+      .padding(8.dp)
+      .fillMaxWidth()
   ) {
     Box(modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .clickable {
-          if (searchText.value.isNotEmpty()) {
-            startSearch(searchText.value.trim())
-            keyboard?.hide()
-          }
-        }) {
+      .align(Alignment.CenterVertically)
+      .clickable {
+        if (searchText.value.isNotEmpty()) {
+          startSearch(searchText.value.trim())
+          keyboard?.hide()
+        }
+      }) {
       Icon(
-          Icons.Filled.Search,
-          contentDescription = "Search",
+        Icons.Filled.Search,
+        contentDescription = "Search",
       )
     }
     SpacerW4()
     TextField(
-        modifier = Modifier.weight(1f),
-        value = searchText.value,
-        onValueChange = {
-          searchText.value = it
+      modifier = Modifier.weight(1f),
+      value = searchText.value,
+      onValueChange = {
+        searchText.value = it
+      },
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+      keyboardActions = KeyboardActions(
+        onSearch = {
+          if (searchText.value.isNotEmpty()) {
+            startSearch(searchText.value.trim())
+            keyboard?.hide()
+          }
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-              if (searchText.value.isNotEmpty()) {
-                startSearch(searchText.value.trim())
-                keyboard?.hide()
-              }
-            },
-        ),
-        singleLine = true,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = transparent,
-            unfocusedContainerColor = transparent,
-            focusedIndicatorColor = transparent,
-            unfocusedIndicatorColor = transparent,
-        ),
-        label = { Text("Search...") },
+      ),
+      singleLine = true,
+      colors = TextFieldDefaults.colors(
+        focusedContainerColor = transparent,
+        unfocusedContainerColor = transparent,
+        focusedIndicatorColor = transparent,
+        unfocusedIndicatorColor = transparent,
+      ),
+      label = { Text("Search...") },
     )
     SpacerMax()
     Box(modifier = Modifier.align(Alignment.CenterVertically)) {

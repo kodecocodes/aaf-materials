@@ -26,14 +26,14 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun ColumnScope.ChipRow(
-    viewModel: RecipeViewModel,
+  viewModel: RecipeViewModel,
 ) {
   val uiState by viewModel.uiState.collectAsState()
   Row(
-      modifier = Modifier
-          .fillMaxWidth()
-          .align(Alignment.CenterHorizontally),
-      horizontalArrangement = Arrangement.Center
+    modifier = Modifier
+      .fillMaxWidth()
+      .align(Alignment.CenterHorizontally),
+    horizontalArrangement = Arrangement.Center
   ) {
     SpacerW4()
     FilterChip(selected = uiState.allChecked, leadingIcon = {

@@ -41,7 +41,7 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 
 @Composable
 fun SearchRow(
-    viewModel: RecipeViewModel
+  viewModel: RecipeViewModel
 ) {
   var expanded by remember { mutableStateOf(false) }
   var searchText by remember {
@@ -51,47 +51,47 @@ fun SearchRow(
   val keyboard = LocalSoftwareKeyboardController.current
 
   Row(
-      modifier = Modifier
-          .padding(8.dp)
-          .fillMaxWidth()
+    modifier = Modifier
+      .padding(8.dp)
+      .fillMaxWidth()
   ) {
     Box(modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .clickable {
-          if (searchText.isNotEmpty()) {
-            viewModel.setSearching(true)
-            keyboard?.hide()
-            searchRecipes(searchText.trim(), viewModel)
-          }
-        }) {
+      .align(Alignment.CenterVertically)
+      .clickable {
+        if (searchText.isNotEmpty()) {
+          viewModel.setSearching(true)
+          keyboard?.hide()
+          searchRecipes(searchText.trim(), viewModel)
+        }
+      }) {
       Icon(
-          Icons.Filled.Search,
-          contentDescription = "Search",
+        Icons.Filled.Search,
+        contentDescription = "Search",
       )
     }
     SpacerW4()
     TextField(
-        modifier = Modifier.fillMaxWidth(0.8f),
-        value = searchText,
-        onValueChange = {
-          searchText = it
+      modifier = Modifier.fillMaxWidth(0.8f),
+      value = searchText,
+      onValueChange = {
+        searchText = it
+      },
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+      keyboardActions = KeyboardActions(
+        onSearch = {
+          viewModel.setSearching(true)
+          keyboard?.hide()
+          searchRecipes(searchText.trim(), viewModel)
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-              viewModel.setSearching(true)
-              keyboard?.hide()
-              searchRecipes(searchText.trim(), viewModel)
-            },
-        ),
-        singleLine = true,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = transparent,
-            unfocusedContainerColor = transparent,
-            focusedIndicatorColor = transparent,
-            unfocusedIndicatorColor = transparent,
-        ),
-        label = { Text("Search...") },
+      ),
+      singleLine = true,
+      colors = TextFieldDefaults.colors(
+        focusedContainerColor = transparent,
+        unfocusedContainerColor = transparent,
+        focusedIndicatorColor = transparent,
+        unfocusedIndicatorColor = transparent,
+      ),
+      label = { Text("Search...") },
     )
     SpacerMax()
     Box(modifier = Modifier.align(Alignment.CenterVertically)) {
@@ -107,21 +107,21 @@ fun SearchRow(
         expanded = true
       }) {
         Icon(
-            imageVector = Icons.Default.MoreVert,
-            contentDescription = "Open Options"
+          imageVector = Icons.Default.MoreVert,
+          contentDescription = "Open Options"
         )
       }
       DropdownMenu(
-          expanded = expanded,
-          onDismissRequest = { expanded = false }
+        expanded = expanded,
+        onDismissRequest = { expanded = false }
       ) {
         uiState.previousSearches.forEach {
           DropdownMenuItem(
-              text = { Text(it) },
-              onClick = {
-                expanded = false
-                searchText = it
-              }
+            text = { Text(it) },
+            onClick = {
+              expanded = false
+              searchText = it
+            }
           )
         }
       }

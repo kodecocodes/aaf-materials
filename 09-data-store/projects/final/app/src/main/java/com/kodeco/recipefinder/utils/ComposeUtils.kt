@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProvider
  */
 @Composable
 inline fun <T> rememberState(crossinline producer: @DisallowComposableCalls () -> T) =
-    remember { mutableStateOf(producer()) }
+  remember { mutableStateOf(producer()) }
 
 /**
  * Shorthand for
@@ -36,12 +36,12 @@ inline fun <T> rememberState(crossinline producer: @DisallowComposableCalls () -
  */
 @Composable
 inline fun <T> rememberState(key: Any?, crossinline producer: @DisallowComposableCalls () -> T) =
-    remember(key) { mutableStateOf(producer()) }
+  remember(key) { mutableStateOf(producer()) }
 
 /**
  * Provide a way to pass variables to view models
  */
 inline fun <VM : ViewModel> viewModelFactory(crossinline f: () -> VM) =
-    object : ViewModelProvider.Factory {
-      override fun <T : ViewModel> create(modelClass: Class<T>): T = f() as T
-    }
+  object : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = f() as T
+  }

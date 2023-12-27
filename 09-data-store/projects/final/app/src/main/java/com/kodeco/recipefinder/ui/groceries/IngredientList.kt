@@ -18,7 +18,7 @@ import com.kodeco.recipefinder.viewmodels.GroceryListViewModel
 
 @Composable
 fun IngredientList(
-    groceryListViewModel: GroceryListViewModel,
+  groceryListViewModel: GroceryListViewModel,
 ) {
   val allListState = rememberLazyListState()
   val needState = rememberLazyListState()
@@ -27,21 +27,21 @@ fun IngredientList(
   val checkBoxStates = groceryUIState.checkBoxes
   if (groceryUIState.allListShowing) {
     val currentIngredients =
-        if (groceryUIState.searching) groceryUIState.searchIngredients else groceryUIState.ingredients
+      if (groceryUIState.searching) groceryUIState.searchIngredients else groceryUIState.ingredients
     LazyColumn(state = allListState, content = {
       items(
-          count = currentIngredients.size,
-          key = { index -> currentIngredients[index].id },
-          itemContent = { index ->
-            IngredientCard(
-                modifier = Modifier.fillMaxWidth(),
-                groceryListViewModel,
-                currentIngredients[index],
-                index,
-                index % 2 == 0,
-                groceryUIState.allListShowing
-            )
-          }
+        count = currentIngredients.size,
+        key = { index -> currentIngredients[index].id },
+        itemContent = { index ->
+          IngredientCard(
+            modifier = Modifier.fillMaxWidth(),
+            groceryListViewModel,
+            currentIngredients[index],
+            index,
+            index % 2 == 0,
+            groceryUIState.allListShowing
+          )
+        }
       )
     })
   } else {
@@ -54,39 +54,39 @@ fun IngredientList(
     LazyColumn(state = needState, content = {
       item {
         Text(
-            modifier = Modifier.padding(start = 16.dp, bottom = 12.dp),
-            text = "Need", style = GroceryTitle
+          modifier = Modifier.padding(start = 16.dp, bottom = 12.dp),
+          text = "Need", style = GroceryTitle
         )
       }
       items(
-          count = needList.size,
-          key = { index -> needList[index].id },
-          itemContent = { index ->
-            NeedIngredientCard(
-                modifier = Modifier.fillMaxWidth(),
-                index,
-                true,
-                ingredients
-            )
-          }
+        count = needList.size,
+        key = { index -> needList[index].id },
+        itemContent = { index ->
+          NeedIngredientCard(
+            modifier = Modifier.fillMaxWidth(),
+            index,
+            true,
+            ingredients
+          )
+        }
       )
       item {
         Text(
-            modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 20.dp),
-            text = "Have", style = GroceryTitle
+          modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 20.dp),
+          text = "Have", style = GroceryTitle
         )
       }
       items(
-          count = haveList.size,
-          key = { index -> haveList[index].id },
-          itemContent = { index ->
-            NeedIngredientCard(
-                modifier = Modifier.fillMaxWidth(),
-                index,
-                false,
-                ingredients
-            )
-          }
+        count = haveList.size,
+        key = { index -> haveList[index].id },
+        itemContent = { index ->
+          NeedIngredientCard(
+            modifier = Modifier.fillMaxWidth(),
+            index,
+            false,
+            ingredients
+          )
+        }
       )
     })
   }

@@ -17,28 +17,28 @@ import com.kodeco.recipefinder.ui.theme.RecipeFinderTheme
 @Composable
 fun BottomBar(bottomItems: List<BottomItem>) {
   BottomNavigation(
-      backgroundColor = MaterialTheme.colorScheme.primary,
+    backgroundColor = MaterialTheme.colorScheme.primary,
   ) {
 
     bottomItems.forEach { item ->
       BottomNavigationItem(
-          selected = item.selected,
-          onClick = item.onclick,
-          label = {
-            Text(
-                text = item.icon.contextText, style = TextStyle(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 12.sp
+        selected = item.selected,
+        onClick = item.onclick,
+        label = {
+          Text(
+            text = item.icon.contextText, style = TextStyle(
+              color = MaterialTheme.colorScheme.onPrimary,
+              fontSize = 12.sp
             )
-            )
-          },
-          icon = {
-            Icon(
-                item.icon.icon,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = item.icon.contextText
-            )
-          })
+          )
+        },
+        icon = {
+          Icon(
+            item.icon.icon,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            contentDescription = item.icon.contextText
+          )
+        })
 
     }
   }
@@ -49,10 +49,10 @@ fun BottomBar(bottomItems: List<BottomItem>) {
 fun DefaultPreview() {
   RecipeFinderTheme {
     BottomBar(
-        listOf(
-            BottomItem(icon = IconInfo(icon = Icons.Filled.Home, contextText = "Home")),
-            BottomItem(icon = IconInfo(icon = Icons.Filled.AccountCircle, contextText = "Account"))
-        )
+      listOf(
+        BottomItem(icon = IconInfo(icon = Icons.Filled.Home, contextText = "Home")),
+        BottomItem(icon = IconInfo(icon = Icons.Filled.AccountCircle, contextText = "Account"))
+      )
     )
   }
 }

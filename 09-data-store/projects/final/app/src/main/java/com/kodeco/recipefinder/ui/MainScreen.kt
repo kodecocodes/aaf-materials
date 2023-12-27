@@ -37,31 +37,35 @@ fun MainScreen() {
     }
   }
   CreateScaffold(
-      bottomBarList = listOf(
-          BottomItem(selected = selectedIndex.intValue == 0, icon = IconInfo(icon = ImageVector.vectorResource(
-              R.drawable.icon_recipe
-          ), contextText = "Recipes"), onclick = {
-            selectedIndex.intValue = 0
-            scope.launch {
-              prefs.saveInt(CURRENT_INDEX_KEY, 0)
-            }
-          }),
-          BottomItem(selected = selectedIndex.intValue == 1, icon = IconInfo(icon = ImageVector.vectorResource(
-              R.drawable.shopping_cart
-          ), contextText = "Groceries"), onclick = {
-            selectedIndex.intValue = 1
-            scope.launch {
-              prefs.saveInt(CURRENT_INDEX_KEY, 1)
-            }
-          }),
-      ), content = { padding ->
-    Box(modifier = Modifier.padding(padding)) {
-      when (selectedIndex.intValue) {
-        0 -> RecipeList()
-        1 -> GroceryList()
+    bottomBarList = listOf(
+      BottomItem(selected = selectedIndex.intValue == 0, icon = IconInfo(
+        icon = ImageVector.vectorResource(
+          R.drawable.icon_recipe
+        ), contextText = "Recipes"
+      ), onclick = {
+        selectedIndex.intValue = 0
+        scope.launch {
+          prefs.saveInt(CURRENT_INDEX_KEY, 0)
+        }
+      }),
+      BottomItem(selected = selectedIndex.intValue == 1, icon = IconInfo(
+        icon = ImageVector.vectorResource(
+          R.drawable.shopping_cart
+        ), contextText = "Groceries"
+      ), onclick = {
+        selectedIndex.intValue = 1
+        scope.launch {
+          prefs.saveInt(CURRENT_INDEX_KEY, 1)
+        }
+      }),
+    ), content = { padding ->
+      Box(modifier = Modifier.padding(padding)) {
+        when (selectedIndex.intValue) {
+          0 -> RecipeList()
+          1 -> GroceryList()
+        }
       }
     }
-  }
 
   )
 }

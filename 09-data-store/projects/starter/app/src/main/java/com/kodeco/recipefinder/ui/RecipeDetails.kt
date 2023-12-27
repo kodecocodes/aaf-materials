@@ -87,26 +87,26 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
         Box(modifier = Modifier.height(200.dp)) {
           if (recipe.image != null) {
             AsyncImage(
-                modifier = Modifier.fillMaxWidth(),
-                model = buildRecipeImageBuilder(recipe.image),
-                contentScale = ContentScale.FillWidth,
-                onState = { state ->
-                  if (state is AsyncImagePainter.State.Error) {
-                    Timber.e(
-                        state.result.throwable,
-                        "Problems loading image ${recipe.image}"
-                    )
-                  }
-                },
-                contentDescription = null,
+              modifier = Modifier.fillMaxWidth(),
+              model = buildRecipeImageBuilder(recipe.image),
+              contentScale = ContentScale.FillWidth,
+              onState = { state ->
+                if (state is AsyncImagePainter.State.Error) {
+                  Timber.e(
+                    state.result.throwable,
+                    "Problems loading image ${recipe.image}"
+                  )
+                }
+              },
+              contentDescription = null,
             )
           }
           TitleRow(
-              modifier = Modifier.align(Alignment.BottomStart),
-              navController,
-              viewModel,
-              recipe,
-              databaseRecipeId != null
+            modifier = Modifier.align(Alignment.BottomStart),
+            navController,
+            viewModel,
+            recipe,
+            databaseRecipeId != null
           )
         }
         Description(description = recipe.summary)
@@ -117,28 +117,30 @@ fun RecipeDetails(recipeId: Int? = null, databaseRecipeId: Int? = null) {
 
 @Composable
 fun TitleRow(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    viewModel: RecipeViewModel,
-    recipe: SpoonacularRecipe,
-    isBookmark: Boolean
+  modifier: Modifier = Modifier,
+  navController: NavHostController,
+  viewModel: RecipeViewModel,
+  recipe: SpoonacularRecipe,
+  isBookmark: Boolean
 ) {
   // TODO: Add Repository
   val scope = rememberCoroutineScope()
-  Row(modifier = modifier
+  Row(
+    modifier = modifier
       .fillMaxWidth()
-      .background(lighterBlue)) {
+      .background(lighterBlue)
+  ) {
     IconButton(onClick = { navController.popBackStack() }) {
       Icon(
-          imageVector = Icons.Default.ArrowBack,
-          tint = Color.Black,
-          contentDescription = "Go back"
+        imageVector = Icons.Default.ArrowBack,
+        tint = Color.Black,
+        contentDescription = "Go back"
       )
     }
     Text(
-        modifier = Modifier.align(Alignment.CenterVertically),
-        text = recipe.title,
-        style = HeadlineSmall.copy(color = Color.Black)
+      modifier = Modifier.align(Alignment.CenterVertically),
+      text = recipe.title,
+      style = HeadlineSmall.copy(color = Color.Black)
     )
     Spacer(modifier = Modifier.weight(1f))
     IconButton(onClick = {
@@ -154,10 +156,10 @@ fun TitleRow(
       navController.popBackStack()
     }) {
       val imageVector = ImageVector.vectorResource(
-          if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
+        if (isBookmark) R.drawable.icon_bookmark_filled else R.drawable.icon_bookmark
       )
       Icon(
-          imageVector = imageVector, tint = Color.Black, contentDescription = null
+        imageVector = imageVector, tint = Color.Black, contentDescription = null
       )
     }
   }
@@ -166,11 +168,11 @@ fun TitleRow(
 @Composable
 fun Description(modifier: Modifier = Modifier, description: String) {
   Card(
-      colors = CardDefaults.cardColors(containerColor = Color.White),
-      modifier = modifier
-          .padding(8.dp)
-          .fillMaxSize(1f),
-      elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+    colors = CardDefaults.cardColors(containerColor = Color.White),
+    modifier = modifier
+      .padding(8.dp)
+      .fillMaxSize(1f),
+    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
   ) {
     AndroidView(modifier = modifier.padding(16.dp), factory = {
       TextView(it)

@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class GroceryUIState(
-    val allListShowing: Boolean = true,
-    val searching: Boolean = false,
-    val ingredients: List<Ingredient> = listOf(),
-    val searchIngredients: List<Ingredient> = listOf(),
-    val checkBoxes: List<Boolean> = listOf()
+  val allListShowing: Boolean = true,
+  val searching: Boolean = false,
+  val ingredients: List<Ingredient> = listOf(),
+  val searchIngredients: List<Ingredient> = listOf(),
+  val checkBoxes: List<Boolean> = listOf()
 )
 
 class GroceryListViewModel : ViewModel() {
   private val _groceryUIState: MutableStateFlow<GroceryUIState> =
-      MutableStateFlow(GroceryUIState())
+    MutableStateFlow(GroceryUIState())
   val groceryUIState = _groceryUIState.asStateFlow()
 
   fun setAllShowing(showing: Boolean) {
@@ -28,17 +28,17 @@ class GroceryListViewModel : ViewModel() {
 
   fun setSearchIngredients(searchIngredients: List<Ingredient>) {
     _groceryUIState.value = _groceryUIState.value.copy(
-        searchIngredients = searchIngredients,
-        searching = searchIngredients.isNotEmpty()
+      searchIngredients = searchIngredients,
+      searching = searchIngredients.isNotEmpty()
     )
   }
 
   fun setIngredients(ingredients: MutableList<Ingredient>) {
     _groceryUIState.value = _groceryUIState.value.copy(ingredients = ingredients,
-        checkBoxes =
-        MutableList(ingredients.size) {
-          false
-        }
+      checkBoxes =
+      MutableList(ingredients.size) {
+        false
+      }
     )
   }
 

@@ -20,15 +20,15 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 @Composable
 fun ImageRow() {
   Box(
-      modifier = Modifier
-          .fillMaxWidth()
-          .height(200.dp)
-          .background(lightGreen)
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(200.dp)
+      .background(lightGreen)
   ) {
     Image(
-        modifier = Modifier.align(Alignment.Center),
-        painter = painterResource(id = R.drawable.background2),
-        contentDescription = null
+      modifier = Modifier.align(Alignment.Center),
+      painter = painterResource(id = R.drawable.background2),
+      contentDescription = null
     )
   }
 }

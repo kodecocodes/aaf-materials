@@ -57,44 +57,44 @@ fun ShowBookmarks(viewModel: RecipeViewModel) {
   val bookmarks = bookmarkListState.value
   LazyColumn(content = {
     items(
-        count = bookmarks.size,
-        key = { index -> bookmarks[index].id },
-        itemContent = { index ->
-          val recipe = bookmarks[index]
-          val currentItem by rememberUpdatedState(recipe)
-          val dismissState = rememberDismissState(
-              confirmValueChange = {
-                scope.launch {
-                  withContext(Dispatchers.IO) {
-                    // TODO: Add Repository
-                    viewModel.deleteBookmark()
-                  }
-                }
-                true
+      count = bookmarks.size,
+      key = { index -> bookmarks[index].id },
+      itemContent = { index ->
+        val recipe = bookmarks[index]
+        val currentItem by rememberUpdatedState(recipe)
+        val dismissState = rememberDismissState(
+          confirmValueChange = {
+            scope.launch {
+              withContext(Dispatchers.IO) {
+                // TODO: Add Repository
+                viewModel.deleteBookmark()
               }
-          )
-          SwipeToDismiss(state = dismissState, background = {
-            val alignment = when (dismissState.dismissDirection) {
-              DismissDirection.StartToEnd -> Alignment.CenterStart
-              DismissDirection.EndToStart -> Alignment.CenterEnd
-              null -> return@SwipeToDismiss
             }
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(lightGrey)
-                    .padding(horizontal = 20.dp),
-                contentAlignment = alignment
-            ) {
-              Icon(
-                  Icons.Default.Delete,
-                  contentDescription = "Delete",
-              )
-            }
-          }, dismissContent = {
-            BookmarkCard(modifier = Modifier.fillMaxWidth(), recipe)
-          })
-        }
+            true
+          }
+        )
+        SwipeToDismiss(state = dismissState, background = {
+          val alignment = when (dismissState.dismissDirection) {
+            DismissDirection.StartToEnd -> Alignment.CenterStart
+            DismissDirection.EndToStart -> Alignment.CenterEnd
+            null -> return@SwipeToDismiss
+          }
+          Box(
+            Modifier
+              .fillMaxSize()
+              .background(lightGrey)
+              .padding(horizontal = 20.dp),
+            contentAlignment = alignment
+          ) {
+            Icon(
+              Icons.Default.Delete,
+              contentDescription = "Delete",
+            )
+          }
+        }, dismissContent = {
+          BookmarkCard(modifier = Modifier.fillMaxWidth(), recipe)
+        })
+      }
     )
   })
 }

@@ -33,27 +33,31 @@ fun MainScreen() {
     }
   }
   CreateScaffold(
-      bottomBarList = listOf(
-          BottomItem(selected = selectedIndex.intValue == 0, icon = IconInfo(icon = ImageVector.vectorResource(
-              R.drawable.icon_recipe
-          ), contextText = "Recipes"), onclick = {
-            selectedIndex.intValue = 0
-            // TODO: Save screen position to prefs
-          }),
-          BottomItem(selected = selectedIndex.intValue == 1, icon = IconInfo(icon = ImageVector.vectorResource(
-              R.drawable.shopping_cart
-          ), contextText = "Groceries"), onclick = {
-            selectedIndex.intValue = 1
-            // TODO: Save screen position to prefs
-          }),
-      ), content = { padding ->
-    Box(modifier = Modifier.padding(padding)) {
-      when (selectedIndex.intValue) {
-        0 -> RecipeList()
-        1 -> GroceryList()
+    bottomBarList = listOf(
+      BottomItem(selected = selectedIndex.intValue == 0, icon = IconInfo(
+        icon = ImageVector.vectorResource(
+          R.drawable.icon_recipe
+        ), contextText = "Recipes"
+      ), onclick = {
+        selectedIndex.intValue = 0
+        // TODO: Save screen position to prefs
+      }),
+      BottomItem(selected = selectedIndex.intValue == 1, icon = IconInfo(
+        icon = ImageVector.vectorResource(
+          R.drawable.shopping_cart
+        ), contextText = "Groceries"
+      ), onclick = {
+        selectedIndex.intValue = 1
+        // TODO: Save screen position to prefs
+      }),
+    ), content = { padding ->
+      Box(modifier = Modifier.padding(padding)) {
+        when (selectedIndex.intValue) {
+          0 -> RecipeList()
+          1 -> GroceryList()
+        }
       }
     }
-  }
 
   )
 }

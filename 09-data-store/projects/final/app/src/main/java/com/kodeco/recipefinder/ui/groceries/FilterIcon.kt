@@ -37,34 +37,34 @@ fun RowScope.FilterIcon(groceryListViewModel: GroceryListViewModel) {
     }
     SpacerW4()
     DropdownMenu(
-        expanded = expanded.value,
-        onDismissRequest = { expanded.value = false }
+      expanded = expanded.value,
+      onDismissRequest = { expanded.value = false }
     ) {
       DropdownMenuItem(
-          text = { Text("All") },
-          leadingIcon = {
-            if (allListShowing) Icon(
-                imageVector = Icons.Filled.CheckBox,
-                contentDescription = "All"
-            )
-          },
-          onClick = {
-            groceryListViewModel.setAllShowing(true)
-            expanded.value = false
-          }
+        text = { Text("All") },
+        leadingIcon = {
+          if (allListShowing) Icon(
+            imageVector = Icons.Filled.CheckBox,
+            contentDescription = "All"
+          )
+        },
+        onClick = {
+          groceryListViewModel.setAllShowing(true)
+          expanded.value = false
+        }
       )
       DropdownMenuItem(
-          text = { Text("Need/Have") },
-          leadingIcon = {
-            if (!allListShowing) Icon(
-                imageVector = Icons.Filled.CheckBox,
-                contentDescription = "Need"
-            )
-          },
-          onClick = {
-            groceryListViewModel.setAllShowing(false)
-            expanded.value = false
-          }
+        text = { Text("Need/Have") },
+        leadingIcon = {
+          if (!allListShowing) Icon(
+            imageVector = Icons.Filled.CheckBox,
+            contentDescription = "Need"
+          )
+        },
+        onClick = {
+          groceryListViewModel.setAllShowing(false)
+          expanded.value = false
+        }
       )
     }
   }
