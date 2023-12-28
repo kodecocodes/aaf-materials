@@ -1,4 +1,4 @@
-# Android Apprentice: Fundamentals: Materials
+# Android Fundamentals: Materials
 
 This repo contains all the downloadable materials and projects associated with the **[Android Apprentice: Fundamentals](https://www.kodeco.com/books)** from [Kodeco](https://www.kodeco.com).
 
