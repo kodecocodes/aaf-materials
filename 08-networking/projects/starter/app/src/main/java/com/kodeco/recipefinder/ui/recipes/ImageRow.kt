@@ -55,9 +55,9 @@ import com.kodeco.recipefinder.viewmodels.RecipeViewModel
 fun ImageRow() {
   Box(
     modifier = Modifier
-        .fillMaxWidth()
-        .height(200.dp)
-        .background(lightGreen)
+      .fillMaxWidth()
+      .height(200.dp)
+      .background(lightGreen)
   ) {
     Image(
       modifier = Modifier.align(Alignment.Center),

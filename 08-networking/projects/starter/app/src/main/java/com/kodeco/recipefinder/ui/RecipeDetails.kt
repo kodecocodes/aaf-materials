@@ -161,8 +161,8 @@ fun TitleRow(
   val scope = rememberCoroutineScope()
   Row(
     modifier = modifier
-        .fillMaxWidth()
-        .background(lighterBlue)
+      .fillMaxWidth()
+      .background(lighterBlue)
   ) {
     IconButton(onClick = { navController.popBackStack() }) {
       Icon(
@@ -204,8 +204,8 @@ fun Description(modifier: Modifier = Modifier, description: String) {
   Card(
     colors = CardDefaults.cardColors(containerColor = Color.White),
     modifier = modifier
-        .padding(8.dp)
-        .fillMaxSize(1f),
+      .padding(8.dp)
+      .fillMaxSize(1f),
     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
   ) {
     AndroidView(modifier = modifier.padding(16.dp), factory = {
