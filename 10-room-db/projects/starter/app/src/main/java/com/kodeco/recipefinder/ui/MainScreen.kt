@@ -78,9 +78,9 @@ fun MainScreen() {
         ), contextText = "Recipes"
       ), onclick = {
         selectedIndex.intValue = 0
-         scope.launch {
-            prefs.saveInt(CURRENT_INDEX_KEY, 0)
-         }
+        scope.launch {
+          prefs.saveInt(CURRENT_INDEX_KEY, 0)
+        }
       }),
       BottomItem(selected = selectedIndex.intValue == 1, icon = IconInfo(
         icon = ImageVector.vectorResource(
@@ -88,9 +88,9 @@ fun MainScreen() {
         ), contextText = "Groceries"
       ), onclick = {
         selectedIndex.intValue = 1
-         scope.launch {
-           prefs.saveInt(CURRENT_INDEX_KEY, 1)
-         }
+        scope.launch {
+          prefs.saveInt(CURRENT_INDEX_KEY, 1)
+        }
       }),
     ), content = { padding ->
       Box(modifier = Modifier.padding(padding)) {

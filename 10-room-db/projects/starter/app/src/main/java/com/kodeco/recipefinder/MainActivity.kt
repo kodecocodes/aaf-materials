@@ -62,7 +62,7 @@ val LocalNavigatorProvider =
 // TODO: Add Repository Provider
 
 val LocalPrefsProvider =
-    compositionLocalOf<Prefs> { error("No prefs provided") }
+  compositionLocalOf<Prefs> { error("No prefs provided") }
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
