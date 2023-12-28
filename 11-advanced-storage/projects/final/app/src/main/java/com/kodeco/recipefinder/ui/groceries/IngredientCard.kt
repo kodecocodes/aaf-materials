@@ -90,7 +90,9 @@ fun IngredientCard(
         text = AnnotatedString(ingredient.name, spanStyle = style),
         style = BodyLarge,
         color = Color.Black,
-        modifier = Modifier.padding(16.dp).weight(0.8f)
+        modifier = Modifier
+          .padding(16.dp)
+          .weight(0.8f)
       )
       Spacer(modifier = Modifier.weight(0.2f))
       if (showCheckbox) {

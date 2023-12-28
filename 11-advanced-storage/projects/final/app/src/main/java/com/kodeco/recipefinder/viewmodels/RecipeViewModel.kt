@@ -72,7 +72,8 @@ data class UIState(
 
 const val PAGE_SIZE = 20
 
-class RecipeViewModel(private val prefs: SecurePrefs, private val repository: RecipeRepository,) : ViewModel() {
+class RecipeViewModel(private val prefs: SecurePrefs, private val repository: RecipeRepository) :
+  ViewModel() {
   companion object {
     const val PREVIOUS_SEARCH_KEY = "PREVIOUS_SEARCH_KEY"
   }
