@@ -398,20 +398,6 @@ private fun UserInputText(
             .align(Alignment.Bottom)
       ) {
         var lastFocusState by remember { mutableStateOf(false) }
-//                if (photoUri != null) {
-//                    //Use Coil to display the selected image
-//                    val painter = rememberAsyncImagePainter(
-//                        ImageRequest
-//                            .Builder(LocalContext.current)
-//                            .data(data = photoUri)
-//                            .build()
-//                    )
-//
-//                    Image(
-//                        painter = painter,
-//                        contentDescription = null
-//                    )
-//                }
         BasicTextField(
           value = textFieldValue,
           onValueChange = { onTextChanged(it) },
